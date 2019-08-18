@@ -1,4 +1,4 @@
-package com.fastaac.mall;
+package com.fastaac;
 
 import com.blankj.utilcode.util.Utils;
 import com.fastaac.base.BaseApp;

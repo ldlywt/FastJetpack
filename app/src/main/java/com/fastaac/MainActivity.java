@@ -1,9 +1,10 @@
-package com.fastaac.mall;
+package com.fastaac;
 
 import android.os.Bundle;
+
 import com.fastaac.base.base.AbsMvvmActivity;
-import com.wu.mall.R;
-import com.wu.mall.databinding.ActivityMainBinding;
+import com.fastaac.databinding.ActivityMainBinding;
+
 
 public class MainActivity extends AbsMvvmActivity<MainVm, ActivityMainBinding> {
 

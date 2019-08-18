@@ -8,7 +8,7 @@
         android:layout_height="match_parent"
         android:gravity="center_horizontal"
         android:orientation="vertical"
-        tools:context="com.fastaac.mall.MainActivity">
+        tools:context="com.fastaac.mall.com.fastaac.MainActivity">
 
         <Button
             android:id="@+id/btn"

@@ -5,7 +5,7 @@ android {
 
 
     defaultConfig {
-        applicationId "com.wu.mall"
+        applicationId "com.fastaac"
         minSdkVersion var.minSdkVersion
         targetSdkVersion var.targetSdkVersion
         versionCode var.versionCode

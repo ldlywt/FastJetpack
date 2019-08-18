@@ -1,4 +1,4 @@
-package com.fastaac.mall;
+package com.fastaac;
 
 import android.app.Application;
 import android.util.Log;
