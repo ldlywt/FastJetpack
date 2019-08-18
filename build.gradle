@@ -1,0 +1,33 @@
+buildscript {
+
+    repositories {
+        google()
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.4.1'
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        jcenter()
+        maven { url "https://jitpack.io" }
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
+
+ext {
+    var = [
+            minSdkVersion        : 15,
+            targetSdkVersion     : 28,
+            compileSdkVersion    : 28,
+            versionName          : "1.0.0",
+            versionCode          : 1,
+            androidxVersion      : "1.1.0-alpha05",
+    ]
+}

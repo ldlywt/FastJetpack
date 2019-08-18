@@ -1,0 +1,18 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion var.compileSdkVersion
+
+    defaultConfig {
+        minSdkVersion var.minSdkVersion
+        targetSdkVersion var.targetSdkVersion
+        versionCode var.versionCode
+        versionName var.versionName
+    }
+}
+
+dependencies {
+    api 'com.squareup.okhttp3:okhttp:3.8.1'
+}
+
+//apply from: 'bintray.gradle'
