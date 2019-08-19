@@ -1,8 +1,7 @@
 # FastAAC
 
-- 一个简单、快速开发的 Android MVVM 开发框架。
+- 一个浅封装、快速开发的 Android MVVM 开发框架。
 - 基于 Android Architecture Components(AAC)。
-- 浅封装、可扩展性强。
 - 项目使用 Androidx 搭建。
 - 只使用官方部分的 MVVM 和 databind 的部分特性。
 
@@ -11,7 +10,7 @@
 
 ## 优点
 
-- 简单
+- 简单、浅封装、扩展性强
  
     代码简单，没有过度的封装，上手非常容易，Lib 只有十几个类。
     
