@@ -15,7 +15,6 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.fastaac.base.pagestate.EmptyCallback;
 import com.fastaac.base.pagestate.ErrorCallback;
 import com.fastaac.base.pagestate.LoadingCallback;
-import com.fastaac.base.util.BaseConstant;
 import com.gyf.immersionbar.ImmersionBar;
 import com.jeremyliao.liveeventbus.LiveEventBus;
 import com.kingja.loadsir.callback.Callback;
@@ -46,7 +45,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IUiCallb
         initView();
         registerPageState();
         initData(savedInstanceState);
-        LiveEventBus.get().with(BaseConstant.PAGE_STATE, BaseResult.class).observe(this,
+        LiveEventBus.get().with(AbsViewModel.PAGE_STATE, BaseResult.class).observe(this,
                 httpResult -> loadService.showWithConvertor(httpResult));
     }
 

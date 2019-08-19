@@ -6,7 +6,6 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 
-import com.fastaac.base.util.BaseConstant;
 import com.jeremyliao.liveeventbus.LiveEventBus;
 
 /**
@@ -18,12 +17,14 @@ import com.jeremyliao.liveeventbus.LiveEventBus;
  */
 public abstract class AbsViewModel extends AndroidViewModel {
 
+    public static final String PAGE_STATE = "PAGE_STATE";
+
     public AbsViewModel(@NonNull Application application) {
         super(application);
     }
 
     protected void postPageState(BaseResult baseResult) {
-        LiveEventBus.get().with(BaseConstant.PAGE_STATE).post(baseResult);
+        LiveEventBus.get().with(PAGE_STATE).post(baseResult);
     }
 
 }

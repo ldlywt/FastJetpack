@@ -24,7 +24,6 @@ public class MainActivity extends AbsMvvmActivity<MainVm, ActivityMainBinding> {
                 mViewModel.requestNet();
             }
         }.start());
-
         mBinding.btnNoNet.setOnClickListener(v -> mViewModel.clickNoNet());
 
         mBinding.btnEmpty.setOnClickListener(v -> mViewModel.clickNoData());
