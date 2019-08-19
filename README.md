@@ -1,5 +1,6 @@
 # FastAAC
 
+- 上手特别容易，不会 MVVM 开发模式的都可以快速上手。
 - 一个浅封装、快速开发的 Android MVVM 开发框架。
 - 基于 Android Architecture Components(AAC)。
 - 项目使用 Androidx 搭建。
