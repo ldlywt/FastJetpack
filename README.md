@@ -1,7 +1,9 @@
 # FastAAC
-一个简单、快速的Android Architecture Components 的MVVM开发框架。
 
-项目使用 Androidx 搭建，只使用官方部分的 MVVM 和 databind 的全部特性，个人觉得怎么简单怎么用。
+- 一个简单、快速开发的 Android MVVM 开发框架。
+- 基于 Android Architecture Components(AAC)。
+- 项目使用 Androidx 搭建。
+- 只使用官方部分的 MVVM 和 databind 的部分特性。
 
 ## Lib 结构
    ![image](https://github.com/ldlywt/FastAAC/raw/master/img/structure.png)
@@ -52,12 +54,13 @@
     ```
     
     如果想手动改变页面状态，只需在 ViewModel 中非常简单的设置，例如：
+    
     无网络时：
     ```
     postPageState(new BaseResult(-1));
     ```
     
-    数据为空：
+    数据为空时：
     ```
     public void clickNoData() {
         BaseResult<Object> baseResult = new BaseResult<>();
@@ -68,7 +71,28 @@
     ```
  
 ## 具体使用
-见 demo 中的 MainActivity。    
+见 demo 中的 MainActivity。   
+
+## END
+大家有什么更好的建议请提出，一起学习进步。
+
+既然来了，麻烦动动手指，点个star，非常感谢。
+ 
+## License
+
+Copyright 2019 Wutao
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
 
 
 
