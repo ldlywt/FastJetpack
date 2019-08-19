@@ -68,9 +68,7 @@ public class MainVm extends AbsViewModel {
     }
 
     public void clickNoNet() {
-        BaseResult<Object> baseResult = new BaseResult<>();
-        baseResult.setErrorCode(-1);
-        postPageState(baseResult);
+        postPageState(new BaseResult(-1));
     }
 
     public void clickNoData() {

@@ -18,6 +18,13 @@ public class BaseResult<T> implements Serializable {
     private String errorMsg;
     private T data;
 
+    public BaseResult() {
+    }
+
+    public BaseResult(int errorCode) {
+        this.errorCode = errorCode;
+    }
+
     @Override
     public String toString() {
         return "LzyResponse{\n" +//
