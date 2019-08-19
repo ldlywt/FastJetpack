@@ -6,6 +6,9 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 
+import com.fastaac.base.util.BaseConstant;
+import com.jeremyliao.liveeventbus.LiveEventBus;
+
 /**
  * author : wutao
  * e-mail : 670831931@qq.com
@@ -13,10 +16,14 @@ import androidx.lifecycle.AndroidViewModel;
  * desc   :
  * version: 1.0
  */
-public class AbsViewModel extends AndroidViewModel {
+public abstract class AbsViewModel extends AndroidViewModel {
 
     public AbsViewModel(@NonNull Application application) {
         super(application);
+    }
+
+    protected void postPageState(BaseResult baseResult) {
+        LiveEventBus.get().with(BaseConstant.PAGE_STATE).post(baseResult);
     }
 
 }

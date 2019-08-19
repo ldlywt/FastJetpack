@@ -14,34 +14,33 @@ public class BaseResult<T> implements Serializable {
     public static final int SUCCESS_CODE = 0;
     private static final long serialVersionUID = 5213230387175987834L;
 
-    public int result;
-    public String message;
-    public T data;
-    public String filePath;
+    private int errorCode;
+    private String errorMsg;
+    private T data;
 
     @Override
     public String toString() {
         return "LzyResponse{\n" +//
-                "\tresult=" + result + "\n" +//
-                "\tmessage='" + message + "\'\n" +//
+                "\terrorCode=" + errorCode + "\n" +//
+                "\terrorMsg='" + errorMsg + "\'\n" +//
                 "\tdata=" + data + "\n" +//
                 '}';
     }
 
-    public int getResult() {
-        return result;
+    public int getErrorCode() {
+        return errorCode;
     }
 
-    public void setResult(int result) {
-        this.result = result;
+    public void setErrorCode(int errorCode) {
+        this.errorCode = errorCode;
     }
 
-    public String getMessage() {
-        return message == null ? "" : message;
+    public String getErrorMsg() {
+        return errorMsg == null ? "" : errorMsg;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setErrorMsg(String errorMsg) {
+        this.errorMsg = errorMsg;
     }
 
     public T getData() {
@@ -52,11 +51,4 @@ public class BaseResult<T> implements Serializable {
         this.data = data;
     }
 
-    public String getFilePath() {
-        return filePath == null ? "" : filePath;
-    }
-
-    public void setFilePath(String filePath) {
-        this.filePath = filePath;
-    }
 }

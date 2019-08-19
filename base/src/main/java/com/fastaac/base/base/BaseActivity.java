@@ -12,6 +12,10 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.blankj.utilcode.util.ToastUtils;
+import com.fastaac.base.pagestate.EmptyCallback;
+import com.fastaac.base.pagestate.ErrorCallback;
+import com.fastaac.base.pagestate.LoadingCallback;
+import com.fastaac.base.util.BaseConstant;
 import com.gyf.immersionbar.ImmersionBar;
 import com.jeremyliao.liveeventbus.LiveEventBus;
 import com.kingja.loadsir.callback.Callback;
@@ -19,11 +23,6 @@ import com.kingja.loadsir.callback.SuccessCallback;
 import com.kingja.loadsir.core.Convertor;
 import com.kingja.loadsir.core.LoadService;
 import com.kingja.loadsir.core.LoadSir;
-import com.fastaac.base.R;
-import com.fastaac.base.pagestate.EmptyCallback;
-import com.fastaac.base.pagestate.ErrorCallback;
-import com.fastaac.base.pagestate.LoadingCallback;
-import com.fastaac.base.util.BaseConstant;
 
 /**
  * <pre>
@@ -37,7 +36,7 @@ import com.fastaac.base.util.BaseConstant;
 public abstract class BaseActivity extends AppCompatActivity implements IUiCallback {
 
 
-    private LoadService loadService;
+    protected LoadService loadService;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -45,8 +44,8 @@ public abstract class BaseActivity extends AppCompatActivity implements IUiCallb
         setStatusBar();
         handleIntent();
         initView();
-        initData(savedInstanceState);
         registerPageState();
+        initData(savedInstanceState);
         LiveEventBus.get().with(BaseConstant.PAGE_STATE, BaseResult.class).observe(this,
                 httpResult -> loadService.showWithConvertor(httpResult));
     }
@@ -59,8 +58,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IUiCallb
     protected void setStatusBar() {
         ImmersionBar.with(this)
                 .transparentStatusBar()
-                .statusBarColor(R.color.status_bar)
-//                .statusBarDarkFont(true)   //状态栏字体是深色，不写默认为亮色
+                .statusBarDarkFont(true)
                 .init();
     }
 
@@ -79,7 +77,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IUiCallb
             retryClick();
         }, (Convertor<BaseResult>) httpResult -> {
             Class<? extends Callback> resultCode;
-            switch (httpResult.getResult()) {
+            switch (httpResult.getErrorCode()) {
                 case BaseResult.SUCCESS_CODE:
                     if (httpResult.getData() != null) {
                         resultCode = SuccessCallback.class;

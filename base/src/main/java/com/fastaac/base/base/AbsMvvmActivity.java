@@ -2,14 +2,14 @@ package com.fastaac.base.base;
 
 import android.view.LayoutInflater;
 
-import com.fastaac.base.util.TUtil;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProviders;
+
+import com.fastaac.base.util.TUtil;
 
 /**
  * author : wutao
@@ -38,7 +38,7 @@ public abstract class AbsMvvmActivity<T extends AbsViewModel, B extends ViewData
     @Override
     public void initView() {
         setContentView(getLayoutId());
-        mViewModel = VMProviders(this, (Class<T>) TUtil.getInstance(this, 0));
+        mViewModel = VMProviders(this, TUtil.getInstance(this, 0));
     }
 
     protected <T extends ViewModel> T VMProviders(AppCompatActivity fragment, @NonNull Class modelClass) {

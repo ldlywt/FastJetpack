@@ -3,6 +3,7 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:gravity="center"
+    android:fitsSystemWindows="true"
               android:orientation="vertical">
 
     <ImageView
@@ -15,7 +16,7 @@
         android:layout_height="wrap_content"
         android:text="@string/xloading_error_text"/>
 
-    <Button
+    <TextView
         android:id="@id/xloading_retry"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

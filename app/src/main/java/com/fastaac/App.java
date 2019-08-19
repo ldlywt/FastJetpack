@@ -1,6 +1,5 @@
 package com.fastaac;
 
-import com.blankj.utilcode.util.Utils;
 import com.fastaac.base.BaseApp;
 
 /**
@@ -14,6 +13,5 @@ public class App extends BaseApp {
     @Override
     public void onCreate() {
         super.onCreate();
-        Utils.init(this);
     }
 }
