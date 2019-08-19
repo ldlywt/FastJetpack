@@ -2,6 +2,7 @@
 
 - 一个简单、快速开发的 Android MVVM 开发框架。
 - 基于 Android Architecture Components(AAC)。
+- 浅封装、可扩展性强。
 - 项目使用 Androidx 搭建。
 - 只使用官方部分的 MVVM 和 databind 的部分特性。
 
@@ -18,7 +19,7 @@
     只集成了一个工具库 `utilcodex`，事件总线 `live-event-bus`，页面状态管理 `loadsir`，
     状态栏沉浸式工具 `immersionbar`，并且都是可以插拔的，不需要替换即可。
     
-    图片加载库，网络请求库等可根据个人兴趣自己选择集成即可。
+    图片加载库，网络请求库等其他第三方 Lib 可根据个人兴趣自己选择集成即可。
     
 
 - 快速开发
