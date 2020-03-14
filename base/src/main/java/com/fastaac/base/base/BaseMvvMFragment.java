@@ -18,19 +18,19 @@ import androidx.viewbinding.ViewBinding;
  * desc   :
  * version: 1.0
  */
-public abstract class AbsMvvmFragment<T extends AbsViewModel, B extends ViewBinding> extends BaseFragment {
+public abstract class BaseMvvMFragment<T extends AbsViewModel, B extends ViewBinding> extends BaseFragment {
 
     protected T mViewModel;
     protected B mBinding;
 
-    public AbsMvvmFragment(int contentLayoutId) {
+    public BaseMvvMFragment(int contentLayoutId) {
         super(contentLayoutId);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mViewModel = VMProviders(this, (Class<T>) TUtil.getInstance(this, 0));
+        mViewModel = VMProviders(TUtil.getInstance(this, 0));
         mBinding = initBinding(view);
     }
 
@@ -42,8 +42,8 @@ public abstract class AbsMvvmFragment<T extends AbsViewModel, B extends ViewBind
 
     public abstract B initBinding(View view);
 
-    protected <T extends ViewModel> T VMProviders(BaseFragment fragment, @NonNull Class<T> modelClass) {
-        return ViewModelProviders.of(fragment).get(modelClass);
+    protected <T extends ViewModel> T VMProviders(@NonNull Class<T> modelClass) {
+        return getDefaultViewModelProviderFactory().create(modelClass);
     }
 
 }

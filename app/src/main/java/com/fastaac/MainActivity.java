@@ -1,14 +1,15 @@
 package com.fastaac;
 
 import android.os.Bundle;
-import com.fastaac.base.base.AbsMvvmActivity;
+
+import com.fastaac.base.base.BaseMvvMActivity;
 import com.fastaac.databinding.ActivityMainBinding;
 import com.jeremyliao.liveeventbus.LiveEventBus;
 
 import androidx.annotation.Nullable;
 
 
-public class MainActivity extends AbsMvvmActivity<MainVm, ActivityMainBinding> {
+public class MainActivity extends BaseMvvMActivity<MainVm, ActivityMainBinding> {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

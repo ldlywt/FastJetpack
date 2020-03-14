@@ -8,7 +8,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModel;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.viewbinding.ViewBinding;
 
 /**
@@ -18,7 +17,7 @@ import androidx.viewbinding.ViewBinding;
  * desc   :
  * version: 1.0
  */
-public abstract class AbsMvvmActivity<T extends AbsViewModel, B extends ViewBinding> extends BaseActivity {
+public abstract class BaseMvvMActivity<T extends AbsViewModel, B extends ViewBinding> extends BaseActivity {
 
     protected T mViewModel;
     protected B mBinding;
@@ -26,14 +25,14 @@ public abstract class AbsMvvmActivity<T extends AbsViewModel, B extends ViewBind
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mViewModel = VMProviders(this, TUtil.getInstance(this, 0));
+        mViewModel = VMProviders(TUtil.getInstance(this, 0));
         mBinding = initBinding();
         setContentView(mBinding.getRoot());
     }
 
     public abstract B initBinding();
 
-    protected <T extends ViewModel> T VMProviders(AppCompatActivity fragment, @NonNull Class modelClass) {
+    protected <T extends ViewModel> T VMProviders(@NonNull Class modelClass) {
         return (T) getDefaultViewModelProviderFactory().create(modelClass);
     }
 

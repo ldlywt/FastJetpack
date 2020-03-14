@@ -3,7 +3,7 @@ package com.fastaac;
 import android.os.Bundle;
 import android.view.View;
 
-import com.fastaac.base.base.AbsMvvmFragment;
+import com.fastaac.base.base.BaseMvvMFragment;
 import com.fastaac.databinding.FragmentTestBinding;
 
 import androidx.annotation.Nullable;
@@ -17,7 +17,7 @@ import androidx.annotation.Nullable;
  *     version: 1.0
  * </pre>
  */
-public class TestFragment extends AbsMvvmFragment<MainVm, FragmentTestBinding> {
+public class TestFragment extends BaseMvvMFragment<MainVm, FragmentTestBinding> {
 
 
     public TestFragment() {
@@ -33,16 +33,5 @@ public class TestFragment extends AbsMvvmFragment<MainVm, FragmentTestBinding> {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mBinding.text.setText("ViewBinding封装");
-    }
-
-
-    @Override
-    public void initData(Bundle savedInstanceState) {
-
-    }
-
-    @Override
-    public void initView() {
-
     }
 }

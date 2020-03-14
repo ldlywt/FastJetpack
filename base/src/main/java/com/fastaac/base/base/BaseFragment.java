@@ -22,7 +22,7 @@ import androidx.fragment.app.FragmentActivity;
  * desc   :
  * version: 1.0
  */
-public abstract class BaseFragment extends Fragment implements IUiCallback {
+public abstract class BaseFragment extends Fragment {
     protected FragmentActivity mActivity;
     protected boolean mIsFirstVisible = true;
 
@@ -60,16 +60,6 @@ public abstract class BaseFragment extends Fragment implements IUiCallback {
     }
 
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        handleIntent();
-        initView();
-        needLazy();
-        initData(savedInstanceState);
-    }
-
-
     protected void retryClick() {
         ToastUtils.showShort("重新请求");
     }
@@ -84,9 +74,6 @@ public abstract class BaseFragment extends Fragment implements IUiCallback {
     public void onDetach() {
         super.onDetach();
         this.mActivity = null;
-    }
-
-    protected void handleIntent() {
     }
 
     private void needLazy() {
