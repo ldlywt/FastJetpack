@@ -1,15 +1,15 @@
 package com.fastaac.base.base;
 
-import android.view.LayoutInflater;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingUtil;
-import androidx.databinding.ViewDataBinding;
-import androidx.lifecycle.ViewModel;
-import androidx.lifecycle.ViewModelProviders;
+import android.os.Bundle;
 
 import com.fastaac.base.util.TUtil;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.viewbinding.ViewBinding;
 
 /**
  * author : wutao
@@ -18,32 +18,23 @@ import com.fastaac.base.util.TUtil;
  * desc   :
  * version: 1.0
  */
-public abstract class AbsMvvmActivity<T extends AbsViewModel, B extends ViewDataBinding> extends BaseActivity {
+public abstract class AbsMvvmActivity<T extends AbsViewModel, B extends ViewBinding> extends BaseActivity {
 
     protected T mViewModel;
     protected B mBinding;
 
-    public AbsMvvmActivity() {
-
-    }
-
     @Override
-    public void setContentView(int layoutResID) {
-        mBinding = DataBindingUtil.inflate(
-                LayoutInflater.from(this),
-                layoutResID, null, false);
-        super.setContentView(mBinding.getRoot());
-    }
-
-    @Override
-    public void initView() {
-        setContentView(getLayoutId());
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         mViewModel = VMProviders(this, TUtil.getInstance(this, 0));
+        mBinding = initBinding();
+        setContentView(mBinding.getRoot());
     }
+
+    public abstract B initBinding();
 
     protected <T extends ViewModel> T VMProviders(AppCompatActivity fragment, @NonNull Class modelClass) {
-        return (T) ViewModelProviders.of(fragment).get(modelClass);
-
+        return (T) getDefaultViewModelProviderFactory().create(modelClass);
     }
 
 }

@@ -32,7 +32,7 @@ import com.kingja.loadsir.core.LoadSir;
  *     version: 1.0
  * </pre>
  */
-public abstract class BaseActivity extends AppCompatActivity implements IUiCallback {
+public abstract class BaseActivity extends AppCompatActivity {
 
 
     protected LoadService loadService;
@@ -41,17 +41,14 @@ public abstract class BaseActivity extends AppCompatActivity implements IUiCallb
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setStatusBar();
-        handleIntent();
-        initView();
-        registerPageState();
-        initData(savedInstanceState);
-        LiveEventBus.get().with(AbsViewModel.PAGE_STATE, BaseResult.class).observe(this,
-                httpResult -> loadService.showWithConvertor(httpResult));
     }
 
     @Override
-    public void initView() {
-        setContentView(getLayoutId());
+    protected void onStart() {
+        super.onStart();
+        registerPageState();
+        LiveEventBus.get().with(AbsViewModel.PAGE_STATE, BaseResult.class).observe(this,
+                httpResult -> loadService.showWithConvertor(httpResult));
     }
 
     protected void setStatusBar() {
@@ -63,11 +60,6 @@ public abstract class BaseActivity extends AppCompatActivity implements IUiCallb
 
     protected void setStatusBarDark() {
         ImmersionBar.with(this).statusBarDarkFont(true).transparentBar().init();
-    }
-
-
-
-    protected void handleIntent() {
     }
 
     private void registerPageState() {
@@ -124,30 +116,6 @@ public abstract class BaseActivity extends AppCompatActivity implements IUiCallb
      */
     public void startActivity(Class<? extends Activity> cls) {
         startActivity(new Intent(this, cls));
-    }
-
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        if (newConfig.fontScale != 1)
-            getResources();
-        super.onConfigurationChanged(newConfig);
-    }
-
-    @Override
-    public Resources getResources() {
-        Resources res = super.getResources();
-        if (res.getConfiguration().fontScale != 1) {
-            Configuration newConfig = new Configuration();
-            newConfig.setToDefaults();
-
-            res.updateConfiguration(newConfig, res.getDisplayMetrics());
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                createConfigurationContext(newConfig);
-            } else {
-                res.updateConfiguration(newConfig, res.getDisplayMetrics());
-            }
-        }
-        return res;
     }
 
 }

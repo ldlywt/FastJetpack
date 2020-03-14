@@ -21,7 +21,7 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-    dataBinding {
+    viewBinding {
         enabled = true
     }
 }
@@ -30,4 +30,5 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(path: ':base')
     implementation("com.squareup.okhttp3:okhttp:4.1.0")
+    implementation 'com.google.code.gson:gson:2.8.6'
 }

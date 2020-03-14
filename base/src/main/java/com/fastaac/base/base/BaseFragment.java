@@ -25,7 +25,13 @@ import androidx.fragment.app.FragmentActivity;
 public abstract class BaseFragment extends Fragment implements IUiCallback {
     protected FragmentActivity mActivity;
     protected boolean mIsFirstVisible = true;
-    protected View mRootView;
+
+    public BaseFragment() {
+    }
+
+    public BaseFragment(int contentLayoutId) {
+        super(contentLayoutId);
+    }
 
     @Override
     public void onHiddenChanged(boolean hidden) {
@@ -53,15 +59,6 @@ public abstract class BaseFragment extends Fragment implements IUiCallback {
         this.mActivity = (FragmentActivity) context;
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle state) {
-        if (getLayoutId() > 0) {
-            mRootView = inflater.inflate(getLayoutId(), container, false);
-            return mRootView;
-        } else {
-            return super.onCreateView(inflater, container, state);
-        }
-    }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
