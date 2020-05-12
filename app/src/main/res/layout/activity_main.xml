@@ -37,7 +37,7 @@
     <TextView
         android:id="@+id/tv_content"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="400dp"
         android:layout_margin="10dp"
         android:text="网络请求结果：" />
 
@@ -46,12 +46,6 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/colorAccent" />
-
-    <TextView
-        android:id="@+id/tv_content2"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:text="网络请求结果：" />
 
     <FrameLayout
         android:id="@+id/fl_contain"
