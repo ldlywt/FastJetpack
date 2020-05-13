@@ -1,16 +1,16 @@
 package com.fastaac.base.base
 
 import android.os.Bundle
-import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.viewbinding.ViewBinding
 import com.blankj.utilcode.util.ToastUtils
 import com.fastaac.base.*
+import com.fastaac.base.manager.NetState
 import com.fastaac.base.pagestate.EmptyCallback
+import com.fastaac.base.pagestate.ErrorCallback
 import com.fastaac.base.pagestate.LoadingCallback
-import com.kingja.loadsir.callback.Callback
-import com.kingja.loadsir.callback.Callback.OnReloadListener
+import com.fastaac.base.pagestate.TimeoutCallback
 import com.kingja.loadsir.callback.SuccessCallback
 import com.kingja.loadsir.core.LoadService
 import com.kingja.loadsir.core.LoadSir
@@ -70,6 +70,15 @@ abstract class BaseVMActivity<VM : AbsViewModel, B : ViewBinding> : BaseActivity
         })
     }
 
+    override fun onNetworkStateChanged(netState: NetState?) {
+        super.onNetworkStateChanged(netState)
+        if (netState?.isSuccess != true) {
+            loadService.showCallback(TimeoutCallback::class.java)
+        } else {
+            loadService.showCallback(SuccessCallback::class.java)
+        }
+    }
+
     open fun showLoading() {
         loadService.showCallback(LoadingCallback::class.java)
     }
@@ -79,7 +88,7 @@ abstract class BaseVMActivity<VM : AbsViewModel, B : ViewBinding> : BaseActivity
     }
 
     open fun handleError() {
-        loadService.showCallback(EmptyCallback::class.java)
+        loadService.showCallback(ErrorCallback::class.java)
     }
 
     protected abstract fun initBinding(): B
