@@ -1,3 +1,8 @@
+# 分支
+- Master 分支 使用Kotlin、ViewBinding、Jetpack框架
+- ViewBinding 分支 使用 Java、ViewBinding、Jetpack框架
+- DataBinding 分支 使用 Java、DataBinding、Jetpack框架
+
 # FastAAC
 
 - 上手特别容易，不会 MVVM 开发模式的都可以快速上手。
