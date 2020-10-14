@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
 import com.fastaac.base.anno.FragmentConfiguration
+import com.fastaac.base.util.GenericUtil
 
 /**
  * author : wutao
@@ -20,10 +21,13 @@ abstract class BaseFragment<VM : BaseViewModel, VB : ViewBinding>(contentLayoutI
     private var shareViewModel = false
     private var useEventBus = false
     protected var mBinding: VB? = null
+        private set
 
     protected val mViewModel: VM by lazy {
-        if (shareViewModel) getActivityViewModel(viewModelClass()) else getFragmentViewModel(viewModelClass())
+        if (shareViewModel) getActivityViewModel<VM>(GenericUtil.getGeneric(this, 0))
+        else getFragmentViewModel(GenericUtil.getGeneric(this, 0))
     }
+
     private val mFragmentProvider: ViewModelProvider by lazy {
         ViewModelProvider(this)
     }
@@ -38,17 +42,15 @@ abstract class BaseFragment<VM : BaseViewModel, VB : ViewBinding>(contentLayoutI
 
     protected abstract fun initBinding(view: View): VB
 
-    protected abstract fun viewModelClass(): Class<VM>
-
     override fun onDestroyView() {
         mBinding = null
         super.onDestroyView()
     }
 
-    protected open fun <T : ViewModel> getFragmentViewModel(modelClass: Class<T>): T =
+    protected open fun <VM : ViewModel> getFragmentViewModel(modelClass: Class<VM>): VM =
             mFragmentProvider.get(modelClass)
 
-    protected open fun <T : ViewModel> getActivityViewModel(modelClass: Class<T>): T =
+    protected open fun <VM : ViewModel> getActivityViewModel(modelClass: Class<VM>): VM =
             mActivityProvider.get(modelClass)
 
     init {

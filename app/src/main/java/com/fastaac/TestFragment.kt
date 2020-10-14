@@ -16,7 +16,7 @@ import com.fastaac.databinding.FragmentTestBinding
 </pre> *
  */
 @FragmentConfiguration(shareViewModel = false)
-class TestFragment : BaseFragment<MainVm, FragmentTestBinding>(R.layout.fragment_test) {
+class TestFragment : BaseFragment<MainViewModel, FragmentTestBinding>(R.layout.fragment_test) {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -24,9 +24,5 @@ class TestFragment : BaseFragment<MainVm, FragmentTestBinding>(R.layout.fragment
     }
 
     override fun initBinding(view: View): FragmentTestBinding = FragmentTestBinding.bind(view)
-
-
-    override fun viewModelClass(): Class<MainVm> = MainVm::class.java
-
 
 }

@@ -20,7 +20,7 @@ import java.io.IOException
  * version: 1.0
 </pre> *
  */
-class MainVm(application: Application) : BaseViewModel(application) {
+class MainViewModel(application: Application) : BaseViewModel(application) {
     private val url = "https://wanandroid.com/wxarticle/chapters/json"
     val resultLiveData = MutableLiveData<BaseResult<List<TestBean>>>()
     private val client = OkHttpClient()
