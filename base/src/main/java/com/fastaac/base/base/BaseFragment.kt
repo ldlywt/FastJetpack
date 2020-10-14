@@ -1,107 +1,60 @@
 package com.fastaac.base.base
 
-import android.app.Activity
-import android.content.Context
-import android.content.Intent
+import android.os.Bundle
+import android.view.View
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
-import com.blankj.utilcode.util.ToastUtils
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.viewbinding.ViewBinding
+import com.fastaac.base.anno.FragmentConfiguration
 
 /**
  * author : wutao
  * e-mail : 670831931@qq.com
- * time   : 2019/05/17
+ * time   : 2020/10/14
  * desc   :
- * version: 1.0
+ * version: 1.1
  */
-abstract class BaseFragment : Fragment {
-    protected var mActivity: FragmentActivity? = null
-    protected var mIsFirstVisible = true
+abstract class BaseFragment<VM : BaseViewModel, VB : ViewBinding>(contentLayoutId: Int) : Fragment(contentLayoutId) {
 
-    constructor()
-    constructor(contentLayoutId: Int) : super(contentLayoutId)
+    private var shareViewModel = false
+    private var useEventBus = false
+    protected var mBinding: VB? = null
 
-    override fun onHiddenChanged(hidden: Boolean) {
-        super.onHiddenChanged(hidden)
-        if (!hidden) {
-            onVisible()
-        } else {
-            onInVisible()
-        }
+    protected val mViewModel: VM by lazy {
+        if (shareViewModel) getActivityViewModel(viewModelClass()) else getFragmentViewModel(viewModelClass())
+    }
+    private val mFragmentProvider: ViewModelProvider by lazy {
+        ViewModelProvider(this)
+    }
+    private val mActivityProvider: ViewModelProvider by lazy {
+        ViewModelProvider(requireActivity())
     }
 
-    override fun setUserVisibleHint(isVisibleToUser: Boolean) {
-        super.setUserVisibleHint(isVisibleToUser)
-        if (isVisibleToUser) {
-            onVisible()
-        } else {
-            onInVisible()
-        }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        mBinding = initBinding(view)
     }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        mActivity = context as FragmentActivity
-    }
+    protected abstract fun initBinding(view: View): VB
 
-    protected fun retryClick() {
-        ToastUtils.showShort("重新请求")
-    }
+    protected abstract fun viewModelClass(): Class<VM>
 
     override fun onDestroyView() {
+        mBinding = null
         super.onDestroyView()
-        mActivity = null
     }
 
-    override fun onDetach() {
-        super.onDetach()
-        mActivity = null
-    }
+    protected open fun <T : ViewModel> getFragmentViewModel(modelClass: Class<T>): T =
+            mFragmentProvider.get(modelClass)
 
-    private fun needLazy() {
-        val isVis = isHidden || userVisibleHint
-        if (isVis && mIsFirstVisible) {
-            lazyLoad()
-            mIsFirstVisible = false
+    protected open fun <T : ViewModel> getActivityViewModel(modelClass: Class<T>): T =
+            mActivityProvider.get(modelClass)
+
+    init {
+        this.javaClass.getAnnotation(FragmentConfiguration::class.java)?.let {
+            shareViewModel = it.shareViewModel
+            useEventBus = it.useEventBus
         }
-    }
-
-    /**
-     * 当界面可见时的操作
-     */
-    protected fun onVisible() {
-        if (mIsFirstVisible && isResumed) {
-            lazyLoad()
-            mIsFirstVisible = false
-        }
-    }
-
-    /**
-     * 当界面不可见时的操作
-     */
-    protected fun onInVisible() {}
-
-    /**
-     * 数据懒加载
-     */
-    protected fun lazyLoad() {}
-
-    /**
-     * 跳转到其他 Activity 并销毁当前 Activity
-     *
-     * @param cls 目标Activity的Class
-     */
-    fun startActivityFinish(cls: Class<out Activity?>?) {
-        startActivity(cls)
-        mActivity!!.finish()
-    }
-
-    /**
-     * 跳转到其他Activity
-     *
-     * @param cls 目标Activity的Class
-     */
-    fun startActivity(cls: Class<out Activity?>?) {
-        startActivity(Intent(context, cls))
     }
 }

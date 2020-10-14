@@ -1,19 +1,23 @@
 package com.fastaac
 
-import androidx.lifecycle.Observer
-import com.fastaac.base.base.BaseVMActivity
-import com.fastaac.base.base.BaseResult
+import android.util.Log
+import androidx.lifecycle.observe
+import com.fastaac.base.base.BaseActivity
 import com.fastaac.databinding.ActivityMainBinding
-import com.jeremyliao.liveeventbus.LiveEventBus
+import java.lang.reflect.GenericArrayType
+import java.lang.reflect.ParameterizedType
+import java.lang.reflect.Type
+import java.lang.reflect.TypeVariable
+import kotlin.concurrent.thread
 
-class MainActivity : BaseVMActivity<MainVm, ActivityMainBinding>() {
+class MainActivity : BaseActivity<MainVm, ActivityMainBinding>() {
 
-    override fun initBinding(): ActivityMainBinding {
-        return ActivityMainBinding.inflate(layoutInflater)
-    }
+    override fun initBinding(): ActivityMainBinding = ActivityMainBinding.inflate(layoutInflater)
 
-    override fun viewModelClass(): Class<MainVm> {
-        return MainVm::class.java
+    override fun viewModelClass(): Class<MainVm> = MainVm::class.java
+
+    override fun init() {
+        initData()
     }
 
     private fun initData() {
@@ -22,23 +26,16 @@ class MainActivity : BaseVMActivity<MainVm, ActivityMainBinding>() {
         }
         mBinding.btnNoNet.setOnClickListener { mViewModel.clickNoNet() }
         mBinding.btnEmpty.setOnClickListener { mViewModel.clickNoData() }
-        mViewModel.resultLiveData.observe(this, Observer {
+        mViewModel.resultLiveData.observe(this) {
             mBinding.tvContent.text = it.data?.toString()
-        })
-        supportFragmentManager.beginTransaction().add(R.id.fl_contain, TestFragment()).commit()
+        }
+        supportFragmentManager.beginTransaction().replace(R.id.fl_contain, TestFragment()).commit()
     }
 
     override fun retryClick() {
         super.retryClick()
-        object : Thread() {
-            override fun run() {
-                super.run()
-                mViewModel.requestNet()
-            }
+        thread {
+            mViewModel.requestNet()
         }.start()
-    }
-
-    override fun init() {
-        initData()
     }
 }

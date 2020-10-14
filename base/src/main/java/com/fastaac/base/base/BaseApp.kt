@@ -1,4 +1,4 @@
-package com.fastaac.base
+package com.fastaac.base.base
 
 import android.app.Application
 import com.blankj.utilcode.util.Utils
@@ -25,12 +25,12 @@ open class BaseApp : Application() {
 
     private fun initPageState() {
         LoadSir.beginBuilder()
-                .addCallback(ErrorCallback()) //添加各种状态页
+                .addCallback(ErrorCallback())
                 .addCallback(EmptyCallback())
                 .addCallback(LoadingCallback())
                 .addCallback(TimeoutCallback())
                 .addCallback(PlaceholderCallback())
-                .setDefaultCallback(SuccessCallback::class.java) //设置默认状态页
+                .setDefaultCallback(SuccessCallback::class.java)
                 .commit()
     }
 

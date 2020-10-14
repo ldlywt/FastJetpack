@@ -13,10 +13,9 @@ import com.fastaac.base.StateActionEvent
  * desc   :
  * version: 1.0
  */
-abstract class AbsViewModel(application: Application) : AndroidViewModel(application) {
+abstract class BaseViewModel(application: Application) : AndroidViewModel(application) {
+
     val stateActionEvent = MutableLiveData<StateActionEvent>()
 
-    fun showLoading(){
-        stateActionEvent.postValue(LoadState)
-    }
+    fun showLoading() = stateActionEvent.postValue(LoadState)
 }

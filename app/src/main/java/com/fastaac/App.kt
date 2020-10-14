@@ -1,6 +1,6 @@
 package com.fastaac
 
-import com.fastaac.base.BaseApp
+import com.fastaac.base.base.BaseApp
 
 /**
  * author : wutao

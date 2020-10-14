@@ -4,10 +4,9 @@ import android.app.Application
 import androidx.lifecycle.MutableLiveData
 import com.blankj.utilcode.util.GsonUtils
 import com.fastaac.base.*
-import com.fastaac.base.base.AbsViewModel
+import com.fastaac.base.base.BaseViewModel
 import com.fastaac.base.base.BaseResult
 import com.google.gson.reflect.TypeToken
-import com.jeremyliao.liveeventbus.LiveEventBus
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import java.io.IOException
@@ -21,7 +20,7 @@ import java.io.IOException
  * version: 1.0
 </pre> *
  */
-class MainVm(application: Application) : AbsViewModel(application) {
+class MainVm(application: Application) : BaseViewModel(application) {
     private val url = "https://wanandroid.com/wxarticle/chapters/json"
     val resultLiveData = MutableLiveData<BaseResult<List<TestBean>>>()
     private val client = OkHttpClient()

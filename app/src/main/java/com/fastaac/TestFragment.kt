@@ -2,7 +2,8 @@ package com.fastaac
 
 import android.os.Bundle
 import android.view.View
-import com.fastaac.base.base.BaseVMFragment
+import com.fastaac.base.anno.FragmentConfiguration
+import com.fastaac.base.base.BaseFragment
 import com.fastaac.databinding.FragmentTestBinding
 
 /**
@@ -14,20 +15,18 @@ import com.fastaac.databinding.FragmentTestBinding
  * version: 1.0
 </pre> *
  */
-class TestFragment : BaseVMFragment<MainVm, FragmentTestBinding?>(R.layout.fragment_test) {
+@FragmentConfiguration(shareViewModel = false)
+class TestFragment : BaseFragment<MainVm, FragmentTestBinding>(R.layout.fragment_test) {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        mBinding!!.text.text = "ViewBinding封装"
+        mBinding?.text?.text = "ViewBinding封装"
     }
 
-    override fun initBinding(view: View): FragmentTestBinding? {
-       return FragmentTestBinding.bind(view)
-    }
+    override fun initBinding(view: View): FragmentTestBinding = FragmentTestBinding.bind(view)
 
-    override fun viewModelClass(): Class<MainVm>? {
-        return MainVm::class.java
-    }
+
+    override fun viewModelClass(): Class<MainVm> = MainVm::class.java
 
 
 }
