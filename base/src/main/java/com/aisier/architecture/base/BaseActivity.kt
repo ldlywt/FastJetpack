@@ -6,8 +6,8 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
-import com.blankj.utilcode.util.ToastUtils
 import com.aisier.architecture.*
 import com.aisier.architecture.manager.NetState
 import com.aisier.architecture.manager.NetworkStateManager
@@ -16,6 +16,7 @@ import com.aisier.architecture.pagestate.ErrorCallback
 import com.aisier.architecture.pagestate.LoadingCallback
 import com.aisier.architecture.pagestate.TimeoutCallback
 import com.aisier.architecture.util.GenericUtil
+import com.blankj.utilcode.util.ToastUtils
 import com.gyf.immersionbar.ImmersionBar
 import com.kingja.loadsir.callback.SuccessCallback
 import com.kingja.loadsir.core.LoadService
@@ -39,9 +40,15 @@ abstract class BaseActivity<VM : BaseViewModel, VB : ViewBinding> : AppCompatAct
         get() = this
 
     private lateinit var loadService: LoadService<Any>
-    protected  val mViewModel: VM by lazy {
+
+    protected val mViewModel: VM by lazy {
         getActivityViewModel<VM>(GenericUtil.getGeneric(this, 0))
     }
+
+    private val mFactory: ViewModelProvider.Factory by lazy {
+        ViewModelProvider.AndroidViewModelFactory.getInstance(BaseApp.baseApp)
+    }
+
     protected lateinit var mBinding: VB
         private set
 
@@ -67,6 +74,9 @@ abstract class BaseActivity<VM : BaseViewModel, VB : ViewBinding> : AppCompatAct
         initPageStates()
         initNetworkStateManager()
     }
+
+    protected open fun getAppViewModelProvider(): ViewModelProvider =
+            ViewModelProvider(BaseApp.baseApp, mFactory)
 
     private fun initNetworkStateManager() {
         lifecycle.addObserver(NetworkStateManager)

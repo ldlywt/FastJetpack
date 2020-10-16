@@ -9,8 +9,4 @@ import com.aisier.architecture.base.BaseApp
  * desc   :
  * version: 1.0
  */
-class App : BaseApp() {
-    override fun onCreate() {
-        super.onCreate()
-    }
-}
+class App : BaseApp()

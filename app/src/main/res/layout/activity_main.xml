@@ -12,6 +12,20 @@
         android:orientation="horizontal">
 
         <Button
+            android:id="@+id/go_second_activity"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:text="第二个页面" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
             android:id="@+id/btn_net"
             android:layout_width="0dp"
             android:layout_height="50dp"

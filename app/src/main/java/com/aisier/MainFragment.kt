@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.View
 import com.aisier.architecture.anno.FragmentConfiguration
 import com.aisier.architecture.base.BaseFragment
-import com.aisier.databinding.FragmentTestBinding
+import com.aisier.databinding.FragmentMainBinding
 
 /**
  * <pre>
@@ -16,13 +16,13 @@ import com.aisier.databinding.FragmentTestBinding
 </pre> *
  */
 @FragmentConfiguration(shareViewModel = false)
-class TestFragment : BaseFragment<MainViewModel, FragmentTestBinding>(R.layout.fragment_test) {
+class MainFragment : BaseFragment<MainViewModel, FragmentMainBinding>(R.layout.fragment_main) {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         mBinding?.text?.text = "ViewBinding封装"
     }
 
-    override fun initBinding(view: View): FragmentTestBinding = FragmentTestBinding.bind(view)
+    override fun initBinding(view: View): FragmentMainBinding = FragmentMainBinding.bind(view)
 
 }

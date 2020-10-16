@@ -1,8 +1,10 @@
 package com.aisier.architecture.base
 
 import android.app.Application
-import com.blankj.utilcode.util.Utils
+import androidx.lifecycle.ViewModelStore
+import androidx.lifecycle.ViewModelStoreOwner
 import com.aisier.architecture.pagestate.*
+import com.blankj.utilcode.util.Utils
 import com.jeremyliao.liveeventbus.LiveEventBus
 import com.kingja.loadsir.callback.SuccessCallback
 import com.kingja.loadsir.core.LoadSir
@@ -14,10 +16,15 @@ import com.kingja.loadsir.core.LoadSir
  * desc   :
  * version: 1.0
  */
-open class BaseApp : Application() {
+open class BaseApp : Application(), ViewModelStoreOwner {
+
+    private lateinit var mAppViewModelStore: ViewModelStore
+
+
     override fun onCreate() {
         super.onCreate()
-        app = this
+        baseApp = this
+        mAppViewModelStore = ViewModelStore()
         Utils.init(this)
         initPageState()
         initLiveBus()
@@ -42,8 +49,10 @@ open class BaseApp : Application() {
                 .autoClear(true)
     }
 
+    override fun getViewModelStore(): ViewModelStore = mAppViewModelStore
+
     companion object {
-        var app: BaseApp? = null
+        lateinit var baseApp: BaseApp
             private set
     }
 }

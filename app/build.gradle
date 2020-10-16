@@ -37,4 +37,7 @@ dependencies {
     implementation project(path: ':base')
     implementation("com.squareup.okhttp3:okhttp:4.1.0")
     implementation 'com.google.code.gson:gson:2.8.6'
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.2'
 }
