@@ -16,7 +16,7 @@ import com.aisier.architecture.pagestate.ErrorCallback
 import com.aisier.architecture.pagestate.LoadingCallback
 import com.aisier.architecture.pagestate.TimeoutCallback
 import com.aisier.architecture.util.GenericUtil
-import com.blankj.utilcode.util.ToastUtils
+import com.aisier.architecture.util.toast
 import com.gyf.immersionbar.ImmersionBar
 import com.kingja.loadsir.callback.SuccessCallback
 import com.kingja.loadsir.core.LoadService
@@ -93,7 +93,7 @@ abstract class BaseActivity<VM : BaseViewModel, VB : ViewBinding> : AppCompatAct
     protected fun setStatusBarDark() =
             ImmersionBar.with(this).statusBarDarkFont(true).transparentBar().init()
 
-    protected open fun retryClick() = ToastUtils.showShort("重新请求")
+    protected open fun retryClick() = toast("重新请求")
 
 
     override fun onStart() {
@@ -117,11 +117,11 @@ abstract class BaseActivity<VM : BaseViewModel, VB : ViewBinding> : AppCompatAct
                     dismissLoading()
                     loadService.showSuccess()
                 }
-                is ToastState -> ToastUtils.showShort(stateActionState.message)
+                is ToastState -> stateActionState.message?.let { toast(it) }
                 is ErrorState -> {
                     dismissLoading()
-                    stateActionState.message?.apply {
-                        ToastUtils.showShort(this)
+                    stateActionState.message?.let {
+                        toast(it)
                         handleError()
                     }
                 }

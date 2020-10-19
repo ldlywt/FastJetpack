@@ -1,10 +1,12 @@
 package com.aisier.architecture.util
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.EditText
+import android.widget.Toast
 import androidx.annotation.StringRes
 import com.aisier.architecture.base.BaseApp
 import java.util.*
@@ -50,4 +52,8 @@ fun EditText.getNotNullUpperCaseText(): String = text?.toString()?.toUpperCase(L
 
 fun getString(@StringRes id: Int, vararg formatArgs: Any?): String {
     return BaseApp.baseApp.resources.getString(id, *formatArgs)
+}
+
+fun Context.toast(message: CharSequence, duration: Int = Toast.LENGTH_SHORT) {
+    Toast.makeText(this, message, duration).show()
 }

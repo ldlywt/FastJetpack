@@ -3,8 +3,8 @@ package com.aisier
 import androidx.lifecycle.observe
 import com.aisier.architecture.base.BaseActivity
 import com.aisier.architecture.base.EmptyViewModel
+import com.aisier.architecture.util.toast
 import com.aisier.databinding.ActivitySecondBinding
-import com.blankj.utilcode.util.ToastUtils
 
 class SecondActivity : BaseActivity<EmptyViewModel, ActivitySecondBinding>() {
     override fun initBinding(): ActivitySecondBinding {
@@ -14,7 +14,7 @@ class SecondActivity : BaseActivity<EmptyViewModel, ActivitySecondBinding>() {
     override fun init() {
         val shareViewModel = getAppViewModelProvider().get(ShareViewModel::class.java)
         shareViewModel.msgLiveData.observe(this){
-            ToastUtils.showShort(it)
+            toast(it)
         }
 
         mBinding.btSendMsg.setOnClickListener {

@@ -2,10 +2,10 @@ package com.aisier
 
 import android.app.Application
 import androidx.lifecycle.MutableLiveData
-import com.blankj.utilcode.util.GsonUtils
 import com.aisier.architecture.*
-import com.aisier.architecture.base.BaseViewModel
 import com.aisier.architecture.base.BaseResult
+import com.aisier.architecture.base.BaseViewModel
+import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -30,7 +30,7 @@ class MainViewModel(application: Application) : BaseViewModel(application) {
             stateActionEvent.postValue(LoadState)
             Thread.sleep(1000)
             val result = run(url)
-            val data = GsonUtils.fromJson<BaseResult<List<TestBean>>>(result, object : TypeToken<BaseResult<List<TestBean?>?>?>() {}.type)
+            val data = Gson().fromJson<BaseResult<List<TestBean>>>(result, object : TypeToken<BaseResult<List<TestBean?>?>?>() {}.type)
             stateActionEvent.postValue(ToastState("请求成功"))
             stateActionEvent.postValue(SuccessState)
             resultLiveData.postValue(data)

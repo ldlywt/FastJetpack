@@ -3,8 +3,8 @@ package com.aisier
 import androidx.lifecycle.observe
 import com.aisier.architecture.base.BaseActivity
 import com.aisier.architecture.util.go
+import com.aisier.architecture.util.toast
 import com.aisier.databinding.ActivityMainBinding
-import com.blankj.utilcode.util.ToastUtils
 
 class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
 
@@ -13,7 +13,7 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
     override fun init() {
         initData()
         getAppViewModelProvider().get(ShareViewModel::class.java).msgLiveData.observe(this){
-            ToastUtils.showShort("我是第二个页面的消息")
+            toast("我是第二个页面的消息")
         }
 
     }

@@ -4,7 +4,6 @@ import android.app.Application
 import androidx.lifecycle.ViewModelStore
 import androidx.lifecycle.ViewModelStoreOwner
 import com.aisier.architecture.pagestate.*
-import com.blankj.utilcode.util.Utils
 import com.jeremyliao.liveeventbus.LiveEventBus
 import com.kingja.loadsir.callback.SuccessCallback
 import com.kingja.loadsir.core.LoadSir
@@ -25,7 +24,6 @@ open class BaseApp : Application(), ViewModelStoreOwner {
         super.onCreate()
         baseApp = this
         mAppViewModelStore = ViewModelStore()
-        Utils.init(this)
         initPageState()
         initLiveBus()
     }
