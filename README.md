@@ -1,18 +1,7 @@
-# 分支
-- Master 分支 使用Kotlin、ViewBinding、Jetpack框架
-- ViewBinding 分支 使用 Java、ViewBinding、Jetpack框架
-- DataBinding 分支 使用 Java、DataBinding、Jetpack框架
-
-# FastAAC
-
+# 简介
+- 使用纯 Kotlin 和 Androidx 搭建。
 - 上手特别容易，不会 MVVM 开发模式的都可以快速上手。
-- 一个浅封装、快速开发的 Android MVVM 开发框架。
 - 基于 Android Architecture Components(AAC)。
-- 项目使用 Androidx 搭建。
-- 只使用官方部分的 MVVM 和 databind 的部分特性。
-
-## Lib 结构
-   ![image](https://github.com/ldlywt/FastAAC/raw/master/img/structure.png)
 
 ## 优点
 
