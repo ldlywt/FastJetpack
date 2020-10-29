@@ -3,13 +3,13 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 android {
-    compileSdkVersion var.compileSdkVersion
+    compileSdkVersion rootProject.ext.android["compileSdkVersion"]
 
     defaultConfig {
-        minSdkVersion var.minSdkVersion
-        targetSdkVersion var.targetSdkVersion
-        versionCode var.versionCode
-        versionName var.versionName
+        minSdkVersion rootProject.ext.android["minSdkVersion"]
+        targetSdkVersion rootProject.ext.android["targetSdkVersion"]
+        versionCode rootProject.ext.android["versionCode"]
+        versionName rootProject.ext.android["versionName"]
     }
 
     compileOptions {
@@ -25,29 +25,15 @@ android {
         enabled = true
     }
 }
+
+
+def apiDependencies = rootProject.ext.dependencies
+
 dependencies {
+
     api fileTree(dir: 'libs', include: ['*.jar'])
-    //android
-    api 'androidx.appcompat:appcompat:1.2.0'
-    api 'androidx.recyclerview:recyclerview:1.1.0'
-    api 'androidx.constraintlayout:constraintlayout:2.0.2'
-    api 'androidx.lifecycle:lifecycle-common-java8:2.2.0'
-    api 'androidx.lifecycle:lifecycle-extensions:2.2.0'
-    api 'com.google.android.material:material:1.2.1'
-    api 'androidx.core:core-ktx:1.3.2'
-    api 'androidx.fragment:fragment-ktx:1.2.5'
-    api 'androidx.lifecycle:lifecycle-extensions:2.2.0'
-    api 'androidx.lifecycle:lifecycle-livedata-ktx:2.2.0'
-    api 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
-    api "androidx.core:core-ktx:1.3.2"
-    api "androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0"
-    api "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
-    api 'com.jeremyliao:live-event-bus-x:1.4.4'
-    api 'com.kingja.loadsir:loadsir:1.3.8'
-    api 'com.gyf.immersionbar:immersionbar:3.0.0-beta03'
-    api 'com.google.code.gson:gson:2.8.6'
-
+    apiDependencies.each { k, v -> api v }
 
 }
 repositories {
