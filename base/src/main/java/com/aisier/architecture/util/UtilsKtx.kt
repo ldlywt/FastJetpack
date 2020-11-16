@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.Toast
 import androidx.annotation.StringRes
@@ -20,18 +21,6 @@ import java.util.*
  *     version: 1.0
  * </pre>
  */
-
-fun View.visible() {
-    visibility = View.VISIBLE
-}
-
-fun View.gone() {
-    visibility = View.GONE
-}
-
-fun View.inVisible() {
-    visibility = View.INVISIBLE
-}
 
 inline fun <reified T : Activity> Activity.go(bundle: Bundle? = null) {
     val intent = Intent(this, T::class.java)
@@ -56,4 +45,41 @@ fun getString(@StringRes id: Int, vararg formatArgs: Any?): String {
 
 fun Context.toast(message: CharSequence, duration: Int = Toast.LENGTH_SHORT) {
     Toast.makeText(this, message, duration).show()
+}
+
+//may only available on real device
+fun EditText.openKeyBoard() {
+    val imm = this.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+    imm.showSoftInput(this, InputMethodManager.RESULT_SHOWN)
+    imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY)
+}
+
+//may only available on real device
+fun EditText.hideKeyBoard() {
+    val imm = this.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+    imm.hideSoftInputFromWindow(this.windowToken, 0)
+}
+
+//filter frequent click event
+fun View.clickWithLimit(block: ((v: View?) -> Unit)) {
+    setOnClickListener(object : View.OnClickListener {
+        var last = 0L
+        override fun onClick(v: View?) {
+            if (System.currentTimeMillis() - last > 500) {
+                block(v)
+                last = System.currentTimeMillis()
+            }
+        }
+    })
+}
+fun View.clickWithLimit(intervalMill:Int, block: ((v: View?) -> Unit)) {
+    setOnClickListener(object : View.OnClickListener {
+        var last = 0L
+        override fun onClick(v: View?) {
+            if (System.currentTimeMillis() - last > intervalMill) {
+                block(v)
+                last = System.currentTimeMillis()
+            }
+        }
+    })
 }
