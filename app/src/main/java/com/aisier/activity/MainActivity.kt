@@ -1,10 +1,16 @@
-package com.aisier
+package com.aisier.activity
 
+import android.util.Log
 import androidx.lifecycle.observe
+import com.aisier.MainFragment
+import com.aisier.MainViewModel
+import com.aisier.R
+import com.aisier.ShareViewModel
 import com.aisier.architecture.base.BaseActivity
 import com.aisier.architecture.util.go
 import com.aisier.architecture.util.toast
 import com.aisier.databinding.ActivityMainBinding
+import com.aisier.util.TimerShareLiveData
 
 class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
 
@@ -12,10 +18,13 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
 
     override fun init() {
         initData()
-        getAppViewModelProvider().get(ShareViewModel::class.java).msgLiveData.observe(this){
+        getAppViewModelProvider().get(ShareViewModel::class.java).msgLiveData.observe(this) {
             toast("我是第二个页面的消息")
         }
 
+        TimerShareLiveData.get(MainActivity::class.simpleName).observe(this) {
+            Log.i("wutao--> ", "MainActivity: $it")
+        }
     }
 
     private fun initData() {
