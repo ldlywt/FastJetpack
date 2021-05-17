@@ -1,4 +1,4 @@
-package com.aisier
+package com.aisier.bean
 
 /**
  * author : wutao

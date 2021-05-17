@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.aisier.architecture.*
 import com.aisier.architecture.base.BaseResult
 import com.aisier.architecture.base.BaseViewModel
+import com.aisier.bean.TestBean
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import okhttp3.OkHttpClient

@@ -11,6 +11,7 @@ import com.aisier.architecture.util.go
 import com.aisier.architecture.util.toast
 import com.aisier.databinding.ActivityMainBinding
 import com.aisier.util.TimerShareLiveData
+import com.aisier.util.UserCacheLiveData
 
 class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
 
@@ -24,6 +25,10 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
 
         TimerShareLiveData.get(MainActivity::class.simpleName).observe(this) {
             Log.i("wutao--> ", "MainActivity: $it")
+        }
+
+        UserCacheLiveData.getCacheUserData().observe(this){
+            Log.i("wutao--> ", "MainActivity:User info $it")
         }
     }
 
