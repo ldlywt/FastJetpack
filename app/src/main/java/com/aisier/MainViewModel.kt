@@ -33,7 +33,7 @@ class MainViewModel(application: Application) : BaseViewModel(application) {
             stateActionEvent.postValue(LoadState)
             Thread.sleep(1000)
             val result = run(url)
-            val data = Gson().fromJson<BaseResult<List<TestBean>>>(result, object : TypeToken<BaseResult<List<TestBean?>?>?>() {}.type)
+            val data = Gson().fromJson<BaseResult<List<TestBean>>>(result, object : TypeToken<BaseResult<List<TestBean>>>() {}.type)
             val list = mutableListOf<WrapperTestBean>()
             data.data?.forEach { list.add(WrapperTestBean(it)) }
 
