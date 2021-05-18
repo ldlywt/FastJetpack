@@ -3,7 +3,6 @@ package com.aisier.architecture.base
 import android.app.Activity
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
 import com.aisier.architecture.*
@@ -13,7 +12,7 @@ import com.aisier.architecture.pagestate.EmptyCallback
 import com.aisier.architecture.pagestate.ErrorCallback
 import com.aisier.architecture.pagestate.LoadingCallback
 import com.aisier.architecture.pagestate.TimeoutCallback
-import com.aisier.architecture.util.GenericUtil
+import com.aisier.architecture.util.createActivityViewModel
 import com.aisier.architecture.util.getViewBinding
 import com.aisier.architecture.util.toast
 import com.gyf.immersionbar.ImmersionBar
@@ -37,9 +36,7 @@ abstract class BaseActivity<VM : BaseViewModel, VB : ViewBinding> : AppCompatAct
 
     private lateinit var loadService: LoadService<Any>
 
-    protected val mViewModel: VM by lazy {
-        getActivityViewModel(GenericUtil.getGeneric(this, 0))
-    }
+    protected val mViewModel: VM by lazy { this.createActivityViewModel() }
 
     private val mFactory: ViewModelProvider.Factory by lazy {
         ViewModelProvider.AndroidViewModelFactory.getInstance(BaseApp.baseApp)
@@ -53,11 +50,6 @@ abstract class BaseActivity<VM : BaseViewModel, VB : ViewBinding> : AppCompatAct
 
     open fun handleError() = loadService.showCallback(ErrorCallback::class.java)
 
-    protected abstract fun init()
-
-    protected open fun <VM : ViewModel> getActivityViewModel(modelClass: Class<VM>): VM =
-            defaultViewModelProviderFactory.create(modelClass)
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setStatusBar()
@@ -66,6 +58,8 @@ abstract class BaseActivity<VM : BaseViewModel, VB : ViewBinding> : AppCompatAct
         initPageStates()
         initNetworkStateManager()
     }
+
+    protected abstract fun init()
 
     protected open fun getAppViewModelProvider(): ViewModelProvider = ViewModelProvider(BaseApp.baseApp, mFactory)
 

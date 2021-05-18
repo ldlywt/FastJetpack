@@ -22,6 +22,9 @@ import java.io.IOException
 </pre> *
  */
 class MainViewModel(application: Application) : BaseViewModel(application) {
+
+    val strLiveData = MutableLiveData<String>()
+
     private val url = "https://wanandroid.com/wxarticle/chapters/json"
     val resultLiveData = MutableLiveData<BaseResult<List<TestBean>>>()
     private val client = OkHttpClient()

@@ -1,6 +1,7 @@
 package com.aisier
 
 import android.os.Bundle
+import androidx.lifecycle.observe
 import com.aisier.architecture.anno.FragmentConfiguration
 import com.aisier.architecture.base.BaseFragment
 import com.aisier.databinding.FragmentMainBinding
@@ -19,7 +20,9 @@ class MainFragment : BaseFragment<MainViewModel, FragmentMainBinding>(R.layout.f
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        mBinding?.text?.text = "ViewBinding封装"
+        mViewModel.resultLiveData.observe(viewLifecycleOwner) {
+            mBinding?.text?.text = it.data?.get(0).toString()
+        }
     }
 
 }
