@@ -15,13 +15,13 @@ import com.aisier.databinding.FragmentMainBinding
  * version: 1.0
 </pre> *
  */
-@FragmentConfiguration(shareViewModel = false)
+@FragmentConfiguration(shareViewModel = true)
 class MainFragment : BaseFragment<MainViewModel, FragmentMainBinding>(R.layout.fragment_main) {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         mViewModel.resultLiveData.observe(viewLifecycleOwner) {
-            mBinding?.text?.text = it.data?.get(0).toString()
+            mBinding?.text?.text = it[0].showName + "   是否展示： " + it[0].isShow + "\n" + it[1].showName + "   是否展示： " + it[1].isShow
         }
     }
 

@@ -6,6 +6,7 @@ import com.aisier.architecture.*
 import com.aisier.architecture.base.BaseResult
 import com.aisier.architecture.base.BaseViewModel
 import com.aisier.bean.TestBean
+import com.aisier.bean.WrapperTestBean
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import okhttp3.OkHttpClient
@@ -23,10 +24,8 @@ import java.io.IOException
  */
 class MainViewModel(application: Application) : BaseViewModel(application) {
 
-    val strLiveData = MutableLiveData<String>()
-
     private val url = "https://wanandroid.com/wxarticle/chapters/json"
-    val resultLiveData = MutableLiveData<BaseResult<List<TestBean>>>()
+    val resultLiveData = MutableLiveData<List<WrapperTestBean>>()
     private val client = OkHttpClient()
 
     fun requestNet() {
@@ -35,9 +34,12 @@ class MainViewModel(application: Application) : BaseViewModel(application) {
             Thread.sleep(1000)
             val result = run(url)
             val data = Gson().fromJson<BaseResult<List<TestBean>>>(result, object : TypeToken<BaseResult<List<TestBean?>?>?>() {}.type)
+            val list = mutableListOf<WrapperTestBean>()
+            data.data?.forEach { list.add(WrapperTestBean(it)) }
+
+            resultLiveData.postValue(list)
             stateActionEvent.postValue(ToastState("请求成功"))
             stateActionEvent.postValue(SuccessState)
-            resultLiveData.postValue(data)
         } catch (e: IOException) {
             e.printStackTrace()
         }

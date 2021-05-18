@@ -9,16 +9,10 @@ import java.io.Serializable
  * desc   :
  * version: 1.0
  */
-class BaseResult<T> : Serializable {
-    var errorCode = 0
+class BaseResult<T>(var errorCode: Int) : Serializable {
+
     var errorMsg: String? = null
     var data: T? = null
-
-    constructor()
-    constructor(errorCode: Int) {
-        this.errorCode = errorCode
-    }
-
 
     companion object {
         const val SUCCESS_CODE = 0

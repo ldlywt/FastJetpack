@@ -37,7 +37,7 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
         mBinding.btnNoNet.setOnClickListener { mViewModel.clickNoNet() }
         mBinding.btnEmpty.setOnClickListener { mViewModel.clickNoData() }
         mViewModel.resultLiveData.observe(this) {
-            mBinding.tvContent.text = it.data?.toString()
+            mBinding.tvContent.text = it.toString()
         }
         supportFragmentManager.beginTransaction().replace(R.id.fl_contain, MainFragment()).commit()
 
