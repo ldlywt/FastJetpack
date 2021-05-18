@@ -1,12 +1,12 @@
 package com.aisier.architecture.base
 
 import android.app.Application
-import androidx.lifecycle.ViewModelStore
-import androidx.lifecycle.ViewModelStoreOwner
+import androidx.lifecycle.*
 import com.aisier.architecture.pagestate.*
 import com.jeremyliao.liveeventbus.LiveEventBus
 import com.kingja.loadsir.callback.SuccessCallback
 import com.kingja.loadsir.core.LoadSir
+
 
 /**
  * author : wutao
@@ -26,6 +26,7 @@ open class BaseApp : Application(), ViewModelStoreOwner {
         mAppViewModelStore = ViewModelStore()
         initPageState()
         initLiveBus()
+        ProcessLifecycleOwner.get().lifecycle.addObserver(ApplicationLifecycleObserver())
     }
 
     private fun initPageState() {
@@ -52,5 +53,18 @@ open class BaseApp : Application(), ViewModelStoreOwner {
     companion object {
         lateinit var baseApp: BaseApp
             private set
+    }
+
+    private inner class ApplicationLifecycleObserver : LifecycleObserver {
+
+        @OnLifecycleEvent(Lifecycle.Event.ON_START)
+        private fun onAppForeground() {
+            // TODO: "ApplicationObserver: app moved to foreground"
+        }
+
+        @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
+        private fun onAppBackground() {
+            // TODO: "ApplicationObserver: app moved to background"
+        }
     }
 }
