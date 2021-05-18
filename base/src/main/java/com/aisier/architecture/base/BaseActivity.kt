@@ -1,10 +1,8 @@
 package com.aisier.architecture.base
 
 import android.app.Activity
-import android.content.Context
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
@@ -16,6 +14,7 @@ import com.aisier.architecture.pagestate.ErrorCallback
 import com.aisier.architecture.pagestate.LoadingCallback
 import com.aisier.architecture.pagestate.TimeoutCallback
 import com.aisier.architecture.util.GenericUtil
+import com.aisier.architecture.util.getViewBinding
 import com.aisier.architecture.util.toast
 import com.gyf.immersionbar.ImmersionBar
 import com.kingja.loadsir.callback.SuccessCallback
@@ -26,39 +25,33 @@ import com.kingja.loadsir.core.LoadSir
  * <pre>
  * author : wutao
  * e-mail : ldlywt@163.com
- * time   : 2020/10/14
+ * time   : 2021/5/18
  * desc   :
- * version: 1.1
+ * version: 1.2
 </pre> *
  */
 abstract class BaseActivity<VM : BaseViewModel, VB : ViewBinding> : AppCompatActivity() {
 
-    protected val context: Context
-        get() = this
-
-    protected val activity: Activity
+    protected val mActivity: Activity
         get() = this
 
     private lateinit var loadService: LoadService<Any>
 
     protected val mViewModel: VM by lazy {
-        getActivityViewModel<VM>(GenericUtil.getGeneric(this, 0))
+        getActivityViewModel(GenericUtil.getGeneric(this, 0))
     }
 
     private val mFactory: ViewModelProvider.Factory by lazy {
         ViewModelProvider.AndroidViewModelFactory.getInstance(BaseApp.baseApp)
     }
 
-    protected lateinit var mBinding: VB
-        private set
+    protected val mBinding: VB by lazy(mode = LazyThreadSafetyMode.NONE) { getViewBinding(layoutInflater) }
 
     open fun showLoading() = loadService.showCallback(LoadingCallback::class.java)
 
     open fun dismissLoading() = loadService.showCallback(SuccessCallback::class.java)
 
     open fun handleError() = loadService.showCallback(ErrorCallback::class.java)
-
-    protected abstract fun initBinding(): VB
 
     protected abstract fun init()
 
@@ -68,19 +61,17 @@ abstract class BaseActivity<VM : BaseViewModel, VB : ViewBinding> : AppCompatAct
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setStatusBar()
-        mBinding = initBinding()
         setContentView(mBinding.root)
         init()
         initPageStates()
         initNetworkStateManager()
     }
 
-    protected open fun getAppViewModelProvider(): ViewModelProvider =
-            ViewModelProvider(BaseApp.baseApp, mFactory)
+    protected open fun getAppViewModelProvider(): ViewModelProvider = ViewModelProvider(BaseApp.baseApp, mFactory)
 
     private fun initNetworkStateManager() {
         lifecycle.addObserver(NetworkStateManager)
-        NetworkStateManager.networkStateCallback.observe(this, Observer(this::onNetworkStateChanged))
+        NetworkStateManager.networkStateCallback.observe(this, androidx.lifecycle.Observer(this::onNetworkStateChanged))
     }
 
     protected fun setStatusBar() {
@@ -90,18 +81,16 @@ abstract class BaseActivity<VM : BaseViewModel, VB : ViewBinding> : AppCompatAct
                 .init()
     }
 
-    protected fun setStatusBarDark() =
-            ImmersionBar.with(this).statusBarDarkFont(true).transparentBar().init()
+    protected fun setStatusBarDark() = ImmersionBar.with(this).statusBarDarkFont(true).transparentBar().init()
 
     protected open fun retryClick() = toast("重新请求")
-
 
     override fun onStart() {
         super.onStart()
         registerPageState()
     }
 
-    protected fun registerPageState() {
+    private fun registerPageState() {
         loadService = LoadSir.getDefault().register(this) {
             loadService.showCallback(LoadingCallback::class.java)
             retryClick()
@@ -109,7 +98,7 @@ abstract class BaseActivity<VM : BaseViewModel, VB : ViewBinding> : AppCompatAct
     }
 
     private fun initPageStates() {
-        mViewModel.stateActionEvent.observe(this, Observer { stateActionState ->
+        mViewModel.stateActionEvent.observe(this, { stateActionState ->
             when (stateActionState) {
                 LoadState -> showLoading()
                 EmptyState -> loadService.showCallback(EmptyCallback::class.java)

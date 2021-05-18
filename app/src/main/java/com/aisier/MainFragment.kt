@@ -1,7 +1,6 @@
 package com.aisier
 
 import android.os.Bundle
-import android.view.View
 import com.aisier.architecture.anno.FragmentConfiguration
 import com.aisier.architecture.base.BaseFragment
 import com.aisier.databinding.FragmentMainBinding
@@ -22,7 +21,5 @@ class MainFragment : BaseFragment<MainViewModel, FragmentMainBinding>(R.layout.f
         super.onActivityCreated(savedInstanceState)
         mBinding?.text?.text = "ViewBinding封装"
     }
-
-    override fun initBinding(view: View): FragmentMainBinding = FragmentMainBinding.bind(view)
 
 }

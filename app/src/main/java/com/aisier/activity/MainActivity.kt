@@ -15,8 +15,6 @@ import com.aisier.util.UserCacheLiveData
 
 class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
 
-    override fun initBinding(): ActivityMainBinding = ActivityMainBinding.inflate(layoutInflater)
-
     override fun init() {
         initData()
         getAppViewModelProvider().get(ShareViewModel::class.java).msgLiveData.observe(this) {
