@@ -15,7 +15,7 @@ import java.util.*
 /**
  * <pre>
  *     @author : wutao
- *     e-mail : wutao@neuron.sg
+ *     e-mail : 670831931@qq.com
  *     time   : 2020/10/16
  *     desc   :
  *     version: 1.0
@@ -36,11 +36,10 @@ fun stringOf(@StringRes id: Int): String = getString(id)
 
 fun EditText.getNotNullText(): String = text?.toString()?.trim() ?: ""
 
-fun EditText.getNotNullUpperCaseText(): String = text?.toString()?.toUpperCase(Locale.ENGLISH)?.trim()
-        ?: ""
+fun EditText.getNotNullUpperCaseText(): String = getNotNullText().toUpperCase(Locale.ENGLISH)
 
 fun getString(@StringRes id: Int, vararg formatArgs: Any?): String {
-    return BaseApp.baseApp.resources.getString(id, *formatArgs)
+    return BaseApp.instance.resources.getString(id, *formatArgs)
 }
 
 fun Context.toast(message: CharSequence, duration: Int = Toast.LENGTH_SHORT) {
@@ -72,7 +71,8 @@ fun View.clickWithLimit(block: ((v: View?) -> Unit)) {
         }
     })
 }
-fun View.clickWithLimit(intervalMill:Int, block: ((v: View?) -> Unit)) {
+
+fun View.clickWithLimit(intervalMill: Int, block: ((v: View?) -> Unit)) {
     setOnClickListener(object : View.OnClickListener {
         var last = 0L
         override fun onClick(v: View?) {

@@ -22,7 +22,7 @@ open class BaseApp : Application(), ViewModelStoreOwner {
 
     override fun onCreate() {
         super.onCreate()
-        baseApp = this
+        instance = this
         mAppViewModelStore = ViewModelStore()
         initPageState()
         initLiveBus()
@@ -51,7 +51,7 @@ open class BaseApp : Application(), ViewModelStoreOwner {
     override fun getViewModelStore(): ViewModelStore = mAppViewModelStore
 
     companion object {
-        lateinit var baseApp: BaseApp
+        lateinit var instance: BaseApp
             private set
     }
 

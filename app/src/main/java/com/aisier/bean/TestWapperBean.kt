@@ -9,6 +9,4 @@ class WrapperTestBean(bean: TestBean) : SDKBean<TestBean>(bean) {
     override fun toString(): String {
         return "WrapperTestBean(showName='$showName', isShow='$isShow')"
     }
-
-
 }

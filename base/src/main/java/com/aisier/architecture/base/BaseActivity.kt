@@ -39,7 +39,7 @@ abstract class BaseActivity<VM : BaseViewModel, VB : ViewBinding> : AppCompatAct
     protected val mViewModel: VM by lazy { this.createActivityViewModel() }
 
     private val mFactory: ViewModelProvider.Factory by lazy {
-        ViewModelProvider.AndroidViewModelFactory.getInstance(BaseApp.baseApp)
+        ViewModelProvider.AndroidViewModelFactory.getInstance(BaseApp.instance)
     }
 
     protected val mBinding: VB by lazy(mode = LazyThreadSafetyMode.NONE) { getViewBinding(layoutInflater) }
@@ -61,7 +61,7 @@ abstract class BaseActivity<VM : BaseViewModel, VB : ViewBinding> : AppCompatAct
 
     protected abstract fun init()
 
-    protected open fun getAppViewModelProvider(): ViewModelProvider = ViewModelProvider(BaseApp.baseApp, mFactory)
+    protected open fun getAppViewModelProvider(): ViewModelProvider = ViewModelProvider(BaseApp.instance, mFactory)
 
     private fun initNetworkStateManager() {
         lifecycle.addObserver(NetworkStateManager)
