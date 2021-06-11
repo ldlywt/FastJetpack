@@ -19,7 +19,6 @@ open class BaseApp : Application(), ViewModelStoreOwner {
 
     private lateinit var mAppViewModelStore: ViewModelStore
 
-
     override fun onCreate() {
         super.onCreate()
         instance = this

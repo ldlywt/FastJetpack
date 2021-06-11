@@ -5,12 +5,9 @@ import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.aisier.architecture.*
-import com.aisier.architecture.manager.NetState
-import com.aisier.architecture.manager.NetworkStateManager
 import com.aisier.architecture.pagestate.EmptyCallback
 import com.aisier.architecture.pagestate.ErrorCallback
 import com.aisier.architecture.pagestate.LoadingCallback
-import com.aisier.architecture.pagestate.TimeoutCallback
 import com.aisier.architecture.util.createActivityViewModel
 import com.aisier.architecture.util.toast
 import com.gyf.immersionbar.ImmersionBar
@@ -49,17 +46,11 @@ abstract class BaseActivity<VM : BaseViewModel>(@LayoutRes contentLayoutId: Int)
         setStatusBar()
         init()
         initPageStates()
-        initNetworkStateManager()
     }
 
     protected abstract fun init()
 
     protected open fun getAppViewModelProvider(): ViewModelProvider = ViewModelProvider(BaseApp.instance, mFactory)
-
-    private fun initNetworkStateManager() {
-        lifecycle.addObserver(NetworkStateManager)
-        NetworkStateManager.networkStateCallback.observe(this, androidx.lifecycle.Observer(this::onNetworkStateChanged))
-    }
 
     protected fun setStatusBar() {
         ImmersionBar.with(this)
@@ -105,12 +96,5 @@ abstract class BaseActivity<VM : BaseViewModel>(@LayoutRes contentLayoutId: Int)
         })
     }
 
-    protected fun onNetworkStateChanged(netState: NetState?) {
-        if (netState?.isSuccess != true) {
-            loadService.showCallback(TimeoutCallback::class.java)
-        } else {
-            loadService.showCallback(SuccessCallback::class.java)
-        }
-    }
 
 }
