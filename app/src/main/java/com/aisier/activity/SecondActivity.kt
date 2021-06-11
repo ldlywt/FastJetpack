@@ -2,6 +2,8 @@ package com.aisier.activity
 
 import android.util.Log
 import androidx.lifecycle.observe
+import by.kirich1409.viewbindingdelegate.viewBinding
+import com.aisier.R
 import com.aisier.ShareViewModel
 import com.aisier.architecture.base.BaseActivity
 import com.aisier.architecture.base.EmptyViewModel
@@ -11,7 +13,9 @@ import com.aisier.databinding.ActivitySecondBinding
 import com.aisier.util.TimerShareLiveData
 import com.aisier.util.UserCacheLiveData
 
-class SecondActivity : BaseActivity<EmptyViewModel, ActivitySecondBinding>() {
+class SecondActivity : BaseActivity<EmptyViewModel>(R.layout.activity_second) {
+
+    private val mBinding by viewBinding(ActivitySecondBinding::bind)
 
     override fun init() {
         val shareViewModel = getAppViewModelProvider().get(ShareViewModel::class.java)

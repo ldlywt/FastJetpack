@@ -1,10 +1,9 @@
 package com.aisier.architecture.base
 
-import android.app.Activity
 import android.os.Bundle
+import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import androidx.viewbinding.ViewBinding
 import com.aisier.architecture.*
 import com.aisier.architecture.manager.NetState
 import com.aisier.architecture.manager.NetworkStateManager
@@ -13,7 +12,6 @@ import com.aisier.architecture.pagestate.ErrorCallback
 import com.aisier.architecture.pagestate.LoadingCallback
 import com.aisier.architecture.pagestate.TimeoutCallback
 import com.aisier.architecture.util.createActivityViewModel
-import com.aisier.architecture.util.getViewBinding
 import com.aisier.architecture.util.toast
 import com.gyf.immersionbar.ImmersionBar
 import com.kingja.loadsir.callback.SuccessCallback
@@ -29,10 +27,8 @@ import com.kingja.loadsir.core.LoadSir
  * version: 1.2
 </pre> *
  */
-abstract class BaseActivity<VM : BaseViewModel, VB : ViewBinding> : AppCompatActivity() {
-
-    protected val mActivity: Activity
-        get() = this
+abstract class BaseActivity<VM : BaseViewModel>(@LayoutRes contentLayoutId: Int) :
+    AppCompatActivity(contentLayoutId) {
 
     private lateinit var loadService: LoadService<Any>
 
@@ -41,8 +37,6 @@ abstract class BaseActivity<VM : BaseViewModel, VB : ViewBinding> : AppCompatAct
     private val mFactory: ViewModelProvider.Factory by lazy {
         ViewModelProvider.AndroidViewModelFactory.getInstance(BaseApp.instance)
     }
-
-    protected val mBinding: VB by lazy(mode = LazyThreadSafetyMode.NONE) { getViewBinding(layoutInflater) }
 
     open fun showLoading() = loadService.showCallback(LoadingCallback::class.java)
 
@@ -53,7 +47,6 @@ abstract class BaseActivity<VM : BaseViewModel, VB : ViewBinding> : AppCompatAct
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setStatusBar()
-        setContentView(mBinding.root)
         init()
         initPageStates()
         initNetworkStateManager()

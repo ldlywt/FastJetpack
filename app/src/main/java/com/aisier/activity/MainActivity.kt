@@ -1,7 +1,7 @@
 package com.aisier.activity
 
 import android.util.Log
-import androidx.lifecycle.observe
+import by.kirich1409.viewbindingdelegate.viewBinding
 import com.aisier.MainFragment
 import com.aisier.MainViewModel
 import com.aisier.R
@@ -13,7 +13,9 @@ import com.aisier.databinding.ActivityMainBinding
 import com.aisier.util.TimerShareLiveData
 import com.aisier.util.UserCacheLiveData
 
-class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
+class MainActivity : BaseActivity<MainViewModel>(R.layout.activity_main) {
+
+    private val mBinding by viewBinding(ActivityMainBinding::bind)
 
     override fun init() {
         initData()
