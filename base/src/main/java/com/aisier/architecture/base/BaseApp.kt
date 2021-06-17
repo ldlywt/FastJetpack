@@ -2,10 +2,7 @@ package com.aisier.architecture.base
 
 import android.app.Application
 import androidx.lifecycle.*
-import com.aisier.architecture.pagestate.*
 import com.jeremyliao.liveeventbus.LiveEventBus
-import com.kingja.loadsir.callback.SuccessCallback
-import com.kingja.loadsir.core.LoadSir
 
 
 /**
@@ -23,20 +20,8 @@ open class BaseApp : Application(), ViewModelStoreOwner {
         super.onCreate()
         instance = this
         mAppViewModelStore = ViewModelStore()
-        initPageState()
         initLiveBus()
         ProcessLifecycleOwner.get().lifecycle.addObserver(ApplicationLifecycleObserver())
-    }
-
-    private fun initPageState() {
-        LoadSir.beginBuilder()
-                .addCallback(ErrorCallback())
-                .addCallback(EmptyCallback())
-                .addCallback(LoadingCallback())
-                .addCallback(TimeoutCallback())
-                .addCallback(PlaceholderCallback())
-                .setDefaultCallback(SuccessCallback::class.java)
-                .commit()
     }
 
     private fun initLiveBus() {

@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <declare-styleable name="XPageStateView">
-        <attr name="loadingView" format="reference"/>
-        <attr name="errorView" format="reference"/>
-        <attr name="emptyView" format="reference"/>
-        <attr name="noNetworkView" format="reference"/>
-    </declare-styleable>
-</resources>

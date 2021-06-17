@@ -32,19 +32,6 @@
             android:layout_weight="1"
             android:text="请求网络" />
 
-        <Button
-            android:id="@+id/btn_no_net"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_weight="1"
-            android:text="无网络" />
-
-        <Button
-            android:id="@+id/btn_empty"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_weight="1"
-            android:text="数据为空" />
     </LinearLayout>
 
     <TextView

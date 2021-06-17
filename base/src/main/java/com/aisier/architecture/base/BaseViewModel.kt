@@ -2,9 +2,6 @@ package com.aisier.architecture.base
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.MutableLiveData
-import com.aisier.architecture.LoadState
-import com.aisier.architecture.StateActionEvent
 
 /**
  * author : wutao
@@ -15,7 +12,12 @@ import com.aisier.architecture.StateActionEvent
  */
 abstract class BaseViewModel(application: Application) : AndroidViewModel(application) {
 
-    val stateActionEvent = MutableLiveData<StateActionEvent>()
+    open class BaseUiModel<T>(
+        var showLoading: Boolean = false,
+        var showError: String? = null,
+        var showSuccess: T? = null,
+        var showEnd: Boolean = false, // 加载更多
+        var isRefresh: Boolean = false // 刷新
 
-    fun showLoading() = stateActionEvent.postValue(LoadState)
+    )
 }

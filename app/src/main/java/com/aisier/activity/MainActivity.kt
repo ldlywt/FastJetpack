@@ -27,29 +27,25 @@ class MainActivity : BaseActivity<MainViewModel>(R.layout.activity_main) {
             Log.i("wutao--> ", "MainActivity: $it")
         }
 
-        UserCacheLiveData.getCacheUserData().observe(this){
+        UserCacheLiveData.getCacheUserData().observe(this) {
             Log.i("wutao--> ", "MainActivity:User info $it")
         }
     }
 
     private fun initData() {
         mBinding.btnNet.setOnClickListener {
-            Thread { mViewModel.requestNet() }.start()
-        }
-        mBinding.btnNoNet.setOnClickListener { mViewModel.clickNoNet() }
-        mBinding.btnEmpty.setOnClickListener { mViewModel.clickNoData() }
-        mViewModel.resultLiveData.observe(this) {
-            mBinding.tvContent.text = it.toString()
+            Thread { mViewModel.requestNetV2() }.start()
         }
         supportFragmentManager.beginTransaction().replace(R.id.fl_contain, MainFragment()).commit()
 
         mBinding.goSecondActivity.setOnClickListener {
             go<SecondActivity>()
         }
-    }
+        mViewModel.resultUiLiveData.observe(this) { uiState ->
+            uiState.showLoading.let { if (it) showLoading() else dismissLoading() }
+            uiState.showSuccess.let { mBinding.tvContent.text = it.toString() }
+            uiState.showError?.let { toast(it) }
+        }
 
-    override fun retryClick() {
-        super.retryClick()
-        Thread { mViewModel.requestNet() }.start()
     }
 }

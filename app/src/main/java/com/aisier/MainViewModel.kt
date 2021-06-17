@@ -2,7 +2,6 @@ package com.aisier
 
 import android.app.Application
 import androidx.lifecycle.MutableLiveData
-import com.aisier.architecture.*
 import com.aisier.architecture.base.BaseResult
 import com.aisier.architecture.base.BaseViewModel
 import com.aisier.bean.TestBean
@@ -25,39 +24,34 @@ import java.io.IOException
 class MainViewModel(application: Application) : BaseViewModel(application) {
 
     private val url = "https://wanandroid.com/wxarticle/chapters/json"
-    val resultLiveData = MutableLiveData<List<WrapperTestBean>>()
+    val resultUiLiveData = MutableLiveData<BaseUiModel<List<WrapperTestBean>>>()
     private val client = OkHttpClient()
 
-    fun requestNet() {
+    fun requestNetV2() {
         try {
-            stateActionEvent.postValue(LoadState)
+            resultUiLiveData.postValue(BaseUiModel(showLoading = true))
             Thread.sleep(1000)
             val result = run(url)
-            val data = Gson().fromJson<BaseResult<List<TestBean>>>(result, object : TypeToken<BaseResult<List<TestBean>>>() {}.type)
+            val data = Gson().fromJson<BaseResult<List<TestBean>>>(
+                result,
+                object : TypeToken<BaseResult<List<TestBean>>>() {}.type
+            )
             val list = mutableListOf<WrapperTestBean>()
             data.data?.forEach { list.add(WrapperTestBean(it)) }
-
-            resultLiveData.postValue(list)
-            stateActionEvent.postValue(ToastState("请求成功"))
-            stateActionEvent.postValue(SuccessState)
+            resultUiLiveData.postValue(BaseUiModel(showLoading = false, showSuccess = list))
         } catch (e: IOException) {
+            resultUiLiveData.postValue(BaseUiModel(showLoading = false, showError = e.toString()))
             e.printStackTrace()
         }
     }
 
+
     @Throws(IOException::class)
     private fun run(url: String): String {
         val request = Request.Builder()
-                .url(url)
-                .build()
+            .url(url)
+            .build()
         client.newCall(request).execute().use { response -> return response.body!!.string() }
     }
 
-    fun clickNoNet() {
-        stateActionEvent.postValue(ErrorState("没有网络"))
-    }
-
-    fun clickNoData() {
-        stateActionEvent.postValue(EmptyState)
-    }
 }
