@@ -36,7 +36,7 @@ class MainActivity : BaseActivity(R.layout.activity_main) {
 
     private fun initData() {
         mBinding.btnNet.setOnClickListener {
-            Thread { mViewModel.requestNetV2() }.start()
+            mViewModel.requestNetV2()
         }
         supportFragmentManager.beginTransaction().replace(R.id.fl_contain, MainFragment()).commit()
 

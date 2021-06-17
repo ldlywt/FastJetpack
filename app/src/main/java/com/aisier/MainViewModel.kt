@@ -8,6 +8,9 @@ import com.aisier.bean.TestBean
 import com.aisier.bean.WrapperTestBean
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import java.io.IOException
@@ -28,22 +31,33 @@ class MainViewModel(application: Application) : BaseViewModel(application) {
     private val client = OkHttpClient()
 
     fun requestNetV2() {
+        launchOnUI {
+            val result = fetchData() as String
+            val jsonData = parseJson(result)
+            val list = mutableListOf<WrapperTestBean>()
+            jsonData?.data?.forEach { list.add(WrapperTestBean(it)) }
+            resultUiLiveData.postValue(BaseUiModel(showLoading = false, showSuccess = list))
+        }
+    }
+
+    private fun parseJson(result: String): BaseResult<List<TestBean>>? {
+        return Gson().fromJson(
+            result,
+            object : TypeToken<BaseResult<List<TestBean>>>() {}.type
+        )
+    }
+
+    private suspend fun fetchData() = withContext(Dispatchers.IO) {
         try {
             resultUiLiveData.postValue(BaseUiModel(showLoading = true))
-            Thread.sleep(1000)
-            val result = run(url)
-            val data = Gson().fromJson<BaseResult<List<TestBean>>>(
-                result,
-                object : TypeToken<BaseResult<List<TestBean>>>() {}.type
-            )
-            val list = mutableListOf<WrapperTestBean>()
-            data.data?.forEach { list.add(WrapperTestBean(it)) }
-            resultUiLiveData.postValue(BaseUiModel(showLoading = false, showSuccess = list))
+            delay(1000)
+            run(url)
         } catch (e: IOException) {
             resultUiLiveData.postValue(BaseUiModel(showLoading = false, showError = e.toString()))
             e.printStackTrace()
         }
     }
+
 
     @Throws(IOException::class)
     private fun run(url: String): String {
