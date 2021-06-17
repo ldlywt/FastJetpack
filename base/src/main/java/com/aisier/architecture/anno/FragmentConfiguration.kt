@@ -4,7 +4,5 @@ package com.aisier.architecture.anno
 @Target(AnnotationTarget.ANNOTATION_CLASS, AnnotationTarget.CLASS)
 annotation class FragmentConfiguration(
 
-        val shareViewModel: Boolean = false,
-
         val useEventBus: Boolean = false
 )

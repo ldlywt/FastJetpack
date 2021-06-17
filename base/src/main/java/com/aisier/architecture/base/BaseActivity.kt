@@ -5,25 +5,19 @@ import android.os.Bundle
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import com.aisier.architecture.util.createActivityViewModel
 import com.gyf.immersionbar.ImmersionBar
-import com.kingja.loadsir.core.LoadService
 
 /**
  * <pre>
  * author : wutao
- * e-mail : ldlywt@163.com
- * time   : 2021/5/18
- * desc   :
- * version: 1.2
+ * e-mail : 670831931@qq.com
+ * time   : 2021/6/18
+ * desc   : 去掉类上面的泛型，因为反射会影响性能。并且优先选择组合而不是继承。
+ * version: 1.3
 </pre> *
  */
-abstract class BaseActivity<VM : BaseViewModel>(@LayoutRes contentLayoutId: Int) :
+abstract class BaseActivity(@LayoutRes contentLayoutId: Int) :
     AppCompatActivity(contentLayoutId) {
-
-    private lateinit var loadService: LoadService<Any>
-
-    protected val mViewModel: VM by lazy { this.createActivityViewModel() }
 
     private val mFactory: ViewModelProvider.Factory by lazy {
         ViewModelProvider.AndroidViewModelFactory.getInstance(BaseApp.instance)
@@ -37,7 +31,8 @@ abstract class BaseActivity<VM : BaseViewModel>(@LayoutRes contentLayoutId: Int)
 
     protected abstract fun init()
 
-    protected open fun getAppViewModelProvider(): ViewModelProvider = ViewModelProvider(BaseApp.instance, mFactory)
+    protected open fun getAppViewModelProvider(): ViewModelProvider =
+        ViewModelProvider(BaseApp.instance, mFactory)
 
     protected fun setStatusBar() {
         ImmersionBar.with(this)

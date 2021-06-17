@@ -4,7 +4,6 @@ import android.app.Application
 import androidx.lifecycle.*
 import com.jeremyliao.liveeventbus.LiveEventBus
 
-
 /**
  * author : wutao
  * e-mail : 670831931@qq.com

@@ -2,6 +2,7 @@ package com.aisier
 
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.activityViewModels
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.aisier.architecture.anno.FragmentConfiguration
 import com.aisier.architecture.base.BaseFragment
@@ -17,9 +18,10 @@ import com.aisier.databinding.FragmentMainBinding
 </pre> *
  */
 @FragmentConfiguration(shareViewModel = true)
-class MainFragment : BaseFragment<MainViewModel>(R.layout.fragment_main) {
+class MainFragment : BaseFragment(R.layout.fragment_main) {
 
     private val mBinding by viewBinding(FragmentMainBinding::bind)
+    private val mViewModel by activityViewModels<MainViewModel>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

@@ -45,7 +45,6 @@ class MainViewModel(application: Application) : BaseViewModel(application) {
         }
     }
 
-
     @Throws(IOException::class)
     private fun run(url: String): String {
         val request = Request.Builder()
