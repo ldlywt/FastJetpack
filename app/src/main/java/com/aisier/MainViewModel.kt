@@ -34,7 +34,7 @@ class MainViewModel : BaseViewModel() {
                 delay(1000)
                 repository.fetchWxArticle().run {
                     handlingHttpResponse<List<WxArticleBean>>(
-                        convertHttpRes(),
+                        this.convertHttpRes(),
                         successBlock = { data ->
                             handleData(data)
                         },

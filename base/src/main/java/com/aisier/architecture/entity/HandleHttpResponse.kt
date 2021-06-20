@@ -4,7 +4,10 @@ import com.aisier.architecture.util.toast
 
 fun <T> handlingHttpResponse(res: HttpResponse,
                              successBlock: (data: T) -> Unit,
-                             failureBlock: ((errorCode: Int, errorMsg: String?) -> Unit)? = null) {
+                             failureBlock: ((errorCode: Int, errorMsg: String?) -> Unit)? =
+                                 { errorCode, errorMsg ->
+                                     handlingApiExceptions(errorCode, errorMsg)
+                                 }) {
     when (res) {
         is Success<*> -> successBlock.invoke(res.data as T)
         is Failure -> {
