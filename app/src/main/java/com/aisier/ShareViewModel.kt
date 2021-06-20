@@ -1,6 +1,5 @@
 package com.aisier
 
-import android.app.Application
 import androidx.lifecycle.MutableLiveData
 import com.aisier.architecture.base.BaseViewModel
 
@@ -11,7 +10,6 @@ import com.aisier.architecture.base.BaseViewModel
  * desc   : Application级别的ViewModel，全局通用
  * version: 1.0
  */
-class ShareViewModel(application: Application) : BaseViewModel(application) {
+class ShareViewModel : BaseViewModel() {
     val msgLiveData = MutableLiveData<String>()
-
 }

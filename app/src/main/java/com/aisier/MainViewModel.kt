@@ -1,19 +1,16 @@
 package com.aisier
 
-import android.app.Application
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import com.aisier.architecture.base.BaseResult
 import com.aisier.architecture.base.BaseViewModel
-import com.aisier.bean.TestBean
+import com.aisier.architecture.entity.convertHttpRes
+import com.aisier.architecture.entity.handlingApiExceptions
+import com.aisier.architecture.entity.handlingExceptions
+import com.aisier.architecture.entity.handlingHttpResponse
 import com.aisier.bean.WrapperTestBean
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
-import kotlinx.coroutines.Dispatchers
+import com.aisier.bean.WxArticleBean
+import com.aisier.net.ApiRepository
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.withContext
-import okhttp3.OkHttpClient
-import okhttp3.Request
-import java.io.IOException
 
 /**
  * <pre>
@@ -24,47 +21,39 @@ import java.io.IOException
  * version: 1.0
 </pre> *
  */
-class MainViewModel(application: Application) : BaseViewModel(application) {
+class MainViewModel : BaseViewModel() {
 
-    private val url = "https://wanandroid.com/wxarticle/chapters/json"
+    private val repository by lazy { ApiRepository() }
+
     val resultUiLiveData = MutableLiveData<BaseUiModel<List<WrapperTestBean>>>()
-    private val client = OkHttpClient()
 
-    fun requestNetV2() {
-        launchOnUI {
-            val result = fetchData() as String
-            val jsonData = parseJson(result)
-            val list = mutableListOf<WrapperTestBean>()
-            jsonData?.data?.forEach { list.add(WrapperTestBean(it)) }
-            resultUiLiveData.postValue(BaseUiModel(showLoading = false, showSuccess = list))
-        }
-    }
-
-    private fun parseJson(result: String): BaseResult<List<TestBean>>? {
-        return Gson().fromJson(
-            result,
-            object : TypeToken<BaseResult<List<TestBean>>>() {}.type
+    fun requestNet() {
+        launchOnIO(
+            tryBlock = {
+                resultUiLiveData.postValue(BaseUiModel(showLoading = true))
+                delay(1000)
+                repository.fetchWxArticle().run {
+                    handlingHttpResponse<List<WxArticleBean>>(
+                        convertHttpRes(),
+                        successBlock = { data ->
+                            handleData(data)
+                        },
+                        failureBlock = { errorCode, errorMsg ->
+                            handlingApiExceptions(errorCode, errorMsg)
+                        }
+                    )
+                }
+            },
+            catchBlock = { e ->
+                handlingExceptions(e)
+            }
         )
     }
 
-    private suspend fun fetchData() = withContext(Dispatchers.IO) {
-        try {
-            resultUiLiveData.postValue(BaseUiModel(showLoading = true))
-            delay(1000)
-            run(url)
-        } catch (e: IOException) {
-            resultUiLiveData.postValue(BaseUiModel(showLoading = false, showError = e.toString()))
-            e.printStackTrace()
-        }
+    private fun handleData(data: List<WxArticleBean>) {
+        val list = mutableListOf<WrapperTestBean>()
+        data.forEach { list.add(WrapperTestBean(it)) }
+        resultUiLiveData.postValue(BaseUiModel(showLoading = false, successData = list))
+        Log.i("wutao--> ", "$list: ")
     }
-
-
-    @Throws(IOException::class)
-    private fun run(url: String): String {
-        val request = Request.Builder()
-            .url(url)
-            .build()
-        client.newCall(request).execute().use { response -> return response.body!!.string() }
-    }
-
 }

@@ -1,6 +1,6 @@
 package com.aisier.bean
 
-class WrapperTestBean(bean: TestBean) : SDKBean<TestBean>(bean) {
+class WrapperTestBean(bean: WxArticleBean) : SDKBean<WxArticleBean>(bean) {
 
     val showName = "名字：" + bean.name
 

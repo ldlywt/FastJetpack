@@ -8,7 +8,7 @@ import com.aisier.MainViewModel
 import com.aisier.R
 import com.aisier.ShareViewModel
 import com.aisier.architecture.base.BaseActivity
-import com.aisier.architecture.util.go
+import com.aisier.architecture.util.startActivity
 import com.aisier.architecture.util.toast
 import com.aisier.databinding.ActivityMainBinding
 import com.aisier.util.TimerShareLiveData
@@ -26,7 +26,7 @@ class MainActivity : BaseActivity(R.layout.activity_main) {
         }
 
         TimerShareLiveData.get(MainActivity::class.simpleName).observe(this) {
-            Log.i("wutao--> ", "MainActivity: $it")
+//            Log.i("wutao--> ", "MainActivity: $it")
         }
 
         UserCacheLiveData.getCacheUserData().observe(this) {
@@ -36,16 +36,16 @@ class MainActivity : BaseActivity(R.layout.activity_main) {
 
     private fun initData() {
         mBinding.btnNet.setOnClickListener {
-            mViewModel.requestNetV2()
+            mViewModel.requestNet()
         }
         supportFragmentManager.beginTransaction().replace(R.id.fl_contain, MainFragment()).commit()
 
         mBinding.goSecondActivity.setOnClickListener {
-            go<SecondActivity>()
+            startActivity<SecondActivity>()
         }
         mViewModel.resultUiLiveData.observe(this) { uiState ->
             uiState.showLoading.let { if (it) showLoading() else dismissLoading() }
-            uiState.showSuccess.let { mBinding.tvContent.text = it.toString() }
+            uiState.successData.let { mBinding.tvContent.text = it.toString() }
             uiState.showError?.let { toast(it) }
         }
 

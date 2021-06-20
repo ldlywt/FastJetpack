@@ -31,6 +31,9 @@ ext {
             "immersionbar"           : "com.gyf.immersionbar:immersionbar:3.0.0-beta03",
             "gson"                   : "com.google.code.gson:gson:2.8.6",
             "okhttp3"                : "com.squareup.okhttp3:okhttp:4.1.0",
+            "retrofit"               : 'com.squareup.retrofit2:retrofit:2.9.0',
+            "converter-gson"         : 'com.squareup.retrofit2:converter-gson:2.9.0',
+            "logging-interceptor"    : "com.squareup.okhttp3:logging-interceptor:4.9.0",
 
             "viewbindingdelegate"    : 'com.github.kirich1409:viewbindingpropertydelegate-noreflection:1.4.6'
 

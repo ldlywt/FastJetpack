@@ -22,7 +22,7 @@ import java.util.*
  * </pre>
  */
 
-inline fun <reified T : Activity> Activity.go(bundle: Bundle? = null) {
+inline fun <reified T : Activity> Activity.startActivity(bundle: Bundle? = null) {
     val intent = Intent(this, T::class.java)
     if (bundle != null) {
         intent.putExtras(bundle)
@@ -42,8 +42,8 @@ fun getString(@StringRes id: Int, vararg formatArgs: Any?): String {
     return BaseApp.instance.resources.getString(id, *formatArgs)
 }
 
-fun Context.toast(message: CharSequence, duration: Int = Toast.LENGTH_SHORT) {
-    Toast.makeText(this, message, duration).show()
+fun toast(message: CharSequence, duration: Int = Toast.LENGTH_SHORT) {
+    Toast.makeText(BaseApp.instance, message, duration).show()
 }
 
 //may only available on real device

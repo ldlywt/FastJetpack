@@ -24,7 +24,7 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mViewModel.resultUiLiveData.observe(viewLifecycleOwner) { uiState ->
-            uiState.showSuccess?.let {
+            uiState.successData?.let {
                 mBinding.text.text =
                     it[0].showName + "   是否展示： " + it[0].isShow + "\n" + it[1].showName + "   是否展示： " + it[1].isShow
             }
