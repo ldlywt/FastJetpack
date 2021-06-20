@@ -1,6 +1,8 @@
 package com.aisier.net
 
-class ApiRepository {
+import com.aisier.architecture.base.BaseRepository
 
-    suspend fun fetchWxArticle() = UserRetrofitClient.service.getWxArticle()
+class ApiRepository : BaseRepository() {
+
+    suspend fun fetchWxArticle() = executeResp(RetrofitClient.service.getWxArticle())
 }

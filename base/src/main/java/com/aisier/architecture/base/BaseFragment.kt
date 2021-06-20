@@ -11,8 +11,7 @@ import com.aisier.architecture.anno.FragmentConfiguration
  * desc   :
  * version: 1.1
  */
-abstract class BaseFragment(@LayoutRes contentLayoutId: Int) :
-    Fragment(contentLayoutId) {
+abstract class BaseFragment(@LayoutRes contentLayoutId: Int) : Fragment(contentLayoutId) {
 
     private var useEventBus = false
 

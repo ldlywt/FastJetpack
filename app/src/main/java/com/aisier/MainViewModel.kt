@@ -3,10 +3,8 @@ package com.aisier
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.aisier.architecture.base.BaseViewModel
-import com.aisier.architecture.entity.convertHttpRes
-import com.aisier.architecture.entity.handlingApiExceptions
+import com.aisier.architecture.entity.ResState
 import com.aisier.architecture.entity.handlingExceptions
-import com.aisier.architecture.entity.handlingHttpResponse
 import com.aisier.bean.WrapperTestBean
 import com.aisier.bean.WxArticleBean
 import com.aisier.net.ApiRepository
@@ -28,25 +26,21 @@ class MainViewModel : BaseViewModel() {
     val resultUiLiveData = MutableLiveData<BaseUiModel<List<WrapperTestBean>>>()
 
     fun requestNet() {
+        resultUiLiveData.postValue(BaseUiModel(showLoading = true))
         launchOnIO(
-            tryBlock = {
-                resultUiLiveData.postValue(BaseUiModel(showLoading = true))
-                delay(1000)
-                repository.fetchWxArticle().run {
-                    handlingHttpResponse<List<WxArticleBean>>(
-                        this.convertHttpRes(),
-                        successBlock = { data ->
-                            handleData(data)
-                        },
-                        failureBlock = { errorCode, errorMsg ->
-                            handlingApiExceptions(errorCode, errorMsg)
-                        }
-                    )
+                tryBlock = {
+                    delay(1000)
+                    val states: ResState<List<WxArticleBean>> = repository.fetchWxArticle()
+                    if (states is ResState.Success) {
+                        handleData(states.data)
+                    } else if (states is ResState.Error) {
+                        resultUiLiveData.postValue(BaseUiModel(showLoading = false, showError = states.exception.message))
+                    }
+                },
+                catchBlock = { e ->
+                    handlingExceptions(e)
                 }
-            },
-            catchBlock = { e ->
-                handlingExceptions(e)
-            }
+
         )
     }
 

@@ -6,8 +6,8 @@ import java.net.SocketTimeoutException
 import java.util.concurrent.CancellationException
 
 enum class HttpError(var code: Int, var errorMsg: String) {
-    TOKEN_EXPIRE(301, "token is expired"),
-    PARAMS_ERROR(403, "params is error")
+    TOKEN_EXPIRE(3001, "token is expired"),
+    PARAMS_ERROR(4003, "params is error")
     // ...... more
 }
 

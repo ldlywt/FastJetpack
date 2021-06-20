@@ -1,12 +1,8 @@
 package com.aisier.architecture.entity
 
-data class ApiResponse<out T>(val errorCode: Int, val errorMsg: String?, val data: T?)
+data class ApiResponse<out T>(val errorCode: Int, val errorMsg: String?, val data: T)
 
-sealed class HttpResponse
-
-data class Success<out T>(val data: T) : HttpResponse()
-
-data class Failure(val errorCode: Int, val errorMsg: String?) : HttpResponse()
-
-
-
+sealed class ResState<out T : Any> {
+    data class Success<out T : Any>(val data: T) : ResState<T>()
+    data class Error(val exception: Exception) : ResState<Nothing>()
+}
