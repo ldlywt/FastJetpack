@@ -17,7 +17,7 @@ import com.gyf.immersionbar.ImmersionBar
 </pre> *
  */
 abstract class BaseActivity(@LayoutRes contentLayoutId: Int) :
-    AppCompatActivity(contentLayoutId) {
+    AppCompatActivity(contentLayoutId), IUiView {
 
     private val mFactory: ViewModelProvider.Factory by lazy {
         ViewModelProvider.AndroidViewModelFactory.getInstance(BaseApp.instance)
@@ -46,14 +46,15 @@ abstract class BaseActivity(@LayoutRes contentLayoutId: Int) :
 
 
     private var progressDialog: ProgressDialog? = null
-    protected fun showLoading() {
+
+    override fun showLoading() {
         if (progressDialog == null)
             progressDialog = ProgressDialog(this)
         progressDialog?.show()
     }
 
-    protected fun dismissLoading() {
-        progressDialog?.dismiss()
+    override fun dismissLoading() {
+        progressDialog?.takeIf { it.isShowing }?.dismiss()
     }
 
 }

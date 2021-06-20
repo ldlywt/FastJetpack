@@ -59,25 +59,20 @@ class MainActivity : BaseActivity(R.layout.activity_main) {
 //
 //        }
 
-        mViewModel.wxArticleLiveData.observe(this, object : IStateObserver<List<WxArticleBean>>() {
+        mViewModel.wxArticleLiveData.observe(this, object : IStateObserver<List<WxArticleBean>>(this) {
 
-            override fun onDataChange(result: List<WxArticleBean>?) {
-                dismissLoading()
-                mBinding.tvContent.text = result?.toString()
+            override fun onDataChange(data: List<WxArticleBean>?) {
+                mBinding.tvContent.text = data?.toString()
             }
 
-            override fun onLoading(isShow: Boolean) {
-                showLoading()
-            }
         })
+
     }
 
     private fun initData() {
         mBinding.btnNet.setOnClickListener { mViewModel.requestNet() }
         mBinding.btnNetV2.setOnClickListener { mViewModel.requestNetV2() }
         supportFragmentManager.beginTransaction().replace(R.id.fl_contain, MainFragment()).commit()
-        mBinding.goSecondActivity.setOnClickListener {
-            startActivity<SecondActivity>()
-        }
+        mBinding.goSecondActivity.setOnClickListener { startActivity<SecondActivity>() }
     }
 }
