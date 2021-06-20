@@ -10,7 +10,7 @@ abstract class IStateObserver<T>(private val uiView: IUiView? = null) : Observer
             DataState.STATE_LOADING -> onShowLoading()
             DataState.STATE_SUCCESS -> {
                 onDismissLoading()
-                onDataChange(t.data)
+                onSuccess(t.data)
             }
 
             DataState.STATE_EMPTY -> {
@@ -27,7 +27,7 @@ abstract class IStateObserver<T>(private val uiView: IUiView? = null) : Observer
         }
     }
 
-    abstract fun onDataChange(data: T?)
+    abstract fun onSuccess(data: T?)
 
     open fun onDataEmpty() = Unit
 

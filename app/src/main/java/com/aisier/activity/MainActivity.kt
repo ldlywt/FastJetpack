@@ -61,7 +61,7 @@ class MainActivity : BaseActivity(R.layout.activity_main) {
 
         mViewModel.wxArticleLiveData.observe(this, object : IStateObserver<List<WxArticleBean>>(this) {
 
-            override fun onDataChange(data: List<WxArticleBean>?) {
+            override fun onSuccess(data: List<WxArticleBean>?) {
                 mBinding.tvContent.text = data?.toString()
             }
 

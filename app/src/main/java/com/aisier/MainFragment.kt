@@ -34,7 +34,7 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
 
         mViewModel.wxArticleLiveData.observe(viewLifecycleOwner, object : IStateObserver<List<WxArticleBean>>() {
 
-            override fun onDataChange(result: List<WxArticleBean>?) {
+            override fun onSuccess(result: List<WxArticleBean>?) {
                 result?:return
                 val wxArticleBean: WxArticleBean = result[0]
                 mBinding.text.text =
