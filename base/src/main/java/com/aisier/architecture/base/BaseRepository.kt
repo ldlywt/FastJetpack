@@ -15,9 +15,9 @@ import java.io.IOException
 open class BaseRepository {
 
     suspend fun <T : Any> executeResp(
-        resp: ApiResponse<T>,
-        successBlock: (suspend CoroutineScope.() -> Unit)? = null,
-        errorBlock: (suspend CoroutineScope.() -> Unit)? = null,
+            resp: ApiResponse<T>,
+            successBlock: (suspend CoroutineScope.() -> Unit)? = null,
+            errorBlock: (suspend CoroutineScope.() -> Unit)? = null,
     ): ResState<T> {
         return coroutineScope {
             if (resp.errorCode == 0) {
@@ -36,25 +36,21 @@ open class BaseRepository {
      * @param block api的请求方法
      * @param stateLiveData 每个请求传入相应的LiveData，主要负责网络状态的监听
      */
-    suspend fun <T : Any> executeResp(
-        block: suspend () -> BaseResp<T>,
-        stateLiveData: StateLiveData<T>
-    ) {
+    suspend fun <T : Any> executeResp(block: suspend () -> BaseResp<T>, stateLiveData: StateLiveData<T>) {
         var baseResp = BaseResp<T>()
-        try {
+        runCatching {
             baseResp.dataState = DataState.STATE_LOADING
             stateLiveData.postValue(baseResp)
             delay(1000)
             baseResp = block.invoke()
             handleHttpOkResponse(baseResp)
-        } catch (e: Exception) {
+        }.onFailure { e ->
             //非后台返回错误，捕获到的异常
             baseResp.dataState = DataState.STATE_ERROR
             baseResp.error = e
             handlingExceptions(e)
-        } finally {
-            stateLiveData.postValue(baseResp)
         }
+        stateLiveData.postValue(baseResp)
     }
 
     /**

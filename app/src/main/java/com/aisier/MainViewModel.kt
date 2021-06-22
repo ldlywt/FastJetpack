@@ -32,26 +32,39 @@ class MainViewModel : BaseViewModel() {
 
     fun requestNet() {
         resultUiLiveData.postValue(BaseUiModel(showLoading = true))
-        launchOnIO(
-            tryBlock = {
-                delay(1000)
-                val states: ResState<List<WxArticleBean>> = repository.fetchWxArticle()
+        viewModelScope.launch {
+            delay(1000)
+            runCatching {
+                repository.fetchWxArticle()
+            }.onSuccess { states ->
                 if (states is ResState.Success) {
                     handleData(states.data)
                 } else if (states is ResState.Error) {
-                    resultUiLiveData.postValue(
-                        BaseUiModel(
-                            showLoading = false,
-                            showError = states.exception.message
-                        )
-                    )
+                    resultUiLiveData.postValue(BaseUiModel(showLoading = false, showError = states.exception.message))
                 }
-            },
-            catchBlock = { e ->
+            }.onFailure { e ->
+                resultUiLiveData.postValue(BaseUiModel(showLoading = false))
                 handlingExceptions(e)
             }
+        }
+    }
 
-        )
+    fun requestNetError() {
+        resultUiLiveData.postValue(BaseUiModel(showLoading = true))
+        viewModelScope.launch {
+            delay(1000)
+            runCatching {
+                repository.fetchWxArticleError()
+            }.onSuccess { states ->
+                if (states is ResState.Success) {
+                    handleData(states.data)
+                } else if (states is ResState.Error) {
+                    resultUiLiveData.postValue(BaseUiModel(showLoading = false, showError = states.exception.message))
+                }
+            }.onFailure { e ->
+                handlingExceptions(e)
+            }
+        }
     }
 
     fun requestNetV2() {
@@ -65,5 +78,11 @@ class MainViewModel : BaseViewModel() {
         data.forEach { list.add(WrapperTestBean(it)) }
         resultUiLiveData.postValue(BaseUiModel(showLoading = false, successData = list))
         Log.i("wutao--> ", "$list: ")
+    }
+
+    fun requestNetErrorV2() {
+        viewModelScope.launch {
+            repository.fetchWxArticleErrorV2(wxArticleLiveData)
+        }
     }
 }

@@ -2,6 +2,8 @@ package com.aisier.activity
 
 import android.util.Log
 import androidx.activity.viewModels
+import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.aisier.MainFragment
 import com.aisier.MainViewModel
@@ -48,30 +50,25 @@ class MainActivity : BaseActivity(R.layout.activity_main) {
             uiState.showError?.let { toast(it) }
         }
 
-//        mViewModel.wxArticleLiveData.observe(this) { baseResp ->
-//            when (baseResp.dataState) {
-//                DataState.STATE_LOADING -> showLoading()
-//                DataState.STATE_SUCCESS -> {
-//                    dismissLoading()
-//                    mBinding.tvContent.text = baseResp.data.toString()
-//                }
-//            }
-//
-//        }
-
         mViewModel.wxArticleLiveData.observe(this, object : IStateObserver<List<WxArticleBean>>(this) {
-
             override fun onSuccess(data: List<WxArticleBean>?) {
                 mBinding.tvContent.text = data?.toString()
             }
 
+            override fun onError(e: Throwable?) {
+                super.onError(e)
+                mBinding.tvContent.isGone = true
+                mBinding.ivContent.isVisible = true
+            }
         })
 
     }
 
     private fun initData() {
         mBinding.btnNet.setOnClickListener { mViewModel.requestNet() }
+        mBinding.btnNetError1.setOnClickListener { mViewModel.requestNetError() }
         mBinding.btnNetV2.setOnClickListener { mViewModel.requestNetV2() }
+        mBinding.btnNetError2.setOnClickListener { mViewModel.requestNetErrorV2() }
         supportFragmentManager.beginTransaction().replace(R.id.fl_contain, MainFragment()).commit()
         mBinding.goSecondActivity.setOnClickListener { startActivity<SecondActivity>() }
     }

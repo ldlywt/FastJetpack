@@ -12,8 +12,14 @@ class ApiRepository : BaseRepository() {
 
     suspend fun fetchWxArticle() = executeResp(mService.getWxArticle())
 
+    suspend fun fetchWxArticleError() = executeResp(mService.getWxArticleError())
+
     suspend fun fetchWxArticleV2(stateLiveData: StateLiveData<List<WxArticleBean>>) {
         executeResp({ mService.getWxArticleV2() }, stateLiveData)
+    }
+
+    suspend fun fetchWxArticleErrorV2(stateLiveData: StateLiveData<List<WxArticleBean>>) {
+        executeResp({ mService.getWxArticleErrorV2() }, stateLiveData)
     }
 
 }
