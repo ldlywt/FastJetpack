@@ -3,6 +3,7 @@ package com.aisier
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.aisier.architecture.base.BaseUiModel
 import com.aisier.architecture.base.BaseViewModel
 import com.aisier.architecture.entity.ResState
 import com.aisier.architecture.entity.handlingExceptions
@@ -62,6 +63,7 @@ class MainViewModel : BaseViewModel() {
                     resultUiLiveData.postValue(BaseUiModel(showLoading = false, showError = states.exception.message))
                 }
             }.onFailure { e ->
+                resultUiLiveData.postValue(BaseUiModel(showLoading = false))
                 handlingExceptions(e)
             }
         }

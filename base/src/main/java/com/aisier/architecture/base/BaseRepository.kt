@@ -38,10 +38,10 @@ open class BaseRepository {
      */
     suspend fun <T : Any> executeResp(block: suspend () -> BaseResp<T>, stateLiveData: StateLiveData<T>) {
         var baseResp = BaseResp<T>()
+        baseResp.dataState = DataState.STATE_LOADING
+        stateLiveData.postValue(baseResp)
+        delay(1000)
         runCatching {
-            baseResp.dataState = DataState.STATE_LOADING
-            stateLiveData.postValue(baseResp)
-            delay(1000)
             baseResp = block.invoke()
             handleHttpOkResponse(baseResp)
         }.onFailure { e ->

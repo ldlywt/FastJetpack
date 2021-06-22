@@ -9,10 +9,11 @@ import com.aisier.MainFragment
 import com.aisier.MainViewModel
 import com.aisier.R
 import com.aisier.ShareViewModel
-import com.aisier.architecture.base.BaseActivity
+import com.aisier.architecture.base.*
 import com.aisier.architecture.net.IStateObserver
 import com.aisier.architecture.util.startActivity
 import com.aisier.architecture.util.toast
+import com.aisier.bean.WrapperTestBean
 import com.aisier.bean.WxArticleBean
 import com.aisier.databinding.ActivityMainBinding
 import com.aisier.util.TimerShareLiveData
@@ -44,24 +45,34 @@ class MainActivity : BaseActivity(R.layout.activity_main) {
     }
 
     private fun initObserver() {
-        mViewModel.resultUiLiveData.observe(this) { uiState ->
-            uiState.showLoading.let { if (it) showLoading() else dismissLoading() }
-            uiState.successData.let { mBinding.tvContent.text = it.toString() }
-            uiState.showError?.let { toast(it) }
+        mViewModel.resultUiLiveData.observe(this) { uiState: BaseUiModel<List<WrapperTestBean>> ->
+            uiState.onLoading {
+                if (it) showLoading() else dismissLoading()
+            }.onSuccess {
+                showNetErrorPic(false)
+                mBinding.tvContent.text = it.toString()
+            }.onError {
+                showNetErrorPic(true)
+            }
         }
 
         mViewModel.wxArticleLiveData.observe(this, object : IStateObserver<List<WxArticleBean>>(this) {
             override fun onSuccess(data: List<WxArticleBean>?) {
+                showNetErrorPic(false)
                 mBinding.tvContent.text = data?.toString()
             }
 
             override fun onError(e: Throwable?) {
                 super.onError(e)
-                mBinding.tvContent.isGone = true
-                mBinding.ivContent.isVisible = true
+                showNetErrorPic(true)
             }
         })
 
+    }
+
+    private fun showNetErrorPic(isShowError: Boolean) {
+        mBinding.tvContent.isGone = isShowError
+        mBinding.ivContent.isVisible = isShowError
     }
 
     private fun initData() {

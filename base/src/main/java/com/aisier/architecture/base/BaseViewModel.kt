@@ -13,17 +13,33 @@ import kotlinx.coroutines.cancel
  */
 abstract class BaseViewModel : ViewModel() {
 
-    open class BaseUiModel<T>(
+    override fun onCleared() {
+        super.onCleared()
+        viewModelScope.cancel()
+    }
+}
+
+open class BaseUiModel<T>(
         var showLoading: Boolean = false,
         var showError: String? = null,
         var successData: T? = null,
         var showEnd: Boolean = false, // 加载更多
         var isRefresh: Boolean = false // 刷新
-    )
+)
 
-    override fun onCleared() {
-        super.onCleared()
-        viewModelScope.cancel()
+inline fun <T> BaseUiModel<T>.onSuccess(action: (value: T?) -> Unit): BaseUiModel<T> {
+    action(successData)
+    return this
+}
+
+inline fun <T> BaseUiModel<T>.onError(action: (value: String?) -> Unit): BaseUiModel<T> {
+    showError?.let {
+        action(it)
     }
+    return this
+}
 
+inline fun <T> BaseUiModel<T>.onLoading(action: (value: Boolean) -> Unit): BaseUiModel<T> {
+    action(showLoading)
+    return this
 }
