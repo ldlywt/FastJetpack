@@ -1,7 +1,7 @@
 package com.aisier.net
 
 import com.aisier.architecture.entity.ApiResponse
-import com.aisier.architecture.net.BaseResp
+import com.aisier.architecture.entity.BaseResponse
 import com.aisier.bean.WxArticleBean
 import retrofit2.http.GET
 
@@ -14,10 +14,10 @@ interface ApiService {
     suspend fun getWxArticleError(): ApiResponse<List<WxArticleBean>>
 
     @GET("wxarticle/chapters/json")
-    suspend fun getWxArticleV2(): BaseResp<List<WxArticleBean>>
+    suspend fun getWxArticleV2(): BaseResponse<List<WxArticleBean>>
 
     @GET("abc/chapters/json")
-    suspend fun getWxArticleErrorV2(): BaseResp<List<WxArticleBean>>
+    suspend fun getWxArticleErrorV2(): BaseResponse<List<WxArticleBean>>
 
     companion object {
         const val BASE_URL = "https://wanandroid.com/"

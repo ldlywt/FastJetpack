@@ -13,29 +13,32 @@ abstract class BaseRetrofitClient {
         private const val TIME_OUT = 5
     }
 
-    protected val client: OkHttpClient
-        get() {
-            val builder = OkHttpClient.Builder()
-            val logging = HttpLoggingInterceptor()
-            if (BuildConfig.DEBUG) {
-                logging.level = HttpLoggingInterceptor.Level.BODY
-            } else {
-                logging.level = HttpLoggingInterceptor.Level.BASIC
-            }
-            builder.addInterceptor(logging)
+    private val client: OkHttpClient by lazy {
+        val builder = OkHttpClient.Builder()
+                .addInterceptor(getHttpLoggingInterceptor())
                 .connectTimeout(TIME_OUT.toLong(), TimeUnit.SECONDS)
-            handleBuilder(builder)
-            return builder.build()
+        handleBuilder(builder)
+        builder.build()
+    }
+
+    private fun getHttpLoggingInterceptor(): HttpLoggingInterceptor {
+        val logging = HttpLoggingInterceptor()
+        if (BuildConfig.DEBUG) {
+            logging.level = HttpLoggingInterceptor.Level.BODY
+        } else {
+            logging.level = HttpLoggingInterceptor.Level.BASIC
         }
+        return logging
+    }
 
     abstract fun handleBuilder(builder: OkHttpClient.Builder)
 
     open fun <Service> getService(serviceClass: Class<Service>, baseUrl: String): Service {
         return Retrofit.Builder()
-            .client(client)
-            .addConverterFactory(GsonConverterFactory.create())
-            .baseUrl(baseUrl)
-            .build()
-            .create(serviceClass)
+                .client(client)
+                .addConverterFactory(GsonConverterFactory.create())
+                .baseUrl(baseUrl)
+                .build()
+                .create(serviceClass)
     }
 }

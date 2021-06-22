@@ -63,15 +63,9 @@ class MainViewModel : BaseViewModel() {
                     resultUiLiveData.postValue(BaseUiModel(showLoading = false, showError = states.exception.message))
                 }
             }.onFailure { e ->
-                resultUiLiveData.postValue(BaseUiModel(showLoading = false))
+                resultUiLiveData.postValue(BaseUiModel(showLoading = false, showError = e.message))
                 handlingExceptions(e)
             }
-        }
-    }
-
-    fun requestNetV2() {
-        viewModelScope.launch {
-            repository.fetchWxArticleV2(wxArticleLiveData)
         }
     }
 
@@ -80,6 +74,12 @@ class MainViewModel : BaseViewModel() {
         data.forEach { list.add(WrapperTestBean(it)) }
         resultUiLiveData.postValue(BaseUiModel(showLoading = false, successData = list))
         Log.i("wutao--> ", "$list: ")
+    }
+
+    fun requestNetV2() {
+        viewModelScope.launch {
+            repository.fetchWxArticleV2(wxArticleLiveData)
+        }
     }
 
     fun requestNetErrorV2() {

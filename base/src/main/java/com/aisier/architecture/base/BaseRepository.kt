@@ -1,11 +1,6 @@
 package com.aisier.architecture.base
 
-import com.aisier.architecture.entity.ApiResponse
-import com.aisier.architecture.entity.ResState
-import com.aisier.architecture.entity.handlingApiExceptions
-import com.aisier.architecture.entity.handlingExceptions
-import com.aisier.architecture.net.BaseResp
-import com.aisier.architecture.net.DataState
+import com.aisier.architecture.entity.*
 import com.aisier.architecture.net.StateLiveData
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.coroutineScope
@@ -14,6 +9,9 @@ import java.io.IOException
 
 open class BaseRepository {
 
+    /**
+     * 方式一
+     */
     suspend fun <T : Any> executeResp(
             resp: ApiResponse<T>,
             successBlock: (suspend CoroutineScope.() -> Unit)? = null,
@@ -31,13 +29,14 @@ open class BaseRepository {
     }
 
     /**
+     * 方式二
      * repo 请求数据的公共方法，
      * 在不同状态下先设置 baseResp.dataState的值，最后将dataState 的状态通知给UI
      * @param block api的请求方法
      * @param stateLiveData 每个请求传入相应的LiveData，主要负责网络状态的监听
      */
-    suspend fun <T : Any> executeResp(block: suspend () -> BaseResp<T>, stateLiveData: StateLiveData<T>) {
-        var baseResp = BaseResp<T>()
+    suspend fun <T : Any> executeResp(block: suspend () -> IBaseResponse<T>, stateLiveData: StateLiveData<T>) {
+        var baseResp: IBaseResponse<T> = BaseResponse()
         baseResp.dataState = DataState.STATE_LOADING
         stateLiveData.postValue(baseResp)
         //for test
@@ -47,6 +46,7 @@ open class BaseRepository {
         }.onSuccess {
             handleHttpOkResponse(baseResp)
         }.onFailure { e ->
+            e.printStackTrace()
             //非后台返回错误，捕获到的异常
             baseResp.dataState = DataState.STATE_ERROR
             baseResp.error = e
@@ -58,11 +58,11 @@ open class BaseRepository {
     /**
      * Http 状态码200，请求成功，但是后台定义了一些错误码
      */
-    private fun <T : Any> handleHttpOkResponse(baseResp: BaseResp<T>) {
+    private fun <T : Any> handleHttpOkResponse(baseResp: IBaseResponse<T>) {
         if (baseResp.isSuccess) {
             //请求成功，判断数据是否为空，
             //因为数据有多种类型，需要自己设置类型进行判断
-            if (baseResp.data == null || baseResp.data is List<*> && baseResp.data.size == 0) {
+            if (baseResp.httpData == null || baseResp.httpData is List<*> && (baseResp.httpData as List<*>).isEmpty()) {
                 //TODO: 数据为空,结构变化时需要修改判空条件
                 baseResp.dataState = DataState.STATE_EMPTY
             } else {
@@ -70,7 +70,7 @@ open class BaseRepository {
                 baseResp.dataState = DataState.STATE_SUCCESS
             }
         } else {
-            handlingApiExceptions(baseResp.errorCode, baseResp.errorMsg)
+            handlingApiExceptions(baseResp.httpCode, baseResp.httpMsg)
             baseResp.dataState = DataState.STATE_FAILED
         }
     }
