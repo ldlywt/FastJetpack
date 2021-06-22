@@ -59,20 +59,7 @@ fun EditText.hideKeyBoard() {
     imm.hideSoftInputFromWindow(this.windowToken, 0)
 }
 
-//filter frequent click event
-fun View.clickWithLimit(block: ((v: View?) -> Unit)) {
-    setOnClickListener(object : View.OnClickListener {
-        var last = 0L
-        override fun onClick(v: View?) {
-            if (System.currentTimeMillis() - last > 500) {
-                block(v)
-                last = System.currentTimeMillis()
-            }
-        }
-    })
-}
-
-fun View.clickWithLimit(intervalMill: Int, block: ((v: View?) -> Unit)) {
+fun View.clickWithLimit(intervalMill: Int = 500, block: ((v: View?) -> Unit)) {
     setOnClickListener(object : View.OnClickListener {
         var last = 0L
         override fun onClick(v: View?) {

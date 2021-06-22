@@ -1,8 +1,6 @@
 package com.aisier.architecture.base
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.cancel
 
 /**
  * author : wutao
@@ -11,14 +9,11 @@ import kotlinx.coroutines.cancel
  * desc   :
  * version: 1.0
  */
-abstract class BaseViewModel : ViewModel() {
+abstract class BaseViewModel : ViewModel()
 
-    override fun onCleared() {
-        super.onCleared()
-        viewModelScope.cancel()
-    }
-}
-
+/**
+ * 与将ui状态返回回去的方式二
+ */
 open class BaseUiModel<T>(
         var showLoading: Boolean = false,
         var showError: String? = null,

@@ -3,8 +3,7 @@ package com.aisier.architecture.net
 class BaseResp<T> {
     var errorCode = -1
     var errorMsg: String? = null
-    var data: T? = null
-        private set
+    val data: T? = null
     var dataState: DataState? = null
     var error: Throwable? = null
     val isSuccess: Boolean

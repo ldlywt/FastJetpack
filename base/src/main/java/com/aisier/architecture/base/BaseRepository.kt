@@ -40,9 +40,11 @@ open class BaseRepository {
         var baseResp = BaseResp<T>()
         baseResp.dataState = DataState.STATE_LOADING
         stateLiveData.postValue(baseResp)
+        //for test
         delay(1000)
         runCatching {
             baseResp = block.invoke()
+        }.onSuccess {
             handleHttpOkResponse(baseResp)
         }.onFailure { e ->
             //非后台返回错误，捕获到的异常
@@ -60,7 +62,7 @@ open class BaseRepository {
         if (baseResp.isSuccess) {
             //请求成功，判断数据是否为空，
             //因为数据有多种类型，需要自己设置类型进行判断
-            if (baseResp.data == null || baseResp.data is List<*> && (baseResp.data as List<*>).size == 0) {
+            if (baseResp.data == null || baseResp.data is List<*> && baseResp.data.size == 0) {
                 //TODO: 数据为空,结构变化时需要修改判空条件
                 baseResp.dataState = DataState.STATE_EMPTY
             } else {
