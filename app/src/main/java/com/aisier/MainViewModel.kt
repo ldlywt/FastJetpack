@@ -10,7 +10,7 @@ import com.aisier.architecture.entity.handlingExceptions
 import com.aisier.architecture.net.StateLiveData
 import com.aisier.bean.WrapperTestBean
 import com.aisier.bean.WxArticleBean
-import com.aisier.net.ApiRepository
+import com.aisier.net.WxArticleRepository
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -25,7 +25,7 @@ import kotlinx.coroutines.launch
  */
 class MainViewModel : BaseViewModel() {
 
-    private val repository by lazy { ApiRepository() }
+    private val repository by lazy { WxArticleRepository() }
 
     val resultUiLiveData = MutableLiveData<BaseUiModel<List<WrapperTestBean>>>()
 

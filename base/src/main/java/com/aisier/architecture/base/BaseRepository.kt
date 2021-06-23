@@ -37,8 +37,7 @@ open class BaseRepository {
      */
     suspend fun <T : Any> executeResp(block: suspend () -> IBaseResponse<T>, stateLiveData: StateLiveData<T>) {
         var baseResp: IBaseResponse<T> = BaseResponse()
-        baseResp.dataState = DataState.STATE_LOADING
-        stateLiveData.postValue(baseResp)
+        stateLiveData.postLoading(baseResp)
         //for test
         delay(1000)
         runCatching {
@@ -48,8 +47,7 @@ open class BaseRepository {
         }.onFailure { e ->
             e.printStackTrace()
             //非后台返回错误，捕获到的异常
-            baseResp.dataState = DataState.STATE_ERROR
-            baseResp.error = e
+            stateLiveData.setError(baseResp, e)
             handlingExceptions(e)
         }
         stateLiveData.postValue(baseResp)
