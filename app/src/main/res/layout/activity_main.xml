@@ -30,28 +30,15 @@
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_weight="1"
-            android:text="请求网络V1" />
+            android:text="请求网络" />
 
         <Button
             android:id="@+id/btn_net_error_1"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_weight="1"
-            android:text="请求网络错误V1" />
+            android:text="请求网络错误" />
     </LinearLayout>
-
-    <Button
-        android:id="@+id/btn_net_v2"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:text="请求网络V2" />
-
-
-    <Button
-        android:id="@+id/btn_net_error_2"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:text="请求网络错误V2" />
 
     <TextView
         android:id="@+id/tv_content"

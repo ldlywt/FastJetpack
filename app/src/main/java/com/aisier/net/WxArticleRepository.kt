@@ -10,16 +10,12 @@ class WxArticleRepository : BaseRepository() {
         RetrofitClient.service
     }
 
-    suspend fun fetchWxArticle() = executeResp(mService.getWxArticle())
-
-    suspend fun fetchWxArticleError() = executeResp(mService.getWxArticleError())
-
     suspend fun fetchWxArticleV2(stateLiveData: StateLiveData<List<WxArticleBean>>) {
-        executeResp({ mService.getWxArticleV2() }, stateLiveData)
+        executeResp(stateLiveData, mService::getWxArticleV2)
     }
 
     suspend fun fetchWxArticleErrorV2(stateLiveData: StateLiveData<List<WxArticleBean>>) {
-        executeResp({ mService.getWxArticleErrorV2() }, stateLiveData)
+        executeResp(stateLiveData, mService::getWxArticleErrorV2)
     }
 
 }

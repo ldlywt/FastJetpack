@@ -2,40 +2,16 @@ package com.aisier.architecture.base
 
 import com.aisier.architecture.entity.*
 import com.aisier.architecture.net.StateLiveData
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
-import java.io.IOException
 
 open class BaseRepository {
-
     /**
-     * 方式一
-     */
-    suspend fun <T : Any> executeResp(
-            resp: ApiResponse<T>,
-            successBlock: (suspend CoroutineScope.() -> Unit)? = null,
-            errorBlock: (suspend CoroutineScope.() -> Unit)? = null,
-    ): ResState<T> {
-        return coroutineScope {
-            if (resp.errorCode == 0) {
-                successBlock?.let { it() }
-                ResState.Success(resp.data)
-            } else {
-                errorBlock?.let { it() } ?: handlingApiExceptions(resp.errorCode, resp.errorMsg)
-                ResState.Error(IOException(resp.errorMsg))
-            }
-        }
-    }
-
-    /**
-     * 方式二
      * repo 请求数据的公共方法，
      * 在不同状态下先设置 baseResp.dataState的值，最后将dataState 的状态通知给UI
      * @param block api的请求方法
      * @param stateLiveData 每个请求传入相应的LiveData，主要负责网络状态的监听
      */
-    suspend fun <T : Any> executeResp(block: suspend () -> IBaseResponse<T>, stateLiveData: StateLiveData<T>) {
+    suspend fun <T : Any> executeResp(stateLiveData: StateLiveData<T>, block: suspend () -> IBaseResponse<T>) {
         var baseResp: IBaseResponse<T> = BaseResponse()
         stateLiveData.postLoading(baseResp)
         //for test

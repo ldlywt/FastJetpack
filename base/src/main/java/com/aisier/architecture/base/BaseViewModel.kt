@@ -10,31 +10,3 @@ import androidx.lifecycle.ViewModel
  * version: 1.0
  */
 abstract class BaseViewModel : ViewModel()
-
-/**
- * 与将ui状态返回回去的方式二
- */
-open class BaseUiModel<T>(
-        var showLoading: Boolean = false,
-        var showError: String? = null,
-        var successData: T? = null,
-        var showEnd: Boolean = false, // 加载更多
-        var isRefresh: Boolean = false // 刷新
-)
-
-inline fun <T> BaseUiModel<T>.onSuccess(action: (value: T?) -> Unit): BaseUiModel<T> {
-    action(successData)
-    return this
-}
-
-inline fun <T> BaseUiModel<T>.onError(action: (value: String?) -> Unit): BaseUiModel<T> {
-    showError?.let {
-        action(it)
-    }
-    return this
-}
-
-inline fun <T> BaseUiModel<T>.onLoading(action: (value: Boolean) -> Unit): BaseUiModel<T> {
-    action(showLoading)
-    return this
-}

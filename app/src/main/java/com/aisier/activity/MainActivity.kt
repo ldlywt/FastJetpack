@@ -9,11 +9,9 @@ import com.aisier.MainFragment
 import com.aisier.MainViewModel
 import com.aisier.R
 import com.aisier.ShareViewModel
-import com.aisier.architecture.base.*
-import com.aisier.architecture.net.IStateObserver
+import com.aisier.architecture.base.BaseActivity
 import com.aisier.architecture.util.startActivity
 import com.aisier.architecture.util.toast
-import com.aisier.bean.WrapperTestBean
 import com.aisier.bean.WxArticleBean
 import com.aisier.databinding.ActivityMainBinding
 import com.aisier.util.TimerShareLiveData
@@ -45,29 +43,25 @@ class MainActivity : BaseActivity(R.layout.activity_main) {
     }
 
     private fun initObserver() {
-        mViewModel.resultUiLiveData.observe(this) { uiState: BaseUiModel<List<WrapperTestBean>> ->
-            uiState.onLoading {
-                if (it) showLoading() else dismissLoading()
-            }.onSuccess {
-                showNetErrorPic(false)
-                mBinding.tvContent.text = it.toString()
-            }.onError {
-                showNetErrorPic(true)
-            }
-        }
-
-        mViewModel.wxArticleLiveData.observe(this, object : IStateObserver<List<WxArticleBean>>(this) {
-            override fun onSuccess(data: List<WxArticleBean>?) {
+        mViewModel.wxArticleLiveData.observeState(this) {
+            onSuccess { data: List<WxArticleBean>? ->
+                Log.i("wutao--> ", "$data: ")
                 showNetErrorPic(false)
                 mBinding.tvContent.text = data?.toString()
             }
 
-            override fun onError(e: Throwable?) {
-                super.onError(e)
+            onException {
                 showNetErrorPic(true)
             }
-        })
 
+            onShowLoading {
+                showLoading()
+            }
+
+            onDismissLoading {
+                dismissLoading()
+            }
+        }
     }
 
     private fun showNetErrorPic(isShowError: Boolean) {
@@ -76,11 +70,9 @@ class MainActivity : BaseActivity(R.layout.activity_main) {
     }
 
     private fun initData() {
+        supportFragmentManager.beginTransaction().replace(R.id.fl_contain, MainFragment()).commit()
         mBinding.btnNet.setOnClickListener { mViewModel.requestNet() }
         mBinding.btnNetError1.setOnClickListener { mViewModel.requestNetError() }
-        mBinding.btnNetV2.setOnClickListener { mViewModel.requestNetV2() }
-        mBinding.btnNetError2.setOnClickListener { mViewModel.requestNetErrorV2() }
-        supportFragmentManager.beginTransaction().replace(R.id.fl_contain, MainFragment()).commit()
         mBinding.goSecondActivity.setOnClickListener { startActivity<SecondActivity>() }
     }
 }
