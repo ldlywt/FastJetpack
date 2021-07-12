@@ -21,11 +21,6 @@ class StateLiveData<T> : MutableLiveData<IBaseResponse<T>>() {
         baseResp.error = error
     }
 
-    override fun onInactive() {
-        super.onInactive()
-        stateListenerList.clear()
-    }
-
     fun observeState(owner: LifecycleOwner, listenerBuilder: ListenerBuilder.() -> Unit) {
         stateListenerList.add(ListenerBuilder().also(listenerBuilder))
         val value = object : IStateObserver<T>() {

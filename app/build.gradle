@@ -34,4 +34,5 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(path: ':base')
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.7'
 }
