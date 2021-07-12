@@ -9,8 +9,6 @@ import com.aisier.architecture.util.toast
 
 class StateLiveData<T> : MutableLiveData<IBaseResponse<T>>() {
 
-    private val stateListenerList = mutableListOf<ListenerBuilder?>()
-
     fun postLoading(baseResp: IBaseResponse<T>) {
         baseResp.dataState = DataState.STATE_LOADING
         postValue(baseResp)
@@ -22,36 +20,26 @@ class StateLiveData<T> : MutableLiveData<IBaseResponse<T>>() {
     }
 
     fun observeState(owner: LifecycleOwner, listenerBuilder: ListenerBuilder.() -> Unit) {
-        stateListenerList.add(ListenerBuilder().also(listenerBuilder))
+        val listener = ListenerBuilder().also(listenerBuilder)
         val value = object : IStateObserver<T>() {
             override fun onShowLoading() {
-                stateListenerList.forEach { listener ->
-                    listener?.mShowLoadingListenerAction?.invoke()
-                }
+                listener.mShowLoadingListenerAction?.invoke()
             }
 
             override fun onDismissLoading() {
-                stateListenerList.forEach { listener ->
-                    listener?.mDismissLoadingListenerAction?.invoke()
-                }
+                listener.mDismissLoadingListenerAction?.invoke()
             }
 
             override fun onSuccess(data: T?) {
-                stateListenerList.forEach { listener ->
-                    listener?.mSuccessListenerAction?.invoke(data)
-                }
+                listener.mSuccessListenerAction?.invoke(data)
             }
 
             override fun onError(e: Throwable?) {
-                stateListenerList.forEach { listener ->
-                    listener?.mErrorListenerAction?.invoke(e) ?: toast("Http Error")
-                }
+                listener.mErrorListenerAction?.invoke(e) ?: toast("Http Error")
             }
 
             override fun onDataEmpty() {
-                stateListenerList.forEach { listener ->
-                    listener?.mEmptyListenerAction?.invoke()
-                }
+                listener.mEmptyListenerAction?.invoke()
             }
 
         }
