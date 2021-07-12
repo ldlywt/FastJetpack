@@ -42,6 +42,10 @@ class StateLiveData<T> : MutableLiveData<IBaseResponse<T>>() {
                 listener.mEmptyListenerAction?.invoke()
             }
 
+            override fun onComplete() {
+                listener.mCompleteListenerAction?.invoke()
+            }
+
         }
         super.observe(owner, value)
     }
@@ -52,6 +56,7 @@ class StateLiveData<T> : MutableLiveData<IBaseResponse<T>>() {
         internal var mDismissLoadingListenerAction: (() -> Unit)? = null
         internal var mErrorListenerAction: ((Throwable?) -> Unit)? = null
         internal var mEmptyListenerAction: (() -> Unit)? = null
+        internal var mCompleteListenerAction: (() -> Unit)? = null
 
         fun onSuccess(action: (T?) -> Unit) {
             mSuccessListenerAction = action
@@ -71,6 +76,10 @@ class StateLiveData<T> : MutableLiveData<IBaseResponse<T>>() {
 
         fun onEmpty(action: () -> Unit) {
             mEmptyListenerAction = action
+        }
+
+        fun onComplete(action: () -> Unit) {
+            mCompleteListenerAction = action
         }
     }
 

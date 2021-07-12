@@ -61,6 +61,10 @@ class MainActivity : BaseActivity(R.layout.activity_main) {
             onDismissLoading {
                 dismissLoading()
             }
+
+            onComplete {
+                Log.i("wutao--> ", "onComplete: ")
+            }
         }
     }
 

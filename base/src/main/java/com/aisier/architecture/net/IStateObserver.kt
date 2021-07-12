@@ -4,7 +4,7 @@ import androidx.lifecycle.Observer
 import com.aisier.architecture.entity.DataState
 import com.aisier.architecture.entity.IBaseResponse
 
-abstract class IStateObserver<T>() : Observer<IBaseResponse<T>> {
+abstract class IStateObserver<T> : Observer<IBaseResponse<T>> {
 
     override fun onChanged(t: IBaseResponse<T>) {
         when (t.dataState) {
@@ -25,6 +25,8 @@ abstract class IStateObserver<T>() : Observer<IBaseResponse<T>> {
             }
             else -> onDismissLoading()
         }
+        onComplete()
+
     }
 
     abstract fun onSuccess(data: T?)
@@ -36,5 +38,7 @@ abstract class IStateObserver<T>() : Observer<IBaseResponse<T>> {
     abstract fun onDismissLoading()
 
     abstract fun onError(e: Throwable?)
+
+    abstract fun onComplete()
 
 }
