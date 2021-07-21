@@ -4,6 +4,6 @@
     <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="android:windowTranslucentStatus">false</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
-        <item name="android:statusBarColor">@android:color/holo_red_light</item>
+        <item name="android:statusBarColor">@android:color/white</item>
     </style>
 </resources>

@@ -5,7 +5,6 @@ import android.os.Bundle
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import com.gyf.immersionbar.ImmersionBar
 
 /**
  * <pre>
@@ -24,24 +23,12 @@ abstract class BaseActivity(@LayoutRes contentLayoutId: Int) : AppCompatActivity
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setStatusBar()
         init()
     }
 
     protected abstract fun init()
 
     protected open fun getAppViewModelProvider(): ViewModelProvider = ViewModelProvider(BaseApp.instance, mFactory)
-
-    protected fun setStatusBar() {
-        ImmersionBar.with(this)
-                .transparentStatusBar()
-                .statusBarDarkFont(true)
-                .init()
-    }
-
-    protected fun setStatusBarDark() =
-            ImmersionBar.with(this).statusBarDarkFont(true).transparentBar().init()
-
 
     private var progressDialog: ProgressDialog? = null
 

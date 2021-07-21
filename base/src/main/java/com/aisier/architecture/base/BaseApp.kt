@@ -2,7 +2,6 @@ package com.aisier.architecture.base
 
 import android.app.Application
 import androidx.lifecycle.*
-import com.jeremyliao.liveeventbus.LiveEventBus
 
 /**
  * author : wutao
@@ -16,16 +15,7 @@ open class BaseApp : Application(), ViewModelStoreOwner {
     override fun onCreate() {
         super.onCreate()
         instance = this
-        initLiveBus()
         ProcessLifecycleOwner.get().lifecycle.addObserver(ApplicationLifecycleObserver())
-    }
-
-    private fun initLiveBus() {
-        LiveEventBus.get()
-                .config()
-                .supportBroadcast(this)
-                .lifecycleObserverAlwaysActive(true)
-                .autoClear(true)
     }
 
     override fun getViewModelStore(): ViewModelStore = ViewModelStore()
