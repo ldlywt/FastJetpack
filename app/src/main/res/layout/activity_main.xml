@@ -19,13 +19,6 @@
             android:text="第二个页面" />
 
         <Button
-            android:id="@+id/btn_test"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_weight="1"
-            android:text="Test" />
-
-        <Button
             android:id="@+id/btn_net_with_loading"
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -33,11 +26,18 @@
             android:text="请求网络自带Loading" />
 
         <Button
-            android:id="@+id/btn_multiple_data_sources"
+            android:id="@+id/btn_multiple_data_sources_net"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_weight="1"
-            android:text="多个数据源" />
+            android:text="多个数据源-net" />
+
+        <Button
+            android:id="@+id/btn_multiple_data_sources_db"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:text="多个数据源-数据库" />
 
     </LinearLayout>
 

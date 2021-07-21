@@ -2,6 +2,7 @@ package com.aisier.net
 
 import com.aisier.architecture.base.BaseRepository
 import com.aisier.architecture.entity.BaseResponse
+import com.aisier.architecture.entity.IBaseResponse
 import com.aisier.architecture.net.StateLiveData
 import com.aisier.bean.WxArticleBean
 import kotlinx.coroutines.Dispatchers
@@ -14,21 +15,20 @@ class WxArticleRepository : BaseRepository() {
         RetrofitClient.service
     }
 
-    suspend fun fetchWxArticle(stateLiveData: StateLiveData<List<WxArticleBean>>) {
-        executeResp(stateLiveData) {
+    suspend fun fetchWxArticle(): IBaseResponse<List<WxArticleBean>> {
+        return executeResp {
             mService.getWxArticle()
         }
     }
 
-    suspend fun fetchWxArticleError(stateLiveData: StateLiveData<List<WxArticleBean>>) {
-        executeResp(stateLiveData) {
+    suspend fun fetchWxArticleError(): IBaseResponse<List<WxArticleBean>> {
+        return executeResp {
             mService.getWxArticleError()
         }
     }
 
-    suspend fun fetchFromDb(mediatorLiveData: StateLiveData<List<WxArticleBean>>) {
-        val data = getWxArticleFromDatabase()
-        mediatorLiveData.value = data
+    suspend fun fetchFromDb(): IBaseResponse<List<WxArticleBean>> {
+        return getWxArticleFromDatabase()
     }
 
     private suspend fun getWxArticleFromDatabase(): BaseResponse<List<WxArticleBean>> = withContext(Dispatchers.IO) {

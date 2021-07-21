@@ -70,7 +70,11 @@ class MainActivity : BaseActivity(R.layout.activity_main) {
 
         mViewModel.mediatorLiveDataLiveData.observe(this) {
             showNetErrorPic(false)
-            mBinding.tvContent.text = it.testData.toString()
+            if (it.testData == null) {
+                mBinding.tvContent.text = it.httpData.toString()
+            } else {
+                mBinding.tvContent.text = it.testData.toString()
+            }
         }
     }
 
@@ -87,9 +91,13 @@ class MainActivity : BaseActivity(R.layout.activity_main) {
             mBinding.tvContent.text = ""
             mViewModel.requestNetWithLoading()
         }
-        mBinding.btnMultipleDataSources.setOnClickListener {
+        mBinding.btnMultipleDataSourcesDb.setOnClickListener {
             mBinding.tvContent.text = ""
             mViewModel.requestFromDb()
+        }
+        mBinding.btnMultipleDataSourcesNet.setOnClickListener {
+            mBinding.tvContent.text = ""
+            mViewModel.requestFromNet()
         }
         mBinding.goSecondActivity.setOnClickListener { startActivity<SecondActivity>() }
     }

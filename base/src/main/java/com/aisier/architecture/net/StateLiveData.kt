@@ -3,6 +3,7 @@ package com.aisier.architecture.net
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import com.aisier.architecture.base.IUiView
+import com.aisier.architecture.entity.BaseResponse
 import com.aisier.architecture.entity.DataState
 import com.aisier.architecture.entity.IBaseResponse
 import com.aisier.architecture.util.toast
@@ -18,7 +19,8 @@ import com.aisier.architecture.util.toast
  */
 class StateLiveData<T> : MutableLiveData<IBaseResponse<T>>() {
 
-    fun postLoading(baseResp: IBaseResponse<T>) {
+    fun postLoading() {
+        val baseResp: IBaseResponse<T> = BaseResponse()
         baseResp.dataState = DataState.STATE_LOADING
         postValue(baseResp)
     }

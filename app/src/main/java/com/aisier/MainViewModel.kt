@@ -24,39 +24,46 @@ class MainViewModel : BaseViewModel() {
 
     val wxArticleLiveData = StateLiveData<List<WxArticleBean>>()
     val wxArticleLoadingLiveData = StateLiveData<List<WxArticleBean>>()
-    val mediatorLiveDataLiveData = MediatorLiveData<IBaseResponse<List<WxArticleBean>>>()
-    val dbLiveData = StateLiveData<List<WxArticleBean>>()
-
-    init {
-        mediatorLiveDataLiveData.addSource(wxArticleLoadingLiveData) {
-            mediatorLiveDataLiveData.value = it
+    private val dbLiveData = StateLiveData<List<WxArticleBean>>()
+    private val apiLiveData = StateLiveData<List<WxArticleBean>>()
+    val mediatorLiveDataLiveData = MediatorLiveData<IBaseResponse<List<WxArticleBean>>>().apply {
+        this.addSource(apiLiveData) {
+            this.value = it
         }
-        mediatorLiveDataLiveData.addSource(dbLiveData) {
-            mediatorLiveDataLiveData.value = it
+        this.addSource(dbLiveData) {
+            this.value = it
         }
     }
 
     fun requestNet() {
+        wxArticleLiveData.postLoading()
         viewModelScope.launch {
-            repository.fetchWxArticle(wxArticleLiveData)
+            wxArticleLiveData.value = repository.fetchWxArticle()
         }
     }
 
     fun requestNetError() {
+        wxArticleLiveData.postLoading()
         viewModelScope.launch {
-            repository.fetchWxArticleError(wxArticleLiveData)
+            wxArticleLiveData.value = repository.fetchWxArticleError()
         }
     }
 
     fun requestNetWithLoading() {
         viewModelScope.launch {
-            repository.fetchWxArticle(wxArticleLoadingLiveData)
+            wxArticleLoadingLiveData.value = repository.fetchWxArticle()
+        }
+    }
+
+    fun requestFromNet() {
+        viewModelScope.launch {
+            apiLiveData.value = repository.fetchWxArticle()
         }
     }
 
     fun requestFromDb() {
         viewModelScope.launch {
-            repository.fetchFromDb(dbLiveData)
+            dbLiveData.value = repository.fetchFromDb()
         }
     }
 }
