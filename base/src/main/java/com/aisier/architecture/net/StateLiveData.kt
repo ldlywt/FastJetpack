@@ -2,11 +2,20 @@ package com.aisier.architecture.net
 
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
+import com.aisier.architecture.base.IUiView
 import com.aisier.architecture.entity.DataState
 import com.aisier.architecture.entity.IBaseResponse
 import com.aisier.architecture.util.toast
 
-
+/**
+ * <pre>
+ * @author : wutao
+ * e-mail : 670831931@qq.com
+ * time   : 2021/07/01
+ * desc   :
+ * version: 1.0
+</pre> *
+ */
 class StateLiveData<T> : MutableLiveData<IBaseResponse<T>>() {
 
     fun postLoading(baseResp: IBaseResponse<T>) {
@@ -19,15 +28,24 @@ class StateLiveData<T> : MutableLiveData<IBaseResponse<T>>() {
         baseResp.error = error
     }
 
-    fun observeState(owner: LifecycleOwner, listenerBuilder: ListenerBuilder.() -> Unit) {
+    fun observeState(owner: LifecycleOwner, isShowLoading: IUiView? = null, listenerBuilder: ListenerBuilder.() -> Unit) {
         val listener = ListenerBuilder().also(listenerBuilder)
-        val value = object : IStateObserver<T>() {
+        val value = object : IStateObserver<T>(isShowLoading) {
             override fun onShowLoading() {
-                listener.mShowLoadingListenerAction?.invoke()
+                if (listener.mShowLoadingListenerAction != null) {
+                    listener.mShowLoadingListenerAction?.invoke()
+                } else {
+                    super.onShowLoading()
+                }
             }
 
             override fun onDismissLoading() {
-                listener.mDismissLoadingListenerAction?.invoke()
+                if (listener.mDismissLoadingListenerAction != null) {
+                    listener.mDismissLoadingListenerAction?.invoke()
+                } else {
+                    super.onDismissLoading()
+                }
+
             }
 
             override fun onSuccess(data: T?) {

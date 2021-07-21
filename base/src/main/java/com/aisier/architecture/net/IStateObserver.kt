@@ -1,10 +1,11 @@
 package com.aisier.architecture.net
 
 import androidx.lifecycle.Observer
+import com.aisier.architecture.base.IUiView
 import com.aisier.architecture.entity.DataState
 import com.aisier.architecture.entity.IBaseResponse
 
-abstract class IStateObserver<T> : Observer<IBaseResponse<T>> {
+abstract class IStateObserver<T>(private val uiView: IUiView? = null) : Observer<IBaseResponse<T>> {
 
     override fun onChanged(t: IBaseResponse<T>) {
         when (t.dataState) {
@@ -33,9 +34,9 @@ abstract class IStateObserver<T> : Observer<IBaseResponse<T>> {
 
     abstract fun onDataEmpty()
 
-    abstract fun onShowLoading()
+    open fun onShowLoading() = uiView?.showLoading()
 
-    abstract fun onDismissLoading()
+    open fun onDismissLoading() = uiView?.dismissLoading()
 
     abstract fun onError(e: Throwable?)
 
