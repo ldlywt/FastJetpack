@@ -23,7 +23,6 @@ class MainViewModel : BaseViewModel() {
     private val repository by lazy { WxArticleRepository() }
 
     val wxArticleLiveData = StateLiveData<List<WxArticleBean>>()
-    val wxArticleLoadingLiveData = StateLiveData<List<WxArticleBean>>()
     private val dbLiveData = StateLiveData<List<WxArticleBean>>()
     private val apiLiveData = StateLiveData<List<WxArticleBean>>()
     val mediatorLiveDataLiveData = MediatorLiveData<IBaseResponse<List<WxArticleBean>>>().apply {
@@ -46,12 +45,6 @@ class MainViewModel : BaseViewModel() {
         wxArticleLiveData.postLoading()
         viewModelScope.launch {
             wxArticleLiveData.value = repository.fetchWxArticleError()
-        }
-    }
-
-    fun requestNetWithLoading() {
-        viewModelScope.launch {
-            wxArticleLoadingLiveData.value = repository.fetchWxArticle()
         }
     }
 

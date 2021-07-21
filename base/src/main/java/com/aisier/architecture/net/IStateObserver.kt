@@ -5,7 +5,7 @@ import com.aisier.architecture.base.IUiView
 import com.aisier.architecture.entity.DataState
 import com.aisier.architecture.entity.IBaseResponse
 
-abstract class IStateObserver<T>(private val uiView: IUiView? = null) : Observer<IBaseResponse<T>> {
+abstract class IStateObserver<T> : Observer<IBaseResponse<T>> {
 
     override fun onChanged(t: IBaseResponse<T>) {
         when (t.dataState) {
@@ -34,9 +34,9 @@ abstract class IStateObserver<T>(private val uiView: IUiView? = null) : Observer
 
     abstract fun onDataEmpty()
 
-    open fun onShowLoading() = uiView?.showLoading()
+    abstract fun onShowLoading()
 
-    open fun onDismissLoading() = uiView?.dismissLoading()
+    abstract fun onDismissLoading()
 
     abstract fun onError(e: Throwable?)
 

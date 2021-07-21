@@ -38,12 +38,6 @@ class MainActivity : BaseActivity(R.layout.activity_main) {
     }
 
     private fun initObserver() {
-        mViewModel.wxArticleLoadingLiveData.observeState(this, this) {
-            onSuccess { data ->
-                showNetErrorPic(false)
-                mBinding.tvContent.text = data?.toString()
-            }
-        }
         mViewModel.wxArticleLiveData.observeState(this) {
             onSuccess { data: List<WxArticleBean>? ->
                 Log.i("wutao--> ", "$data: ")
@@ -87,10 +81,6 @@ class MainActivity : BaseActivity(R.layout.activity_main) {
         supportFragmentManager.beginTransaction().replace(R.id.fl_contain, MainFragment()).commit()
         mBinding.btnNet.setOnClickListener { mViewModel.requestNet() }
         mBinding.btnNetError1.setOnClickListener { mViewModel.requestNetError() }
-        mBinding.btnNetWithLoading.setOnClickListener {
-            mBinding.tvContent.text = ""
-            mViewModel.requestNetWithLoading()
-        }
         mBinding.btnMultipleDataSourcesDb.setOnClickListener {
             mBinding.tvContent.text = ""
             mViewModel.requestFromDb()

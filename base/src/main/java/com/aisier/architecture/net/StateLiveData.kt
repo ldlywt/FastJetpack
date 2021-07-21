@@ -2,7 +2,6 @@ package com.aisier.architecture.net
 
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
-import com.aisier.architecture.base.IUiView
 import com.aisier.architecture.entity.BaseResponse
 import com.aisier.architecture.entity.DataState
 import com.aisier.architecture.entity.IBaseResponse
@@ -25,29 +24,15 @@ class StateLiveData<T> : MutableLiveData<IBaseResponse<T>>() {
         postValue(baseResp)
     }
 
-    fun setError(baseResp: IBaseResponse<T>, error: Throwable) {
-        baseResp.dataState = DataState.STATE_ERROR
-        baseResp.error = error
-    }
-
-    fun observeState(owner: LifecycleOwner, isShowLoading: IUiView? = null, listenerBuilder: ListenerBuilder.() -> Unit) {
+    fun observeState(owner: LifecycleOwner, listenerBuilder: ListenerBuilder.() -> Unit) {
         val listener = ListenerBuilder().also(listenerBuilder)
-        val value = object : IStateObserver<T>(isShowLoading) {
+        val value = object : IStateObserver<T>() {
             override fun onShowLoading() {
-                if (listener.mShowLoadingListenerAction != null) {
-                    listener.mShowLoadingListenerAction?.invoke()
-                } else {
-                    super.onShowLoading()
-                }
+                listener.mShowLoadingListenerAction?.invoke()
             }
 
             override fun onDismissLoading() {
-                if (listener.mDismissLoadingListenerAction != null) {
-                    listener.mDismissLoadingListenerAction?.invoke()
-                } else {
-                    super.onDismissLoading()
-                }
-
+                listener.mDismissLoadingListenerAction?.invoke()
             }
 
             override fun onSuccess(data: T?) {
