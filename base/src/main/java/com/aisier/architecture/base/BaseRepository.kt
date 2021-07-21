@@ -11,9 +11,12 @@ open class BaseRepository {
      * @param block api的请求方法
      * @param stateLiveData 每个请求传入相应的LiveData，主要负责网络状态的监听
      */
-    suspend fun <T : Any> executeResp(stateLiveData: StateLiveData<T>, block: suspend () -> IBaseResponse<T>) {
+    suspend fun <T> executeResp(stateLiveData: StateLiveData<T>? = null,
+                                needPostValue: Boolean = true,
+                                block: suspend () -> IBaseResponse<T>): StateLiveData<T> {
         var baseResp: IBaseResponse<T> = BaseResponse()
-        stateLiveData.postLoading(baseResp)
+        val liveData: StateLiveData<T> = stateLiveData ?: StateLiveData()
+        liveData.postLoading(baseResp)
         //for test
         delay(1000)
         runCatching {
@@ -23,16 +26,19 @@ open class BaseRepository {
         }.onFailure { e ->
             e.printStackTrace()
             //非后台返回错误，捕获到的异常
-            stateLiveData.setError(baseResp, e)
+            liveData.setError(baseResp, e)
             handlingExceptions(e)
         }
-        stateLiveData.postValue(baseResp)
+        if (needPostValue) {
+            liveData.postValue(baseResp)
+        }
+        return liveData
     }
 
     /**
      * Http 状态码200，请求成功，但是后台定义了一些错误码
      */
-    private fun <T : Any> handleHttpOkResponse(baseResp: IBaseResponse<T>) {
+    private fun <T> handleHttpOkResponse(baseResp: IBaseResponse<T>) {
         if (baseResp.isSuccess) {
             //请求成功，判断数据是否为空，
             //因为数据有多种类型，需要自己设置类型进行判断

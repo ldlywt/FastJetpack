@@ -1,7 +1,9 @@
 package com.aisier
 
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.viewModelScope
 import com.aisier.architecture.base.BaseViewModel
+import com.aisier.architecture.entity.IBaseResponse
 import com.aisier.architecture.net.StateLiveData
 import com.aisier.bean.WxArticleBean
 import com.aisier.net.WxArticleRepository
@@ -22,22 +24,39 @@ class MainViewModel : BaseViewModel() {
 
     val wxArticleLiveData = StateLiveData<List<WxArticleBean>>()
     val wxArticleLoadingLiveData = StateLiveData<List<WxArticleBean>>()
+    val mediatorLiveDataLiveData = MediatorLiveData<IBaseResponse<List<WxArticleBean>>>()
+    val dbLiveData = StateLiveData<List<WxArticleBean>>()
+
+    init {
+        mediatorLiveDataLiveData.addSource(wxArticleLoadingLiveData) {
+            mediatorLiveDataLiveData.value = it
+        }
+        mediatorLiveDataLiveData.addSource(dbLiveData) {
+            mediatorLiveDataLiveData.value = it
+        }
+    }
 
     fun requestNet() {
         viewModelScope.launch {
-            repository.fetchWxArticleV2(wxArticleLiveData)
+            repository.fetchWxArticle(wxArticleLiveData)
         }
     }
 
     fun requestNetError() {
         viewModelScope.launch {
-            repository.fetchWxArticleErrorV2(wxArticleLiveData)
+            repository.fetchWxArticleError(wxArticleLiveData)
         }
     }
 
     fun requestNetWithLoading() {
         viewModelScope.launch {
-            repository.fetchWxArticleV2(wxArticleLoadingLiveData)
+            repository.fetchWxArticle(wxArticleLoadingLiveData)
+        }
+    }
+
+    fun requestFromDb() {
+        viewModelScope.launch {
+            repository.fetchFromDb(dbLiveData)
         }
     }
 }

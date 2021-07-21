@@ -23,4 +23,5 @@ class BaseResponse<T> : IBaseResponse<T> {
     override var error: Throwable? = null
 
     private val data: T? = null
+    override var testData: T? = null
 }

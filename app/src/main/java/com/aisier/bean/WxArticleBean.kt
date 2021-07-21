@@ -14,9 +14,9 @@ class WxArticleBean {
      * order : 190000
      * visible : 1
      */
-    val id = 0
-    val name: String? = null
-    val visible = 0
+    var id = 0
+    var name: String? = null
+    var visible = 0
 
     override fun toString(): String {
         return "TestBean(id=$id, name=$name, visible=$visible)"

@@ -19,6 +19,7 @@ interface IBaseResponse<Data> : Serializable {
     val isFailed: Boolean
         get() = !isSuccess
 
+    var testData: Data?
 }
 
 enum class DataState {
