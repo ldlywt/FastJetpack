@@ -15,7 +15,6 @@ import com.aisier.architecture.util.toast
 import com.aisier.bean.WxArticleBean
 import com.aisier.databinding.ActivityMainBinding
 import com.aisier.util.TimerShareLiveData
-import com.aisier.util.UserCacheLiveData
 
 class MainActivity : BaseActivity(R.layout.activity_main) {
 
@@ -33,12 +32,8 @@ class MainActivity : BaseActivity(R.layout.activity_main) {
             toast("我是第二个页面的消息")
         }
 
-        TimerShareLiveData.get(MainActivity::class.simpleName).observe(this) {
-            //            Log.i("wutao--> ", "MainActivity: $it")
-        }
-
-        UserCacheLiveData.getCacheUserData().observe(this) {
-            Log.i("wutao--> ", "MainActivity:User info $it")
+        TimerShareLiveData.get().observe(this) {
+            Log.i("wutao--> ", "MainActivity: $it")
         }
     }
 

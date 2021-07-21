@@ -13,12 +13,9 @@ import com.jeremyliao.liveeventbus.LiveEventBus
  */
 open class BaseApp : Application(), ViewModelStoreOwner {
 
-    private lateinit var mAppViewModelStore: ViewModelStore
-
     override fun onCreate() {
         super.onCreate()
         instance = this
-        mAppViewModelStore = ViewModelStore()
         initLiveBus()
         ProcessLifecycleOwner.get().lifecycle.addObserver(ApplicationLifecycleObserver())
     }
@@ -31,7 +28,7 @@ open class BaseApp : Application(), ViewModelStoreOwner {
                 .autoClear(true)
     }
 
-    override fun getViewModelStore(): ViewModelStore = mAppViewModelStore
+    override fun getViewModelStore(): ViewModelStore = ViewModelStore()
 
     companion object {
         lateinit var instance: BaseApp

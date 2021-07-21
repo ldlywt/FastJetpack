@@ -16,8 +16,7 @@ import com.gyf.immersionbar.ImmersionBar
  * version: 1.3
 </pre> *
  */
-abstract class BaseActivity(@LayoutRes contentLayoutId: Int) :
-    AppCompatActivity(contentLayoutId), IUiView {
+abstract class BaseActivity(@LayoutRes contentLayoutId: Int) : AppCompatActivity(contentLayoutId), IUiView {
 
     private val mFactory: ViewModelProvider.Factory by lazy {
         ViewModelProvider.AndroidViewModelFactory.getInstance(BaseApp.instance)
@@ -31,18 +30,17 @@ abstract class BaseActivity(@LayoutRes contentLayoutId: Int) :
 
     protected abstract fun init()
 
-    protected open fun getAppViewModelProvider(): ViewModelProvider =
-        ViewModelProvider(BaseApp.instance, mFactory)
+    protected open fun getAppViewModelProvider(): ViewModelProvider = ViewModelProvider(BaseApp.instance, mFactory)
 
     protected fun setStatusBar() {
         ImmersionBar.with(this)
-            .transparentStatusBar()
-            .statusBarDarkFont(true)
-            .init()
+                .transparentStatusBar()
+                .statusBarDarkFont(true)
+                .init()
     }
 
     protected fun setStatusBarDark() =
-        ImmersionBar.with(this).statusBarDarkFont(true).transparentBar().init()
+            ImmersionBar.with(this).statusBarDarkFont(true).transparentBar().init()
 
 
     private var progressDialog: ProgressDialog? = null

@@ -7,7 +7,7 @@ interface TimeIntervalCallback {
     fun secondListener(number: Int)
 }
 
-class TimerManager(val tag: String? = null) {
+class TimerManager {
 
     private var timeIntervalCallback: TimeIntervalCallback? = null
 
@@ -16,6 +16,7 @@ class TimerManager(val tag: String? = null) {
     init {
         handler.postDelayed(object : Runnable {
             override fun run() {
+                // 模拟网络请求
                 timeIntervalCallback?.secondListener(++count)
                 handler.postDelayed(this, 1000)
             }
