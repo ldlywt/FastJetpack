@@ -6,8 +6,6 @@
 - 基于 Android Architecture Components(AAC)。
 
 # 简单、浅封装、扩展性强
-- 代码简单，没有过度的封装，上手非常容易，Lib 只有十几个类。
-- 除了 Android 原生的依赖以外，只集成总线 `live-event-bus`，页面状态管理 `loadsir`，状态栏沉浸式工具 `immersionbar`，并且都是可以插拔的，不需要替换即可。
 
 # 快速开发
 
@@ -19,14 +17,6 @@
 
 ### Activity 和 Fragment 共享 ViewModel
 当 Activity 和 Fragment 通讯时，共用一个 ViewModel 是一种非常简单有效的方式。
-
-只需要在 Fragment 类上面,加个注解既可搞定：
-
-```
-@FragmentConfiguration(shareViewModel = true)
-class MainFragment : BaseFragment<MainViewModel, FragmentMainBinding(R.layout.fragment_main) 
-```
-
 
 ### Application 级别的 ViewModel
 
