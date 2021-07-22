@@ -1,4 +1,4 @@
-package com.aisier
+package com.aisier.vm
 
 import androidx.lifecycle.MutableLiveData
 import com.aisier.architecture.base.BaseViewModel

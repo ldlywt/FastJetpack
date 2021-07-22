@@ -5,13 +5,13 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:fitsSystemWindows="true"
-    tools:context=".activity.SecondActivity">
+    tools:context=".ui.SecondActivity">
 
     <Button
         android:id="@+id/bt_send_msg"
         android:text="给MainActivity发消息"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content" />
 
     <Button
         android:id="@+id/bt_get_user_info"

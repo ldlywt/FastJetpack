@@ -1,4 +1,4 @@
-package com.aisier
+package com.aisier.vm
 
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.viewModelScope

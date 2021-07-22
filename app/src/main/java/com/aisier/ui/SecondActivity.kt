@@ -1,13 +1,13 @@
-package com.aisier.activity
+package com.aisier.ui
 
 import android.util.Log
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.aisier.R
-import com.aisier.ShareViewModel
 import com.aisier.architecture.base.BaseActivity
 import com.aisier.architecture.util.toast
 import com.aisier.databinding.ActivitySecondBinding
 import com.aisier.util.TimerShareLiveData
+import com.aisier.vm.ShareViewModel
 
 class SecondActivity : BaseActivity(R.layout.activity_second) {
 

@@ -1,20 +1,19 @@
-package com.aisier.activity
+package com.aisier.ui
 
 import android.util.Log
 import androidx.activity.viewModels
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import by.kirich1409.viewbindingdelegate.viewBinding
-import com.aisier.MainFragment
-import com.aisier.MainViewModel
 import com.aisier.R
-import com.aisier.ShareViewModel
 import com.aisier.architecture.base.BaseActivity
 import com.aisier.architecture.util.startActivity
 import com.aisier.architecture.util.toast
 import com.aisier.bean.WxArticleBean
 import com.aisier.databinding.ActivityMainBinding
 import com.aisier.util.TimerShareLiveData
+import com.aisier.vm.MainViewModel
+import com.aisier.vm.ShareViewModel
 
 class MainActivity : BaseActivity(R.layout.activity_main) {
 

@@ -2,8 +2,8 @@ package com.aisier.bean
 
 /**
  * author : wutao
- * e-mail : wutao@himango.cn
- * time   : 2019/08/19
+ * e-mail : 670831931@qq.com
+ * time   : 2020/01/01
  * desc   :
  * version: 1.0
  */
