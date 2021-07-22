@@ -31,10 +31,6 @@ class StateLiveData<T> : MutableLiveData<IBaseResponse<T>>() {
                 listener.mShowLoadingListenerAction?.invoke()
             }
 
-            override fun onDismissLoading() {
-                listener.mDismissLoadingListenerAction?.invoke()
-            }
-
             override fun onSuccess(data: T?) {
                 listener.mSuccessListenerAction?.invoke(data)
             }
@@ -51,6 +47,10 @@ class StateLiveData<T> : MutableLiveData<IBaseResponse<T>>() {
                 listener.mCompleteListenerAction?.invoke()
             }
 
+            override fun onFailed(httpCode: Int) {
+                listener.mFailedListenerAction?.invoke(httpCode)
+            }
+
         }
         super.observe(owner, value)
     }
@@ -58,21 +58,21 @@ class StateLiveData<T> : MutableLiveData<IBaseResponse<T>>() {
     inner class ListenerBuilder {
         internal var mSuccessListenerAction: ((T?) -> Unit)? = null
         internal var mShowLoadingListenerAction: (() -> Unit)? = null
-        internal var mDismissLoadingListenerAction: (() -> Unit)? = null
         internal var mErrorListenerAction: ((Throwable?) -> Unit)? = null
         internal var mEmptyListenerAction: (() -> Unit)? = null
         internal var mCompleteListenerAction: (() -> Unit)? = null
-
-        fun onSuccess(action: (T?) -> Unit) {
-            mSuccessListenerAction = action
-        }
+        internal var mFailedListenerAction: ((Int) -> Unit)? = null
 
         fun onShowLoading(action: () -> Unit) {
             mShowLoadingListenerAction = action
         }
 
-        fun onDismissLoading(action: () -> Unit) {
-            mDismissLoadingListenerAction = action
+        fun onSuccess(action: (T?) -> Unit) {
+            mSuccessListenerAction = action
+        }
+
+        fun onFailed(action: (Int) -> Unit) {
+            mFailedListenerAction = action
         }
 
         fun onException(action: (Throwable?) -> Unit) {

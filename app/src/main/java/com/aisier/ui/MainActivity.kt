@@ -44,6 +44,10 @@ class MainActivity : BaseActivity(R.layout.activity_main) {
                 mBinding.tvContent.text = data?.toString()
             }
 
+            onFailed {
+
+            }
+
             onException {
                 showNetErrorPic(true)
             }
@@ -52,11 +56,12 @@ class MainActivity : BaseActivity(R.layout.activity_main) {
                 showLoading()
             }
 
-            onDismissLoading {
-                dismissLoading()
+            onEmpty {
+
             }
 
             onComplete {
+                dismissLoading()
                 Log.i("wutao--> ", "onComplete: ")
             }
         }
