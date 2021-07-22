@@ -37,7 +37,7 @@ class MainViewModel : BaseViewModel() {
     fun requestNet() {
         wxArticleLiveData.postLoading()
         viewModelScope.launch {
-            wxArticleLiveData.value = repository.fetchWxArticle()
+            wxArticleLiveData.value = repository.fetchWxArticleFromNet()
         }
     }
 
@@ -50,13 +50,13 @@ class MainViewModel : BaseViewModel() {
 
     fun requestFromNet() {
         viewModelScope.launch {
-            apiLiveData.value = repository.fetchWxArticle()
+            apiLiveData.value = repository.fetchWxArticleFromNet()
         }
     }
 
     fun requestFromDb() {
         viewModelScope.launch {
-            dbLiveData.value = repository.fetchFromDb()
+            dbLiveData.value = repository.fetchWxArticleFromDb()
         }
     }
 }
