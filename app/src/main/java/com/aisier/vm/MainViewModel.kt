@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.aisier.architecture.base.BaseViewModel
 import com.aisier.architecture.entity.IBaseResponse
 import com.aisier.architecture.net.StateLiveData
+import com.aisier.bean.User
 import com.aisier.bean.WxArticleBean
 import com.aisier.net.WxArticleRepository
 import kotlinx.coroutines.launch
@@ -23,6 +24,7 @@ class MainViewModel : BaseViewModel() {
     private val repository by lazy { WxArticleRepository() }
 
     val wxArticleLiveData = StateLiveData<List<WxArticleBean>>()
+    val userLiveData = StateLiveData<User>()
     private val dbLiveData = StateLiveData<List<WxArticleBean>>()
     private val apiLiveData = StateLiveData<List<WxArticleBean>>()
     val mediatorLiveDataLiveData = MediatorLiveData<IBaseResponse<List<WxArticleBean>>>().apply {
@@ -57,6 +59,12 @@ class MainViewModel : BaseViewModel() {
     fun requestFromDb() {
         viewModelScope.launch {
             dbLiveData.value = repository.fetchWxArticleFromDb()
+        }
+    }
+
+    fun login(username: String, password: String) {
+        viewModelScope.launch {
+            userLiveData.value = repository.login(username, password)
         }
     }
 }

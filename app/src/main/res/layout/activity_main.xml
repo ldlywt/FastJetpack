@@ -19,6 +19,13 @@
             android:text="第二个页面" />
 
         <Button
+            android:id="@+id/bt_login"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:text="登录" />
+
+        <Button
             android:id="@+id/btn_multiple_data_sources_net"
             android:layout_width="match_parent"
             android:layout_height="50dp"

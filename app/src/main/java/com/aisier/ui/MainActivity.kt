@@ -94,6 +94,10 @@ class MainActivity : BaseActivity(R.layout.activity_main) {
             mViewModel.requestFromNet()
         }
         mBinding.goSecondActivity.setOnClickListener { startActivity<SecondActivity>() }
+
+        mBinding.btLogin.setOnClickListener {
+            mViewModel.login("FastJetpack", "FastJetpack")
+        }
     }
 
     companion object {
