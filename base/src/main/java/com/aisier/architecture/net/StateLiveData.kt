@@ -2,7 +2,7 @@ package com.aisier.architecture.net
 
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
-import com.aisier.architecture.entity.IBaseResponse
+import com.aisier.architecture.entity.ApiResponse
 import com.aisier.architecture.util.toast
 
 /**
@@ -14,7 +14,7 @@ import com.aisier.architecture.util.toast
  * version: 1.0
 </pre> *
  */
-class StateLiveData<T> : MutableLiveData<IBaseResponse<T>>() {
+class StateLiveData<T> : MutableLiveData<ApiResponse<T>>() {
 
     fun observeState(owner: LifecycleOwner, listenerBuilder: ListenerBuilder.() -> Unit) {
         val listener = ListenerBuilder().also(listenerBuilder)
@@ -36,7 +36,7 @@ class StateLiveData<T> : MutableLiveData<IBaseResponse<T>>() {
                 listener.mCompleteListenerAction?.invoke()
             }
 
-            override fun onFailed(httpCode: Int) {
+            override fun onFailed(httpCode: Int?) {
                 listener.mFailedListenerAction?.invoke(httpCode)
             }
 
@@ -49,13 +49,13 @@ class StateLiveData<T> : MutableLiveData<IBaseResponse<T>>() {
         internal var mErrorListenerAction: ((Throwable?) -> Unit)? = null
         internal var mEmptyListenerAction: (() -> Unit)? = null
         internal var mCompleteListenerAction: (() -> Unit)? = null
-        internal var mFailedListenerAction: ((Int) -> Unit)? = null
+        internal var mFailedListenerAction: ((Int?) -> Unit)? = null
 
         fun onSuccess(action: (T?) -> Unit) {
             mSuccessListenerAction = action
         }
 
-        fun onFailed(action: (Int) -> Unit) {
+        fun onFailed(action: (Int?) -> Unit) {
             mFailedListenerAction = action
         }
 

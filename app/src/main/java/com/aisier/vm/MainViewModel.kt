@@ -3,7 +3,7 @@ package com.aisier.vm
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.viewModelScope
 import com.aisier.architecture.base.BaseViewModel
-import com.aisier.architecture.entity.IBaseResponse
+import com.aisier.architecture.entity.ApiResponse
 import com.aisier.architecture.net.StateLiveData
 import com.aisier.bean.User
 import com.aisier.bean.WxArticleBean
@@ -27,7 +27,7 @@ class MainViewModel : BaseViewModel() {
     val userLiveData = StateLiveData<User>()
     private val dbLiveData = StateLiveData<List<WxArticleBean>>()
     private val apiLiveData = StateLiveData<List<WxArticleBean>>()
-    val mediatorLiveDataLiveData = MediatorLiveData<IBaseResponse<List<WxArticleBean>>>().apply {
+    val mediatorLiveDataLiveData = MediatorLiveData<ApiResponse<List<WxArticleBean>>>().apply {
         this.addSource(apiLiveData) {
             this.value = it
         }

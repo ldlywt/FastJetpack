@@ -67,11 +67,7 @@ class MainActivity : BaseActivity(R.layout.activity_main) {
 
         mViewModel.mediatorLiveDataLiveData.observe(this) {
             showNetErrorPic(false)
-            if (it.testData == null) {
-                mBinding.tvContent.text = it.httpData.toString()
-            } else {
-                mBinding.tvContent.text = it.testData.toString()
-            }
+            mBinding.tvContent.text = it.data.toString()
         }
 
         mViewModel.userLiveData.observeState(this) {

@@ -5,20 +5,19 @@ import kotlinx.coroutines.delay
 
 open class BaseRepository {
 
-    suspend fun <T> executeHttp(block: suspend () -> IBaseResponse<T>): IBaseResponse<T> {
-        var response: IBaseResponse<T> = BaseResponse()
+    suspend fun <T> executeHttp(block: suspend () -> ApiResponse<T>): ApiResponse<T> {
+        var response: ApiResponse<T> = ApiResponse()
         //for test
-        delay(1000)
+        delay(500)
         runCatching {
             response = block.invoke()
         }.onSuccess {
-            handleHttpOkResponse(response)
+            return handleHttpOkResponse(response)
         }.onFailure { e ->
             e.printStackTrace()
             //非后台返回错误，捕获到的异常
-            response.dataState = DataState.STATE_ERROR
-            response.error = e
             handlingExceptions(e)
+            return ApiErrorResponse(e)
         }
         return response
     }
@@ -26,19 +25,17 @@ open class BaseRepository {
     /**
      * Http 状态码200，请求成功，但是后台定义了一些错误码
      */
-    private fun <T> handleHttpOkResponse(baseResp: IBaseResponse<T>) {
-        if (baseResp.isSuccess) {
-            if (baseResp.httpData == null || baseResp.httpData is List<*> && (baseResp.httpData as List<*>).isEmpty()) {
+    private fun <T> handleHttpOkResponse(response: ApiResponse<T>): ApiResponse<T> {
+        return if (response.isSuccess) {
+            if (response.data == null || response.data is List<*> && (response.data as List<*>).isEmpty()) {
                 //TODO: 数据为空,结构变化时需要修改判空条件
-                baseResp.dataState = DataState.STATE_EMPTY
+                ApiEmptyResponse()
             } else {
-                baseResp.dataState = DataState.STATE_SUCCESS
+                ApiSuccessResponse(response.data)
             }
         } else {
-            handlingApiExceptions(baseResp.httpCode, baseResp.httpMsg)
-            baseResp.dataState = DataState.STATE_FAILED
+            handlingApiExceptions(response.errorCode, response.errorMsg)
+            ApiFailedResponse(response.errorCode, response.errorMsg)
         }
     }
-
-
 }

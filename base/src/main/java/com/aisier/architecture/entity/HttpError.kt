@@ -12,7 +12,7 @@ enum class HttpError(var code: Int, var errorMsg: String) {
     // ...... more
 }
 
-fun handlingApiExceptions(code: Int, errorMsg: String?) = when (code) {
+fun handlingApiExceptions(code: Int?, errorMsg: String?) = when (code) {
     HttpError.TOKEN_EXPIRE.code -> toast(HttpError.TOKEN_EXPIRE.errorMsg)
     HttpError.PARAMS_ERROR.code -> toast(HttpError.PARAMS_ERROR.errorMsg)
     else -> errorMsg?.let { toast(it) }
