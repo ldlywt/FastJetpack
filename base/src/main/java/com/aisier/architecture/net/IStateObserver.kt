@@ -8,7 +8,6 @@ abstract class IStateObserver<T> : Observer<IBaseResponse<T>> {
 
     override fun onChanged(t: IBaseResponse<T>) {
         when (t.dataState) {
-            DataState.STATE_LOADING -> onShowLoading()
             DataState.STATE_SUCCESS -> onSuccess(t.httpData)
             DataState.STATE_EMPTY -> onDataEmpty()
             DataState.STATE_FAILED -> onFailed(t.httpCode)
@@ -20,8 +19,6 @@ abstract class IStateObserver<T> : Observer<IBaseResponse<T>> {
     abstract fun onSuccess(data: T?)
 
     abstract fun onDataEmpty()
-
-    abstract fun onShowLoading()
 
     abstract fun onError(e: Throwable?)
 

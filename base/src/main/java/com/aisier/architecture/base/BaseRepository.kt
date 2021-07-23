@@ -8,7 +8,7 @@ open class BaseRepository {
     suspend fun <T> executeHttp(block: suspend () -> IBaseResponse<T>): IBaseResponse<T> {
         var response: IBaseResponse<T> = BaseResponse()
         //for test
-        delay(500)
+        delay(1000)
         runCatching {
             response = block.invoke()
         }.onSuccess {

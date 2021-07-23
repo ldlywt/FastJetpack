@@ -37,14 +37,12 @@ class MainViewModel : BaseViewModel() {
     }
 
     fun requestNet() {
-        wxArticleLiveData.postLoading()
         viewModelScope.launch {
             wxArticleLiveData.value = repository.fetchWxArticleFromNet()
         }
     }
 
     fun requestNetError() {
-        wxArticleLiveData.postLoading()
         viewModelScope.launch {
             wxArticleLiveData.value = repository.fetchWxArticleError()
         }

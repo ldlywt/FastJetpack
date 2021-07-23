@@ -2,8 +2,6 @@ package com.aisier.architecture.net
 
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
-import com.aisier.architecture.entity.BaseResponse
-import com.aisier.architecture.entity.DataState
 import com.aisier.architecture.entity.IBaseResponse
 import com.aisier.architecture.util.toast
 
@@ -18,18 +16,9 @@ import com.aisier.architecture.util.toast
  */
 class StateLiveData<T> : MutableLiveData<IBaseResponse<T>>() {
 
-    fun postLoading() {
-        val baseResp: IBaseResponse<T> = BaseResponse()
-        baseResp.dataState = DataState.STATE_LOADING
-        postValue(baseResp)
-    }
-
     fun observeState(owner: LifecycleOwner, listenerBuilder: ListenerBuilder.() -> Unit) {
         val listener = ListenerBuilder().also(listenerBuilder)
         val value = object : IStateObserver<T>() {
-            override fun onShowLoading() {
-                listener.mShowLoadingListenerAction?.invoke()
-            }
 
             override fun onSuccess(data: T?) {
                 listener.mSuccessListenerAction?.invoke(data)
@@ -57,15 +46,10 @@ class StateLiveData<T> : MutableLiveData<IBaseResponse<T>>() {
 
     inner class ListenerBuilder {
         internal var mSuccessListenerAction: ((T?) -> Unit)? = null
-        internal var mShowLoadingListenerAction: (() -> Unit)? = null
         internal var mErrorListenerAction: ((Throwable?) -> Unit)? = null
         internal var mEmptyListenerAction: (() -> Unit)? = null
         internal var mCompleteListenerAction: (() -> Unit)? = null
         internal var mFailedListenerAction: ((Int) -> Unit)? = null
-
-        fun onShowLoading(action: () -> Unit) {
-            mShowLoadingListenerAction = action
-        }
 
         fun onSuccess(action: (T?) -> Unit) {
             mSuccessListenerAction = action

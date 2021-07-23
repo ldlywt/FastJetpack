@@ -52,10 +52,6 @@ class MainActivity : BaseActivity(R.layout.activity_main) {
                 showNetErrorPic(true)
             }
 
-            onShowLoading {
-                showLoading()
-            }
-
             onEmpty {
 
             }
@@ -74,6 +70,16 @@ class MainActivity : BaseActivity(R.layout.activity_main) {
                 mBinding.tvContent.text = it.testData.toString()
             }
         }
+
+        mViewModel.userLiveData.observeState(this) {
+            onSuccess {
+                mBinding.tvContent.text = it.toString()
+            }
+
+            onComplete {
+                dismissLoading()
+            }
+        }
     }
 
     private fun showNetErrorPic(isShowError: Boolean) {
@@ -83,8 +89,14 @@ class MainActivity : BaseActivity(R.layout.activity_main) {
 
     private fun initData() {
         supportFragmentManager.beginTransaction().replace(R.id.fl_contain, MainFragment()).commit()
-        mBinding.btnNet.setOnClickListener { mViewModel.requestNet() }
-        mBinding.btnNetError1.setOnClickListener { mViewModel.requestNetError() }
+        mBinding.btnNet.setOnClickListener {
+            showLoading()
+            mViewModel.requestNet()
+        }
+        mBinding.btnNetError1.setOnClickListener {
+            showLoading()
+            mViewModel.requestNetError()
+        }
         mBinding.btnMultipleDataSourcesDb.setOnClickListener {
             mBinding.tvContent.text = ""
             mViewModel.requestFromDb()
@@ -96,6 +108,7 @@ class MainActivity : BaseActivity(R.layout.activity_main) {
         mBinding.goSecondActivity.setOnClickListener { startActivity<SecondActivity>() }
 
         mBinding.btLogin.setOnClickListener {
+            showLoading()
             mViewModel.login("FastJetpack", "FastJetpack")
         }
     }

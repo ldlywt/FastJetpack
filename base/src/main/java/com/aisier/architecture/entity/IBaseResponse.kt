@@ -23,7 +23,6 @@ interface IBaseResponse<Data> : Serializable {
 }
 
 enum class DataState {
-    STATE_LOADING,
     STATE_SUCCESS,
     STATE_EMPTY,
     STATE_FAILED,
