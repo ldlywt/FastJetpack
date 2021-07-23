@@ -15,6 +15,9 @@ import com.aisier.util.TimerShareLiveData
 import com.aisier.vm.MainViewModel
 import com.aisier.vm.ShareViewModel
 
+/**
+ * 这种封装方式不支持Loading状态，需要自己手动书写Loading
+ */
 class MainActivity : BaseActivity(R.layout.activity_main) {
 
     private val mBinding by viewBinding(ActivityMainBinding::bind)
