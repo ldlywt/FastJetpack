@@ -9,7 +9,7 @@ abstract class IStateObserver<T> : Observer<ApiResponse<T>> {
         when (response) {
             is ApiSuccessResponse -> onSuccess(response.data)
             is ApiEmptyResponse -> onDataEmpty()
-            is ApiFailedResponse -> onFailed(response.errorCode)
+            is ApiFailedResponse -> onFailed(response.errorCode, response.errorMsg)
             is ApiErrorResponse -> response.error?.let { onError(it) }
         }
         onComplete()
@@ -23,6 +23,6 @@ abstract class IStateObserver<T> : Observer<ApiResponse<T>> {
 
     abstract fun onComplete()
 
-    abstract fun onFailed(httpCode: Int?)
+    abstract fun onFailed(errorCode: Int?, errorMsg: String?)
 
 }

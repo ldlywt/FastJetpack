@@ -3,19 +3,19 @@ package com.aisier.architecture.entity
 import java.io.Serializable
 
 open class ApiResponse<T>(
-        var data: T? = null,
-        var errorCode: Int? = null,
-        var errorMsg: String? = null,
-        var error: Throwable? = null
+        open var data: T? = null,
+        open var errorCode: Int? = null,
+        open var errorMsg: String? = null,
+        open var error: Throwable? = null
 ) : Serializable {
     val isSuccess: Boolean
         get() = errorCode == 0
 }
 
-data class ApiSuccessResponse<T>(val httpData: T?) : ApiResponse<T>(data = httpData)
+data class ApiSuccessResponse<T>(override var data: T?) : ApiResponse<T>(data = data)
 
 class ApiEmptyResponse<T> : ApiResponse<T>()
 
-data class ApiFailedResponse<T>(val code: Int?, val msg: String?) : ApiResponse<T>(errorCode = code, errorMsg = msg)
+data class ApiFailedResponse<T>(override var errorCode: Int?, override var errorMsg: String?) : ApiResponse<T>(errorCode = errorCode, errorMsg = errorMsg)
 
-data class ApiErrorResponse<T>(val e: Throwable?) : ApiResponse<T>(error = e)
+data class ApiErrorResponse<T>(override var error: Throwable?) : ApiResponse<T>(error = error)

@@ -47,7 +47,7 @@ class MainActivity : BaseActivity(R.layout.activity_main) {
                 mBinding.tvContent.text = data?.toString()
             }
 
-            onFailed {
+            onFailed { code, msg ->
 
             }
 

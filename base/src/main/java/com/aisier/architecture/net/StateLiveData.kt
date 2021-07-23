@@ -36,8 +36,8 @@ class StateLiveData<T> : MutableLiveData<ApiResponse<T>>() {
                 listener.mCompleteListenerAction?.invoke()
             }
 
-            override fun onFailed(httpCode: Int?) {
-                listener.mFailedListenerAction?.invoke(httpCode)
+            override fun onFailed(errorCode: Int?, errorMsg: String?) {
+                listener.mFailedListenerAction?.invoke(errorCode, errorMsg)
             }
 
         }
@@ -49,13 +49,13 @@ class StateLiveData<T> : MutableLiveData<ApiResponse<T>>() {
         internal var mErrorListenerAction: ((Throwable?) -> Unit)? = null
         internal var mEmptyListenerAction: (() -> Unit)? = null
         internal var mCompleteListenerAction: (() -> Unit)? = null
-        internal var mFailedListenerAction: ((Int?) -> Unit)? = null
+        internal var mFailedListenerAction: ((Int?, String?) -> Unit)? = null
 
         fun onSuccess(action: (T?) -> Unit) {
             mSuccessListenerAction = action
         }
 
-        fun onFailed(action: (Int?) -> Unit) {
+        fun onFailed(action: (Int?, String?) -> Unit) {
             mFailedListenerAction = action
         }
 
