@@ -32,14 +32,14 @@ class MainActivity : BaseActivity(R.layout.activity_main) {
         }
 
         TimerShareLiveData.get().observe(this) {
-            Log.i("wutao--> ", "MainActivity: $it")
+            Log.i(TAG, "TimerShareLiveData value: $it")
         }
     }
 
     private fun initObserver() {
         mViewModel.wxArticleLiveData.observeState(this) {
             onSuccess { data: List<WxArticleBean>? ->
-                Log.i("wutao--> ", "$data: ")
+                Log.i(TAG, "$data: ")
                 showNetErrorPic(false)
                 mBinding.tvContent.text = data?.toString()
             }
@@ -62,7 +62,7 @@ class MainActivity : BaseActivity(R.layout.activity_main) {
 
             onComplete {
                 dismissLoading()
-                Log.i("wutao--> ", "onComplete: ")
+                Log.i(TAG, "onComplete: ")
             }
         }
 
@@ -94,5 +94,9 @@ class MainActivity : BaseActivity(R.layout.activity_main) {
             mViewModel.requestFromNet()
         }
         mBinding.goSecondActivity.setOnClickListener { startActivity<SecondActivity>() }
+    }
+
+    companion object {
+        private const val TAG = "MainActivity-->"
     }
 }

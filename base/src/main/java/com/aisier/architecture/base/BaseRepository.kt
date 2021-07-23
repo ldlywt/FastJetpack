@@ -5,7 +5,7 @@ import kotlinx.coroutines.delay
 
 open class BaseRepository {
 
-    suspend fun <T>  executeResp(block: suspend () -> IBaseResponse<T>): IBaseResponse<T> {
+    suspend fun <T> executeHttp(block: suspend () -> IBaseResponse<T>): IBaseResponse<T> {
         var response: IBaseResponse<T> = BaseResponse()
         //for test
         delay(500)

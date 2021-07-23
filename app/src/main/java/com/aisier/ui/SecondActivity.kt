@@ -29,7 +29,11 @@ class SecondActivity : BaseActivity(R.layout.activity_second) {
         }
 
         TimerShareLiveData.get().observe(this) {
-            Log.i("wutao--> ", "SecondActivity: $it")
+            Log.i(TAG, "SecondActivity: $it")
         }
+    }
+
+    companion object {
+        private const val TAG = "SecondActivity-->"
     }
 }

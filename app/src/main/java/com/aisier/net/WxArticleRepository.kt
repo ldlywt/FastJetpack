@@ -15,7 +15,7 @@ class WxArticleRepository : BaseRepository() {
     }
 
     suspend fun fetchWxArticleFromNet(): IBaseResponse<List<WxArticleBean>> {
-        return executeResp {
+        return executeHttp {
             mService.getWxArticle()
         }
     }
@@ -25,7 +25,7 @@ class WxArticleRepository : BaseRepository() {
     }
 
     suspend fun fetchWxArticleError(): IBaseResponse<List<WxArticleBean>> {
-        return executeResp {
+        return executeHttp {
             mService.getWxArticleError()
         }
     }

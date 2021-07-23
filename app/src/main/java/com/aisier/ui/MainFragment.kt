@@ -28,6 +28,10 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initObserver()
+    }
+
+    private fun initObserver() {
         mViewModel.wxArticleLiveData.observeState(this) {
             onSuccess { result: List<WxArticleBean>? ->
                 result?.let {

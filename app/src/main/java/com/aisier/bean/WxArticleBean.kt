@@ -21,6 +21,4 @@ class WxArticleBean {
     override fun toString(): String {
         return "TestBean(id=$id, name=$name, visible=$visible)"
     }
-
-
 }
