@@ -26,6 +26,13 @@
             android:text="登录" />
 
         <Button
+            android:id="@+id/go_save_state_activity"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:text="数据恢复" />
+
+        <Button
             android:id="@+id/btn_multiple_data_sources_net"
             android:layout_width="match_parent"
             android:layout_height="50dp"

@@ -106,6 +106,8 @@ class MainActivity : BaseActivity(R.layout.activity_main) {
         }
         mBinding.goSecondActivity.setOnClickListener { startActivity<SecondActivity>() }
 
+        mBinding.goSaveStateActivity.setOnClickListener { startActivity<SavedStateActivity>() }
+
         mBinding.btLogin.setOnClickListener {
             showLoading()
             mViewModel.login("FastJetpack", "FastJetpack")
