@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:fitsSystemWindows="true"
+    android:padding="10dp"
     tools:context=".ui.SecondActivity">
 
     <Button
@@ -15,8 +16,28 @@
 
     <Button
         android:id="@+id/bt_get_user_info"
-        android:layout_marginTop="20dp"
-        android:text="模拟获取用户信息"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:text="模拟获取用户信息"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp" />
+
+    <Button
+        android:id="@+id/bt_take_photo"
+        android:layout_marginTop="10dp"
+        android:text="拍照"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/bt_request_permission"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="请求权限" />
+
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="100dp"
+        android:layout_height="100dp" />
 </LinearLayout>
