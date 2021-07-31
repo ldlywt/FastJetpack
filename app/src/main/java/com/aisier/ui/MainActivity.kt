@@ -53,10 +53,10 @@ class MainActivity : BaseActivity(R.layout.activity_main) {
 
     private fun initObserver() {
         mViewModel.wxArticleLiveData.observeState(this) {
-            onSuccess { data: List<WxArticleBean>? ->
+            onSuccess { data: List<WxArticleBean> ->
                 Log.i(TAG, "$data: ")
                 showNetErrorPic(false)
-                mBinding.tvContent.text = data?.toString()
+                mBinding.tvContent.text = data.toString()
             }
 
             onFailed { code, msg ->

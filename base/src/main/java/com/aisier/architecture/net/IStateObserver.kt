@@ -5,17 +5,17 @@ import com.aisier.architecture.entity.*
 
 abstract class IStateObserver<T> : Observer<ApiResponse<T>> {
 
-    override fun onChanged(response: ApiResponse<T>) {
-        when (response) {
-            is ApiSuccessResponse -> onSuccess(response.data)
+    override fun onChanged(apiResponse: ApiResponse<T>) {
+        when (apiResponse) {
+            is ApiSuccessResponse -> onSuccess(apiResponse.response)
             is ApiEmptyResponse -> onDataEmpty()
-            is ApiFailedResponse -> onFailed(response.errorCode, response.errorMsg)
-            is ApiErrorResponse -> response.error?.let { onError(it) }
+            is ApiFailedResponse -> onFailed(apiResponse.errorCode, apiResponse.errorMsg)
+            is ApiErrorResponse -> apiResponse.error?.let { onError(it) }
         }
         onComplete()
     }
 
-    abstract fun onSuccess(data: T?)
+    abstract fun onSuccess(data: T)
 
     abstract fun onDataEmpty()
 

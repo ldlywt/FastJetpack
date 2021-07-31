@@ -31,7 +31,7 @@ open class BaseRepository {
                 //TODO: 数据为空,结构变化时需要修改判空条件
                 ApiEmptyResponse()
             } else {
-                ApiSuccessResponse(response.data)
+                ApiSuccessResponse(response.data!!)
             }
         } else {
             handlingApiExceptions(response.errorCode, response.errorMsg)

@@ -20,7 +20,7 @@ class StateLiveData<T> : MutableLiveData<ApiResponse<T>>() {
         val listener = ListenerBuilder().also(listenerBuilder)
         val value = object : IStateObserver<T>() {
 
-            override fun onSuccess(data: T?) {
+            override fun onSuccess(data: T) {
                 listener.mSuccessListenerAction?.invoke(data)
             }
 
@@ -45,13 +45,13 @@ class StateLiveData<T> : MutableLiveData<ApiResponse<T>>() {
     }
 
     inner class ListenerBuilder {
-        internal var mSuccessListenerAction: ((T?) -> Unit)? = null
+        internal var mSuccessListenerAction: ((T) -> Unit)? = null
         internal var mErrorListenerAction: ((Throwable?) -> Unit)? = null
         internal var mEmptyListenerAction: (() -> Unit)? = null
         internal var mCompleteListenerAction: (() -> Unit)? = null
         internal var mFailedListenerAction: ((Int?, String?) -> Unit)? = null
 
-        fun onSuccess(action: (T?) -> Unit) {
+        fun onSuccess(action: (T) -> Unit) {
             mSuccessListenerAction = action
         }
 

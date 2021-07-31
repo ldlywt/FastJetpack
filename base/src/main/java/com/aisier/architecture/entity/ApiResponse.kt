@@ -12,7 +12,7 @@ open class ApiResponse<T>(
         get() = errorCode == 0
 }
 
-data class ApiSuccessResponse<T>(override var data: T?) : ApiResponse<T>(data = data)
+data class ApiSuccessResponse<T>(var response: T) : ApiResponse<T>(data = response)
 
 class ApiEmptyResponse<T> : ApiResponse<T>()
 
