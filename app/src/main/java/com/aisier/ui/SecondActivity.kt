@@ -1,6 +1,8 @@
 package com.aisier.ui
 
 import android.Manifest
+import android.app.Activity
+import android.content.Intent
 import android.util.Log
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -54,6 +56,11 @@ class SecondActivity : BaseActivity(R.layout.activity_second) {
 
         mBinding.btRequestPermission.setOnClickListener {
             requestPermission.launch(Manifest.permission.ACCESS_FINE_LOCATION)
+        }
+
+        mBinding.btBack.setOnClickListener {
+            setResult(Activity.RESULT_OK, Intent().putExtra("key", "返回消息"))
+            finish()
         }
     }
 

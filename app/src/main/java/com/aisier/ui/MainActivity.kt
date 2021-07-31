@@ -1,6 +1,11 @@
 package com.aisier.ui
 
+import android.app.Activity
+import android.content.Intent
 import android.util.Log
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
@@ -22,6 +27,13 @@ class MainActivity : BaseActivity(R.layout.activity_main) {
 
     private val mBinding by viewBinding(ActivityMainBinding::bind)
     private val mViewModel by viewModels<MainViewModel>()
+
+    private val activityResultLauncher: ActivityResultLauncher<Intent> =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult: ActivityResult ->
+            if (activityResult.resultCode == Activity.RESULT_OK) {
+                toast(activityResult.data?.getStringExtra("key") ?: "")
+            }
+        }
 
     override fun init() {
         initData()
@@ -104,7 +116,9 @@ class MainActivity : BaseActivity(R.layout.activity_main) {
             mBinding.tvContent.text = ""
             mViewModel.requestFromNet()
         }
-        mBinding.goSecondActivity.setOnClickListener { startActivity<SecondActivity>() }
+        mBinding.goSecondActivity.setOnClickListener {
+            activityResultLauncher.launch(Intent(this, SecondActivity::class.java))
+        }
 
         mBinding.goSaveStateActivity.setOnClickListener { startActivity<SavedStateActivity>() }
 
@@ -112,6 +126,7 @@ class MainActivity : BaseActivity(R.layout.activity_main) {
             showLoading()
             mViewModel.login("FastJetpack", "FastJetpack")
         }
+
     }
 
     companion object {
