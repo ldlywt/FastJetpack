@@ -1,7 +1,12 @@
 package com.aisier.architecture.base
 
 import com.aisier.architecture.entity.*
+import com.aisier.architecture.util.toast
+import com.google.gson.JsonParseException
 import kotlinx.coroutines.delay
+import retrofit2.HttpException
+import java.net.SocketTimeoutException
+import java.util.concurrent.CancellationException
 
 open class BaseRepository {
 
@@ -12,12 +17,12 @@ open class BaseRepository {
         runCatching {
             response = block.invoke()
         }.onSuccess {
-            return handleHttpOkResponse(response)
+            response = handleHttpOkResponse(response)
         }.onFailure { e ->
             e.printStackTrace()
             //非后台返回错误，捕获到的异常
             handlingExceptions(e)
-            return ApiErrorResponse(e)
+            response = ApiErrorResponse(e)
         }
         return response
     }
@@ -38,4 +43,19 @@ open class BaseRepository {
             ApiFailedResponse(response.errorCode, response.errorMsg)
         }
     }
+
+    private fun handlingExceptions(e: Throwable) = when (e) {
+        is HttpException -> {
+            toast(e.message())
+        }
+        is CancellationException -> {
+        }
+        is SocketTimeoutException -> {
+        }
+        is JsonParseException -> {
+        }
+        else -> {
+        }
+    }
+
 }

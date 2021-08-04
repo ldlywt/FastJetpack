@@ -1,10 +1,6 @@
 package com.aisier.architecture.entity
 
 import com.aisier.architecture.util.toast
-import com.google.gson.JsonParseException
-import retrofit2.HttpException
-import java.net.SocketTimeoutException
-import java.util.concurrent.CancellationException
 
 enum class HttpError(var code: Int, var errorMsg: String) {
     TOKEN_EXPIRE(3001, "token is expired"),
@@ -16,21 +12,4 @@ fun handlingApiExceptions(code: Int?, errorMsg: String?) = when (code) {
     HttpError.TOKEN_EXPIRE.code -> toast(HttpError.TOKEN_EXPIRE.errorMsg)
     HttpError.PARAMS_ERROR.code -> toast(HttpError.PARAMS_ERROR.errorMsg)
     else -> errorMsg?.let { toast(it) }
-}
-
-/**
- * 处理请求层的错误,对可能的已知的错误进行处理
- */
-fun handlingExceptions(e: Throwable) = when (e) {
-    is HttpException -> {
-        toast(e.message())
-    }
-    is CancellationException -> {
-    }
-    is SocketTimeoutException -> {
-    }
-    is JsonParseException -> {
-    }
-    else -> {
-    }
 }
