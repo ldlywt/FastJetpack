@@ -18,4 +18,4 @@ class ApiEmptyResponse<T> : ApiResponse<T>()
 
 data class ApiFailedResponse<T>(override var errorCode: Int?, override var errorMsg: String?) : ApiResponse<T>(errorCode = errorCode, errorMsg = errorMsg)
 
-data class ApiErrorResponse<T>(override var error: Throwable?) : ApiResponse<T>(error = error)
+data class ApiErrorResponse<T>(var throwable: Throwable) : ApiResponse<T>(error = throwable)
