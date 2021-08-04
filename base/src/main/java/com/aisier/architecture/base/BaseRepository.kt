@@ -11,20 +11,19 @@ import java.util.concurrent.CancellationException
 open class BaseRepository {
 
     suspend fun <T> executeHttp(block: suspend () -> ApiResponse<T>): ApiResponse<T> {
-        var response: ApiResponse<T> = ApiResponse()
         //for test
         delay(500)
         runCatching {
-            response = block.invoke()
-        }.onSuccess {
-            response = handleHttpOkResponse(response)
+            block.invoke()
+        }.onSuccess { data: ApiResponse<T> ->
+            return handleHttpOkResponse(data)
         }.onFailure { e ->
             e.printStackTrace()
             //非后台返回错误，捕获到的异常
             handlingExceptions(e)
-            response = ApiErrorResponse(e)
+            return ApiErrorResponse(e)
         }
-        return response
+        return ApiEmptyResponse()
     }
 
     /**
