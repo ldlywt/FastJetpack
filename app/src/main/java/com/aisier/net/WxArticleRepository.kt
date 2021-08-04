@@ -31,7 +31,7 @@ class WxArticleRepository : BaseRepository() {
         }
     }
 
-    suspend fun login(username: String, password: String): ApiResponse<User> {
+    suspend fun login(username: String, password: String): ApiResponse<User?> {
         return executeHttp {
             mService.login(username, password)
         }

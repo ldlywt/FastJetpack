@@ -24,7 +24,7 @@ class ApiViewModel : BaseViewModel() {
     private val repository by lazy { WxArticleRepository() }
 
     val wxArticleLiveData = StateLiveData<List<WxArticleBean>>()
-    val userLiveData = StateLiveData<User>()
+    val userLiveData = StateLiveData<User?>()
     private val dbLiveData = StateLiveData<List<WxArticleBean>>()
     private val apiLiveData = StateLiveData<List<WxArticleBean>>()
     val mediatorLiveDataLiveData = MediatorLiveData<ApiResponse<List<WxArticleBean>>>().apply {
