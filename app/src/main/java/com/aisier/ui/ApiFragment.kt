@@ -8,9 +8,9 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.aisier.R
 import com.aisier.architecture.base.BaseFragment
 import com.aisier.bean.WxArticleBean
-import com.aisier.databinding.FragmentMainBinding
+import com.aisier.databinding.FragmentApiBinding
 import com.aisier.util.TimerShareLiveData
-import com.aisier.vm.MainViewModel
+import com.aisier.vm.ApiViewModel
 
 /**
  * <pre>
@@ -21,10 +21,10 @@ import com.aisier.vm.MainViewModel
  * version: 1.0
 </pre> *
  */
-class MainFragment : BaseFragment(R.layout.fragment_main) {
+class ApiFragment : BaseFragment(R.layout.fragment_api) {
 
-    private val mBinding by viewBinding(FragmentMainBinding::bind)
-    private val mViewModel by activityViewModels<MainViewModel>()
+    private val mBinding by viewBinding(FragmentApiBinding::bind)
+    private val mViewModel by activityViewModels<ApiViewModel>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

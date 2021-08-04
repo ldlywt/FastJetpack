@@ -19,7 +19,7 @@ import kotlinx.coroutines.launch
  * version: 1.0
 </pre> *
  */
-class MainViewModel : BaseViewModel() {
+class ApiViewModel : BaseViewModel() {
 
     private val repository by lazy { WxArticleRepository() }
 

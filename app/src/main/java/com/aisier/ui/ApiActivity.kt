@@ -8,12 +8,12 @@ import com.aisier.R
 import com.aisier.architecture.base.BaseActivity
 import com.aisier.bean.WxArticleBean
 import com.aisier.databinding.ActivityApiBinding
-import com.aisier.vm.MainViewModel
+import com.aisier.vm.ApiViewModel
 
 class ApiActivity : BaseActivity(R.layout.activity_api) {
 
     private val mBinding by viewBinding(ActivityApiBinding::bind)
-    private val mViewModel by viewModels<MainViewModel>()
+    private val mViewModel by viewModels<ApiViewModel>()
 
     override fun init() {
         initData()
@@ -28,7 +28,6 @@ class ApiActivity : BaseActivity(R.layout.activity_api) {
             }
 
             onFailed { code, msg ->
-
             }
 
             onException {
@@ -36,7 +35,6 @@ class ApiActivity : BaseActivity(R.layout.activity_api) {
             }
 
             onEmpty {
-
             }
 
             onComplete {
@@ -66,7 +64,7 @@ class ApiActivity : BaseActivity(R.layout.activity_api) {
     }
 
     private fun initData() {
-        supportFragmentManager.beginTransaction().replace(R.id.fl_contain, MainFragment()).commit()
+        supportFragmentManager.beginTransaction().replace(R.id.fl_contain, ApiFragment()).commit()
         mBinding.btnNet.setOnClickListener {
             showLoading()
             mViewModel.requestNet()
