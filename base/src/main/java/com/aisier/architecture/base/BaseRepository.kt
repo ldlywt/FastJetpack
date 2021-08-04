@@ -1,5 +1,6 @@
 package com.aisier.architecture.base
 
+import com.aisier.architecture.BuildConfig
 import com.aisier.architecture.entity.*
 import com.aisier.architecture.util.toast
 import com.google.gson.JsonParseException
@@ -16,30 +17,34 @@ open class BaseRepository {
         runCatching {
             block.invoke()
         }.onSuccess { data: ApiResponse<T> ->
-            return handleHttpOkResponse(data)
+            return handleHttpOk(data)
         }.onFailure { e ->
-            e.printStackTrace()
-            //非后台返回错误，捕获到的异常
-            handlingExceptions(e)
-            return ApiErrorResponse(e)
+            return handleHttpError(e)
         }
         return ApiEmptyResponse()
     }
 
-    /**
-     * Http 状态码200，请求成功，但是后台定义了一些错误码
-     */
-    private fun <T> handleHttpOkResponse(response: ApiResponse<T>): ApiResponse<T> {
-        return if (response.isSuccess) {
-            if (response.data == null || response.data is List<*> && (response.data as List<*>).isEmpty()) {
-                //TODO: 数据为空,结构变化时需要修改判空条件
-                ApiEmptyResponse()
-            } else {
-                ApiSuccessResponse(response.data!!)
-            }
+    private fun <T> handleHttpError(e: Throwable): ApiErrorResponse<T> {
+        if (BuildConfig.DEBUG) e.printStackTrace()
+        //非后台返回错误，捕获到的异常
+        handlingExceptions(e)
+        return ApiErrorResponse(e)
+    }
+
+    private fun <T> handleHttpOk(data: ApiResponse<T>): ApiResponse<T> {
+        return if (data.isSuccess) {
+            getHttpSuccessResponse(data)
         } else {
-            handlingApiExceptions(response.errorCode, response.errorMsg)
-            ApiFailedResponse(response.errorCode, response.errorMsg)
+            handlingApiExceptions(data.errorCode, data.errorMsg)
+            ApiFailedResponse(data.errorCode, data.errorMsg)
+        }
+    }
+
+    private fun <T> getHttpSuccessResponse(response: ApiResponse<T>): ApiResponse<T> {
+        return if (response.data == null || response.data is List<*> && (response.data as List<*>).isEmpty()) {
+            ApiEmptyResponse()
+        } else {
+            ApiSuccessResponse(response.data!!)
         }
     }
 

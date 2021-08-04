@@ -2,6 +2,7 @@ package com.aisier.net
 
 import com.aisier.architecture.base.BaseRepository
 import com.aisier.architecture.entity.ApiResponse
+import com.aisier.architecture.entity.ApiSuccessResponse
 import com.aisier.bean.User
 import com.aisier.bean.WxArticleBean
 import kotlinx.coroutines.Dispatchers
@@ -41,10 +42,7 @@ class WxArticleRepository : BaseRepository() {
         bean.id = 999
         bean.name = "零先生"
         bean.visible = 1
-        val response = ApiResponse<List<WxArticleBean>>()
-        val list = arrayListOf(bean)
-        response.data = list
-        response
+        ApiSuccessResponse(arrayListOf(bean))
     }
 
 
