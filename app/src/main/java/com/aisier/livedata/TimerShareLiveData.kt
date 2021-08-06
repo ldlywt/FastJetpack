@@ -1,4 +1,4 @@
-package com.aisier.util
+package com.aisier.livedata
 
 import androidx.annotation.MainThread
 import androidx.lifecycle.LiveData

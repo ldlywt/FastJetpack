@@ -9,7 +9,7 @@ import com.aisier.R
 import com.aisier.architecture.base.BaseFragment
 import com.aisier.bean.WxArticleBean
 import com.aisier.databinding.FragmentApiBinding
-import com.aisier.util.TimerShareLiveData
+import com.aisier.livedata.TimerShareLiveData
 import com.aisier.vm.ApiViewModel
 
 /**

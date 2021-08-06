@@ -12,8 +12,8 @@ import com.aisier.architecture.base.BaseActivity
 import com.aisier.architecture.util.startActivity
 import com.aisier.architecture.util.toast
 import com.aisier.databinding.ActivityMainBinding
-import com.aisier.util.NetworkWatchLiveData
-import com.aisier.util.TimerShareLiveData
+import com.aisier.livedata.NetworkWatchLiveData
+import com.aisier.livedata.TimerShareLiveData
 import com.aisier.vm.ShareViewModel
 
 /**

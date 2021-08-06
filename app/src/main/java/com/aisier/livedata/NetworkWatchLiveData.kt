@@ -1,4 +1,4 @@
-package com.aisier.util
+package com.aisier.livedata
 
 import android.content.BroadcastReceiver
 import android.content.Context

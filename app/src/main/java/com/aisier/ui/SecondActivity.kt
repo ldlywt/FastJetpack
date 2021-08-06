@@ -11,8 +11,8 @@ import com.aisier.R
 import com.aisier.architecture.base.BaseActivity
 import com.aisier.architecture.util.toast
 import com.aisier.databinding.ActivitySecondBinding
-import com.aisier.util.TakePhotoLiveData
-import com.aisier.util.TimerShareLiveData
+import com.aisier.livedata.TakePhotoLiveData
+import com.aisier.livedata.TimerShareLiveData
 import com.aisier.vm.ShareViewModel
 
 class SecondActivity : BaseActivity(R.layout.activity_second) {
