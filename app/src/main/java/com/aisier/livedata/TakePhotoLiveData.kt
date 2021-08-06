@@ -8,7 +8,7 @@ import androidx.lifecycle.LiveData
 
 class TakePhotoLiveData(private val registry: ActivityResultRegistry) : LiveData<Bitmap>() {
 
-    lateinit var takePhotoLauncher: ActivityResultLauncher<Void?>
+    private lateinit var takePhotoLauncher: ActivityResultLauncher<Void?>
 
     override fun onActive() {
         super.onActive()
@@ -23,6 +23,10 @@ class TakePhotoLiveData(private val registry: ActivityResultRegistry) : LiveData
     override fun onInactive() {
         super.onInactive()
         takePhotoLauncher.unregister()
+    }
+
+    fun takePhoto() {
+        takePhotoLauncher.launch(null)
     }
 
 }

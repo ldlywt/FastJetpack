@@ -11,6 +11,7 @@ import com.aisier.R
 import com.aisier.architecture.base.BaseActivity
 import com.aisier.architecture.util.toast
 import com.aisier.databinding.ActivitySecondBinding
+import com.aisier.livedata.RequestPermissionLiveData
 import com.aisier.livedata.TakePhotoLiveData
 import com.aisier.livedata.TimerShareLiveData
 import com.aisier.vm.ShareViewModel
@@ -19,9 +20,11 @@ class SecondActivity : BaseActivity(R.layout.activity_second) {
 
     private val mBinding by viewBinding(ActivitySecondBinding::bind)
 
-    private lateinit var takePhotoLiveData: TakePhotoLiveData
+    private var takePhotoLiveData: TakePhotoLiveData = TakePhotoLiveData(activityResultRegistry)
 
-    private val requestPermission: ActivityResultLauncher<String> =
+    private var requestPermissionLiveData = RequestPermissionLiveData(activityResultRegistry, "key")
+
+    private val requestPermissionLauncher: ActivityResultLauncher<String> =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { result: Boolean ->
             toast("request permission $result")
         }
@@ -33,13 +36,12 @@ class SecondActivity : BaseActivity(R.layout.activity_second) {
             shareViewModel.msgLiveData.postValue("给MainActivity发消息")
         }
 
-        takePhotoLiveData = TakePhotoLiveData(activityResultRegistry)
         takePhotoLiveData.observe(this) { bitmap ->
             mBinding.imageView.setImageBitmap(bitmap)
         }
 
         mBinding.btTakePhoto.setOnClickListener {
-            takePhotoLiveData.takePhotoLauncher.launch(null)
+            takePhotoLiveData.takePhoto()
         }
 
         TimerShareLiveData.get().observe(this) {
@@ -47,7 +49,15 @@ class SecondActivity : BaseActivity(R.layout.activity_second) {
         }
 
         mBinding.btRequestPermission.setOnClickListener {
-            requestPermission.launch(Manifest.permission.ACCESS_FINE_LOCATION)
+            requestPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
+        }
+
+        mBinding.btRequestPermissionV2.setOnClickListener {
+            requestPermissionLiveData.requestPermission(Manifest.permission.RECORD_AUDIO)
+        }
+
+        requestPermissionLiveData.observe(this) {
+            toast("权限RECORD_AUDIO请求结果   $it")
         }
 
         mBinding.btBack.setOnClickListener {
