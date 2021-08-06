@@ -12,6 +12,7 @@ import com.aisier.architecture.base.BaseActivity
 import com.aisier.architecture.util.startActivity
 import com.aisier.architecture.util.toast
 import com.aisier.databinding.ActivityMainBinding
+import com.aisier.util.NetworkWatchLiveData
 import com.aisier.util.TimerShareLiveData
 import com.aisier.vm.ShareViewModel
 
@@ -41,6 +42,10 @@ class MainActivity : BaseActivity(R.layout.activity_main) {
 
         TimerShareLiveData.get().observe(this) {
             Log.i(TAG, "TimerShareLiveData value: $it")
+        }
+
+        NetworkWatchLiveData.get().observe(this) {
+            Log.i("wutao--> ", "network change: $it")
         }
     }
 
