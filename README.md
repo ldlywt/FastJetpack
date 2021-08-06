@@ -8,7 +8,7 @@
 - 完全不懂协程也能立马上手（模板代码）
 - 用Kotlin的方式写Kotlin代码，什么意思呢？对比一下下面2个代码就知道了：
 
-```
+```kotlin
 mViewModel.wxArticleLiveData.observe(this, object : IStateObserver<List<WxArticleBean>>() {
 
     override fun onSuccess(data: List<WxArticleBean>?) {
@@ -42,21 +42,21 @@ mViewModel.wxArticleLiveData.observeState(this) {
 
 基于官方架构的封装：
 
-![img](https://cdn.nlark.com/yuque/0/2021/png/655344/1626940212479-d49f14d9-5ee9-4abf-b7a3-64a16a15297e.png)
+![img](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/b0258b753a58459599208f83093114a2~tplv-k3u1fbpfcp-zoom-1.image)
 
-## 封装一
+## 一、封装一
 
 ### Activity中的代码示例
 
 #### 点击请求网络
 
-```
+```kotlin
 mViewModel.getArticleData()
 ```
 
 #### 设置监听，只监听成功的结果，使用默认异常处理
 
-```
+```kotlin
 mViewModel.wxArticleLiveData.observeState(this) {
     onSuccess { data ->
         Log.i("wutao","网络请求的结果是：$data")
@@ -68,7 +68,7 @@ mViewModel.wxArticleLiveData.observeState(this) {
 
 这些回调都是可选的，不需要可不实现
 
-```
+```kotlin
 mViewModel.wxArticleLiveData.observeState(this) {
     onSuccess { data ->
         Log.i("wutao","网络请求的结果是：$data")
@@ -100,7 +100,7 @@ mViewModel.wxArticleLiveData.observeState(this) {
 
 很多网络请求都需要Loading，不想每次都写`onShowLoading{}`方法，也so easy。
 
-```
+```kotlin
 mViewModel.wxArticleLoadingLiveData.observeState(this, this) {
     onSuccess { data ->
 		Log.i("wutao","网络请求的结果是：$data")
@@ -116,7 +116,7 @@ mViewModel.wxArticleLoadingLiveData.observeState(this, this) {
 
 ### ViewModel中代码示例
 
-```
+```kotlin
 class MainViewModel{
     
     private val repository by lazy { WxArticleRepository() }
@@ -135,7 +135,7 @@ class MainViewModel{
 
 ### Repository中代码示例
 
-```
+```kotlin
 class WxArticleRepository : BaseRepository() {
 
     private val mService by lazy { RetrofitClient.service }
@@ -187,7 +187,8 @@ Repository是做一个数据仓库，项目中获取数据的方式都在这里�
 
 针对封装一的不足，优化出了封装二。
 
-# 封装二
+# 二、封装二
+### 思路
 
 - 想要解决上面的不足，不能以LiveData为载体贯穿整个网络请求。
 - `Observe()`方法中去掉ui引用，不要小看一个ui引用，这个引用代表着`具体的Activity`跟`Observe`耦合起来了，并且`Activity`还要实现`IUiView`接口。
@@ -202,7 +203,7 @@ Repository是做一个数据仓库，项目中获取数据的方式都在这里�
 
 ### Activity中代码
 
-```
+```kotlin
 // 请求网络
 mViewModel.login("username", "password")
 
@@ -222,7 +223,7 @@ mViewModel.userLiveData.observeState(this) {
 
 ### ViewModel中
 
-```
+```kotlin
 class MainViewModel {
     
     val userLiveData = StateLiveData<User?>()
@@ -239,7 +240,7 @@ class MainViewModel {
 
 ### Repository中
 
-```
+```kotlin
 suspend fun login(username: String, password: String): ApiResponse<User?> {
     return executeHttp {
         mService.login(username, password)
@@ -251,7 +252,7 @@ Repository中的方法都返回请求结果，并且方法参数不需要livedat
 
 ### 针对多数据源
 
-```
+```kotlin
 // WxArticleRepository
 class WxArticleRepository : BaseRepository() {
 
@@ -288,11 +289,11 @@ val mediatorLiveDataLiveData = MediatorLiveData<ApiResponse<List<WxArticleBean>>
 
 https://github.com/ldlywt/FastJetpack   (Master分支)
 
-### 实现原理
+## 三、实现原理
 
 数据来源于鸿洋大神的[玩Android 开放API](https://wanandroid.com/blog/show/2)
 
-```
+```kotlin
 回数据结构定义:
 {
     "data": ...,
@@ -303,9 +304,9 @@ https://github.com/ldlywt/FastJetpack   (Master分支)
 
 封装一和封装二的代码差距很小，主要看封装二。
 
-## 定义数据返回类
+### 定义数据返回类
 
-```
+```kotlin
 open class ApiResponse<T>(
         open val data: T? = null,
         open val errorCode: Int? = null,
@@ -329,7 +330,7 @@ data class ApiErrorResponse<T>(val throwable: Throwable) : ApiResponse<T>(error 
 
 ### 网络请求统一处理：BaseRepository
 
-```
+```kotlin
 open class BaseRepository {
 
     suspend fun <T> executeHttp(block: suspend () -> ApiResponse<T>): ApiResponse<T> {
@@ -380,9 +381,11 @@ open class BaseRepository {
 
 Retrofit协程的错误码处理是通过异常抛出来的，所以通过try...catch来捕捉非200的错误码。包装成不同的数据类对象返回。
 
+### 扩展LiveData和Observer
+
 在LiveData的`Observer()`来判断是哪种数据类，进行相应的回调处理：
 
-```
+```kotlin
 abstract class IStateObserver<T> : Observer<ApiResponse<T>> {
 
     override fun onChanged(apiResponse: ApiResponse<T>) {
@@ -398,7 +401,7 @@ abstract class IStateObserver<T> : Observer<ApiResponse<T>> {
 
 再扩展LiveData，通过kotlin的DSL表达式替换java的callback回调，简写代码。
 
-```
+```kotlin
 class StateLiveData<T> : MutableLiveData<ApiResponse<T>>() {
 
     fun observeState(owner: LifecycleOwner, listenerBuilder: ListenerBuilder.() -> Unit) {
@@ -431,7 +434,7 @@ class StateLiveData<T> : MutableLiveData<ApiResponse<T>>() {
 }
 ```
 
-## 总结
+## 四、总结
 
 封装一：代码量更少，可以根据项目需要封装一些具体的ui相关，开发起来更快速，用起来更爽。
 
@@ -441,7 +444,7 @@ class StateLiveData<T> : MutableLiveData<ApiResponse<T>>() {
 
 我们自己项目中使用，怎么轻便，怎么快速，怎么写的爽就怎么来。
 
-## 鸣谢
+## 五、鸣谢
 
 非常感谢鸿洋大神提供稳定好用的[玩Android](https://wanandroid.com/blog/show/2)，业余时间用[玩Android 开放API](https://wanandroid.com/blog/show/2)折腾学习了好多东西。
 
@@ -449,7 +452,7 @@ class StateLiveData<T> : MutableLiveData<ApiResponse<T>>() {
 
 这套网络框架前前后后改了很多次，终于优化到了自己还算满意的地步，如有不足，请指出交流，一起学习进步。
 
-## 项目地址
+## 六、项目地址
 
 https://github.com/ldlywt/FastJetpack
 
