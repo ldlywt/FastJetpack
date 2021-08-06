@@ -33,21 +33,13 @@ class SecondActivity : BaseActivity(R.layout.activity_second) {
             shareViewModel.msgLiveData.postValue("给MainActivity发消息")
         }
 
-        mBinding.btGetUserInfo.setOnClickListener {
-            TimerShareLiveData.get().cancelTimer()
-        }
-
         takePhotoLiveData = TakePhotoLiveData(activityResultRegistry)
-        takePhotoLiveData.observeForever { bitmap ->
+        takePhotoLiveData.observe(this) { bitmap ->
             mBinding.imageView.setImageBitmap(bitmap)
         }
 
         mBinding.btTakePhoto.setOnClickListener {
             takePhotoLiveData.takePhotoLauncher.launch(null)
-        }
-
-        shareViewModel.msgLiveData.observe(this) {
-            toast(it)
         }
 
         TimerShareLiveData.get().observe(this) {
