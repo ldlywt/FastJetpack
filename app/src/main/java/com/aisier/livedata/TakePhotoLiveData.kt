@@ -6,14 +6,15 @@ import androidx.activity.result.ActivityResultRegistry
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.LiveData
 
-class TakePhotoLiveData(private val registry: ActivityResultRegistry) : LiveData<Bitmap>() {
+class TakePhotoLiveData(private val registry: ActivityResultRegistry, private val key: String) :
+    LiveData<Bitmap>() {
 
     private lateinit var takePhotoLauncher: ActivityResultLauncher<Void?>
 
     override fun onActive() {
         super.onActive()
         takePhotoLauncher = registry.register(
-            "key",
+            key,
             ActivityResultContracts.TakePicturePreview()
         ) { result ->
             value = result

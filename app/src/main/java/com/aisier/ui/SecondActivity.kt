@@ -20,7 +20,8 @@ class SecondActivity : BaseActivity(R.layout.activity_second) {
 
     private val mBinding by viewBinding(ActivitySecondBinding::bind)
 
-    private var takePhotoLiveData: TakePhotoLiveData = TakePhotoLiveData(activityResultRegistry)
+    private var takePhotoLiveData: TakePhotoLiveData =
+        TakePhotoLiveData(activityResultRegistry, "key")
 
     private var requestPermissionLiveData = RequestPermissionLiveData(activityResultRegistry, "key")
 
