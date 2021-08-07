@@ -13,18 +13,13 @@ class RequestPermissionLiveData(
     private lateinit var requestPermissionLauncher: ActivityResultLauncher<String>
 
     override fun onActive() {
-        super.onActive()
-
         requestPermissionLauncher =
             registry.register(key, ActivityResultContracts.RequestPermission()) { result ->
                 value = result
             }
     }
 
-    override fun onInactive() {
-        super.onInactive()
-        requestPermissionLauncher.unregister()
-    }
+    override fun onInactive() = requestPermissionLauncher.unregister()
 
     fun requestPermission(permission: String) {
         requestPermissionLauncher.launch(permission)

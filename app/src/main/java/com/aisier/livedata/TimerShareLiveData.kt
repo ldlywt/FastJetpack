@@ -17,9 +17,7 @@ class TimerShareLiveData : LiveData<Int>() {
 
     override fun onInactive() = timerManager.unRegisterTimeIntervalCallback()
 
-    fun cancelTimer(){
-        timerManager.cancelTimer()
-    }
+    fun cancelTimer() = timerManager.cancelTimer()
 
     companion object {
         private lateinit var sInstance: TimerShareLiveData

@@ -16,14 +16,10 @@ class NetworkWatchLiveData : LiveData<NetworkInfo?>() {
     private val mIntentFilter: IntentFilter = IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)
 
     override fun onActive() {
-        super.onActive()
         mContext.registerReceiver(mNetworkReceiver, mIntentFilter)
     }
 
-    override fun onInactive() {
-        super.onInactive()
-        mContext.unregisterReceiver(mNetworkReceiver)
-    }
+    override fun onInactive() = mContext.unregisterReceiver(mNetworkReceiver)
 
     private class NetworkReceiver : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {

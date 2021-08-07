@@ -12,22 +12,14 @@ class TakePhotoLiveData(private val registry: ActivityResultRegistry, private va
     private lateinit var takePhotoLauncher: ActivityResultLauncher<Void?>
 
     override fun onActive() {
-        super.onActive()
-        takePhotoLauncher = registry.register(
-            key,
-            ActivityResultContracts.TakePicturePreview()
-        ) { result ->
-            value = result
-        }
+        takePhotoLauncher =
+            registry.register(key, ActivityResultContracts.TakePicturePreview()) { result ->
+                value = result
+            }
     }
 
-    override fun onInactive() {
-        super.onInactive()
-        takePhotoLauncher.unregister()
-    }
+    override fun onInactive() = takePhotoLauncher.unregister()
 
-    fun takePhoto() {
-        takePhotoLauncher.launch(null)
-    }
+    fun takePhoto() = takePhotoLauncher.launch(null)
 
 }
