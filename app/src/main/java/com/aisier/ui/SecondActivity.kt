@@ -13,7 +13,7 @@ import com.aisier.architecture.util.toast
 import com.aisier.databinding.ActivitySecondBinding
 import com.aisier.livedata.RequestPermissionLiveData
 import com.aisier.livedata.TakePhotoLiveData
-import com.aisier.livedata.TimerShareLiveData
+import com.aisier.livedata.TimerGlobalLiveData
 import com.aisier.vm.ShareViewModel
 
 class SecondActivity : BaseActivity(R.layout.activity_second) {
@@ -45,8 +45,12 @@ class SecondActivity : BaseActivity(R.layout.activity_second) {
             takePhotoLiveData.takePhoto()
         }
 
-        TimerShareLiveData.get().observe(this) {
-            Log.i(TAG, "SecondActivity: $it")
+        mBinding.btStopTimer.setOnClickListener {
+            TimerGlobalLiveData.get().cancelTimer()
+        }
+
+        TimerGlobalLiveData.get().observe(this) {
+            Log.i(TAG, "GlobalTimer value: == $it")
         }
 
         mBinding.btRequestPermission.setOnClickListener {

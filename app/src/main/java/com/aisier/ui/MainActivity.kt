@@ -13,7 +13,7 @@ import com.aisier.architecture.util.startActivity
 import com.aisier.architecture.util.toast
 import com.aisier.databinding.ActivityMainBinding
 import com.aisier.livedata.NetworkWatchLiveData
-import com.aisier.livedata.TimerShareLiveData
+import com.aisier.livedata.TimerGlobalLiveData
 import com.aisier.vm.ShareViewModel
 
 /**
@@ -24,11 +24,11 @@ class MainActivity : BaseActivity(R.layout.activity_main) {
     private val mBinding by viewBinding(ActivityMainBinding::bind)
 
     private val activityResultLauncher: ActivityResultLauncher<Intent> =
-            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult: ActivityResult ->
-                if (activityResult.resultCode == Activity.RESULT_OK) {
-                    toast(activityResult.data?.getStringExtra("key") ?: "")
-                }
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult: ActivityResult ->
+            if (activityResult.resultCode == Activity.RESULT_OK) {
+                toast(activityResult.data?.getStringExtra("key") ?: "")
             }
+        }
 
     override fun init() {
         initData()
@@ -40,8 +40,8 @@ class MainActivity : BaseActivity(R.layout.activity_main) {
             toast("我是第二个页面的消息")
         }
 
-        TimerShareLiveData.get().observe(this) {
-            Log.i(TAG, "TimerShareLiveData value: $it")
+        TimerGlobalLiveData.get().observe(this) {
+            Log.i(TAG, "GlobalTimer value: ==  $it")
         }
 
         NetworkWatchLiveData.get().observe(this) {
@@ -57,6 +57,8 @@ class MainActivity : BaseActivity(R.layout.activity_main) {
         mBinding.goSaveStateActivity.setOnClickListener { startActivity<SavedStateActivity>() }
 
         mBinding.btApiActivity.setOnClickListener { startActivity<ApiActivity>() }
+
+        mBinding.btStartTimer.setOnClickListener { TimerGlobalLiveData.get().startTimer() }
 
     }
 

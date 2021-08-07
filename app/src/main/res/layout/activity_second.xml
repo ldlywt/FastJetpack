@@ -12,7 +12,8 @@
         android:id="@+id/bt_send_msg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="给MainActivity发消息" />
+        android:text="给MainActivity发消息"
+        android:textAllCaps="false" />
 
     <Button
         android:id="@+id/bt_back"
@@ -36,7 +37,14 @@
         android:id="@+id/bt_request_permission_v2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="请求权限LiveData" />
+        android:text="请求权限LiveData"
+        android:textAllCaps="false" />
+
+    <Button
+        android:id="@+id/bt_stop_timer"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="停止全局定时器" />
 
 
     <ImageView

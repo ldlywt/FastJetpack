@@ -9,7 +9,7 @@ import com.aisier.R
 import com.aisier.architecture.base.BaseFragment
 import com.aisier.bean.WxArticleBean
 import com.aisier.databinding.FragmentApiBinding
-import com.aisier.livedata.TimerShareLiveData
+import com.aisier.livedata.TimerGlobalLiveData
 import com.aisier.vm.ApiViewModel
 
 /**
@@ -37,13 +37,14 @@ class ApiFragment : BaseFragment(R.layout.fragment_api) {
                 result?.let {
                     val wxArticleBean: WxArticleBean = result[0]
                     mBinding.text.text =
-                            wxArticleBean.name + "   是否展示： " + wxArticleBean.visible + "\n" + result[1].name + "   是否展示： " + result[1].visible
+                        wxArticleBean.name + "   是否展示： " + wxArticleBean.visible + "\n" + result[1].name + "   是否展示： " + result[1].visible
                 }
             }
         }
 
-        TimerShareLiveData.get().observe(viewLifecycleOwner) {
-            Log.i("wutao--> ", "MainFragment: $it")
+
+        TimerGlobalLiveData.get().observe(viewLifecycleOwner) {
+            Log.i("ApiFragment", "GlobalTimer value: == $it")
         }
     }
 
