@@ -4,7 +4,6 @@ import android.app.ProgressDialog
 import android.os.Bundle
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 
 /**
  * <pre>
@@ -17,18 +16,12 @@ import androidx.lifecycle.ViewModelProvider
  */
 abstract class BaseActivity(@LayoutRes contentLayoutId: Int) : AppCompatActivity(contentLayoutId), IUiView {
 
-    private val mFactory: ViewModelProvider.Factory by lazy {
-        ViewModelProvider.AndroidViewModelFactory.getInstance(BaseApp.instance)
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         init()
     }
 
     protected abstract fun init()
-
-    protected open fun getAppViewModelProvider(): ViewModelProvider = ViewModelProvider(BaseApp.instance, mFactory)
 
     private var progressDialog: ProgressDialog? = null
 
@@ -41,5 +34,4 @@ abstract class BaseActivity(@LayoutRes contentLayoutId: Int) : AppCompatActivity
     override fun dismissLoading() {
         progressDialog?.takeIf { it.isShowing }?.dismiss()
     }
-
 }

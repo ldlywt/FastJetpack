@@ -1,7 +1,10 @@
 package com.aisier.architecture.base
 
 import android.app.Application
-import androidx.lifecycle.*
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.OnLifecycleEvent
+import androidx.lifecycle.ProcessLifecycleOwner
 
 /**
  * author : wutao
@@ -10,15 +13,13 @@ import androidx.lifecycle.*
  * desc   :
  * version: 1.0
  */
-open class BaseApp : Application(), ViewModelStoreOwner {
+open class BaseApp : Application() {
 
     override fun onCreate() {
         super.onCreate()
         instance = this
         ProcessLifecycleOwner.get().lifecycle.addObserver(ApplicationLifecycleObserver())
     }
-
-    override fun getViewModelStore(): ViewModelStore = ViewModelStore()
 
     companion object {
         lateinit var instance: BaseApp

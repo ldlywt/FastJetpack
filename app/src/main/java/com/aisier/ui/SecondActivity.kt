@@ -14,7 +14,6 @@ import com.aisier.databinding.ActivitySecondBinding
 import com.aisier.livedata.RequestPermissionLiveData
 import com.aisier.livedata.TakePhotoLiveData
 import com.aisier.livedata.TimerGlobalLiveData
-import com.aisier.vm.ShareViewModel
 
 class SecondActivity : BaseActivity(R.layout.activity_second) {
 
@@ -31,11 +30,6 @@ class SecondActivity : BaseActivity(R.layout.activity_second) {
         }
 
     override fun init() {
-        val shareViewModel = getAppViewModelProvider().get(ShareViewModel::class.java)
-
-        mBinding.btSendMsg.setOnClickListener {
-            shareViewModel.msgLiveData.postValue("给MainActivity发消息")
-        }
 
         takePhotoLiveData.observe(this) { bitmap ->
             mBinding.imageView.setImageBitmap(bitmap)

@@ -14,7 +14,6 @@ import com.aisier.architecture.util.toast
 import com.aisier.databinding.ActivityMainBinding
 import com.aisier.livedata.NetworkWatchLiveData
 import com.aisier.livedata.TimerGlobalLiveData
-import com.aisier.vm.ShareViewModel
 
 /**
  * 这种封装方式不支持Loading状态，需要自己手动书写Loading
@@ -36,9 +35,6 @@ class MainActivity : BaseActivity(R.layout.activity_main) {
     }
 
     private fun initGlobalObserver() {
-        getAppViewModelProvider().get(ShareViewModel::class.java).msgLiveData.observe(this) {
-            toast("我是第二个页面的消息")
-        }
 
         TimerGlobalLiveData.get().observe(this) {
             Log.i(TAG, "GlobalTimer value: ==  $it")
