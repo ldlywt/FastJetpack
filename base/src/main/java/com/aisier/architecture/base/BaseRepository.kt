@@ -44,10 +44,11 @@ open class BaseRepository {
      * 成功和数据为空的处理
      */
     private fun <T> getHttpSuccessResponse(response: ApiResponse<T>): ApiResponse<T> {
-        return if (response.data == null || response.data is List<*> && (response.data as List<*>).isEmpty()) {
+        val data = response.data
+        return if (data == null || data is List<*> && (data as List<*>).isEmpty()) {
             ApiEmptyResponse()
         } else {
-            ApiSuccessResponse(response.data!!)
+            ApiSuccessResponse(data)
         }
     }
 
