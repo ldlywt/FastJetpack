@@ -1,10 +1,10 @@
 package com.aisier.net
 
-import com.aisier.architecture.base.BaseRepository
-import com.aisier.architecture.entity.ApiResponse
-import com.aisier.architecture.entity.ApiSuccessResponse
 import com.aisier.bean.User
 import com.aisier.bean.WxArticleBean
+import com.aisier.network.base.BaseRepository
+import com.aisier.network.entity.ApiResponse
+import com.aisier.network.entity.ApiSuccessResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 

@@ -4,6 +4,8 @@ import android.app.ProgressDialog
 import android.os.Bundle
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
+import com.aisier.architecture.util.toast
+import com.jeremyliao.liveeventbus.LiveEventBus
 
 /**
  * <pre>
@@ -19,6 +21,13 @@ abstract class BaseActivity(@LayoutRes contentLayoutId: Int) : AppCompatActivity
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         init()
+        observeToast()
+    }
+
+    private fun observeToast() {
+        LiveEventBus.get<String>(SHOW_TOAST).observe(this) {
+            toast(it)
+        }
     }
 
     protected abstract fun init()
@@ -33,5 +42,9 @@ abstract class BaseActivity(@LayoutRes contentLayoutId: Int) : AppCompatActivity
 
     override fun dismissLoading() {
         progressDialog?.takeIf { it.isShowing }?.dismiss()
+    }
+
+    companion object {
+        const val SHOW_TOAST = "show_toast"
     }
 }

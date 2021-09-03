@@ -1,6 +1,6 @@
-package com.aisier.architecture.entity
+package com.aisier.network.entity
 
-import com.aisier.architecture.util.toast
+import com.aisier.network.toast
 import com.google.gson.JsonParseException
 import retrofit2.HttpException
 import java.net.SocketTimeoutException
@@ -19,9 +19,8 @@ internal fun handlingApiExceptions(code: Int?, errorMsg: String?) = when (code) 
 }
 
 internal fun handlingExceptions(e: Throwable) = when (e) {
-    is HttpException -> {
-        toast(e.message())
-    }
+    is HttpException -> toast(e.message())
+
     is CancellationException -> {
     }
     is SocketTimeoutException -> {

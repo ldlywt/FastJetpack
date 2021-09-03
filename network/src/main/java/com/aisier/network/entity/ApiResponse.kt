@@ -1,4 +1,4 @@
-package com.aisier.architecture.entity
+package com.aisier.network.entity
 
 import java.io.Serializable
 

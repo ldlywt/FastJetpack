@@ -1,4 +1,4 @@
-package com.aisier
+package com.aisier.ui
 
 import android.content.Context
 import android.view.LayoutInflater

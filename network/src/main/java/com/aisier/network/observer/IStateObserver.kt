@@ -1,7 +1,7 @@
-package com.aisier.architecture.net
+package com.aisier.network.observer
 
 import androidx.lifecycle.Observer
-import com.aisier.architecture.entity.*
+import com.aisier.network.entity.*
 
 abstract class IStateObserver<T> : Observer<ApiResponse<T>> {
 

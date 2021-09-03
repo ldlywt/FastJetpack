@@ -1,7 +1,7 @@
-package com.aisier.architecture.base
+package com.aisier.network.base
 
-import com.aisier.architecture.BuildConfig
-import com.aisier.architecture.entity.*
+import com.aisier.network.BuildConfig
+import com.aisier.network.entity.*
 import kotlinx.coroutines.delay
 
 open class BaseRepository {

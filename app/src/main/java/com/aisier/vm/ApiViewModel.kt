@@ -3,11 +3,11 @@ package com.aisier.vm
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.viewModelScope
 import com.aisier.architecture.base.BaseViewModel
-import com.aisier.architecture.entity.ApiResponse
-import com.aisier.architecture.net.StateLiveData
 import com.aisier.bean.User
 import com.aisier.bean.WxArticleBean
 import com.aisier.net.WxArticleRepository
+import com.aisier.network.entity.ApiResponse
+import com.aisier.network.observer.StateLiveData
 import kotlinx.coroutines.launch
 
 /**

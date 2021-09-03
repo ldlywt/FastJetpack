@@ -1,9 +1,9 @@
-package com.aisier.architecture.net
+package com.aisier.network.observer
 
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
-import com.aisier.architecture.entity.ApiResponse
-import com.aisier.architecture.util.toast
+import com.aisier.network.entity.ApiResponse
+import com.aisier.network.toast
 
 /**
  * <pre>
