@@ -12,6 +12,7 @@ inline fun Fragment.requestPermission(
     crossinline explained: (permission: String) -> Unit = {}
 
 ) {
+
     registerForActivityResult(ActivityResultContracts.RequestPermission()) { result: Boolean ->
         when {
             result -> granted.invoke(permission)
@@ -27,6 +28,8 @@ inline fun AppCompatActivity.requestPermission(
     crossinline denied: (permission: String) -> Unit = {},
     crossinline explained: (permission: String) -> Unit = {}
 ) {
+
+
     registerForActivityResult(ActivityResultContracts.RequestPermission()) { result ->
         when {
             result -> granted.invoke(permission)
