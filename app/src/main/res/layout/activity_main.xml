@@ -12,6 +12,13 @@
         android:orientation="vertical">
 
         <Button
+            android:id="@+id/bt_api_activity"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:text="网络请求封装" />
+
+        <Button
             android:id="@+id/go_second_activity"
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -25,13 +32,6 @@
             android:layout_height="50dp"
             android:layout_weight="1"
             android:text="数据恢复" />
-
-        <Button
-            android:id="@+id/bt_api_activity"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_weight="1"
-            android:text="网络请求封装" />
 
         <Button
             android:id="@+id/bt_start_timer"
