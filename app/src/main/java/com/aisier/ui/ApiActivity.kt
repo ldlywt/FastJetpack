@@ -21,6 +21,10 @@ class ApiActivity : BaseActivity(R.layout.activity_api) {
     }
 
     private fun initObserver() {
+        mViewModel.loadingLiveData.observe(this) {
+            if (it) showLoading() else dismissLoading()
+        }
+
         mViewModel.wxArticleLiveData.observeState(this) {
             onSuccess { data: List<WxArticleBean> ->
                 showNetErrorPic(false)
@@ -38,22 +42,12 @@ class ApiActivity : BaseActivity(R.layout.activity_api) {
             }
 
             onComplete {
-                dismissLoading()
             }
-        }
-
-        mViewModel.mediatorLiveDataLiveData.observe(this) {
-            showNetErrorPic(false)
-            mBinding.tvContent.text = it.data.toString()
         }
 
         mViewModel.userLiveData.observeState(this) {
             onSuccess {
                 mBinding.tvContent.text = it.toString()
-            }
-
-            onComplete {
-                dismissLoading()
             }
         }
     }
@@ -65,25 +59,16 @@ class ApiActivity : BaseActivity(R.layout.activity_api) {
 
     private fun initData() {
         supportFragmentManager.beginTransaction().replace(R.id.fl_contain, ApiFragment()).commit()
-        mBinding.btnNet.setOnClickListener {
-            showLoading()
-            mViewModel.requestNet()
-        }
-        mBinding.btnNetError1.setOnClickListener {
-            showLoading()
+
+        mBinding.btnNetError.setOnClickListener {
             mViewModel.requestNetError()
         }
-        mBinding.btnMultipleDataSourcesDb.setOnClickListener {
-            mBinding.tvContent.text = ""
-            mViewModel.requestFromDb()
-        }
-        mBinding.btnMultipleDataSourcesNet.setOnClickListener {
-            mBinding.tvContent.text = ""
-            mViewModel.requestFromNet()
-        }
         mBinding.btLogin.setOnClickListener {
-            showLoading()
             mViewModel.login("FastJetpack", "FastJetpack")
+        }
+
+        mBinding.btnNetFlow.setOnClickListener {
+            mViewModel.requestNetWithFlow()
         }
 
     }

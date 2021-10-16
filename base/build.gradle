@@ -35,6 +35,8 @@ dependencies {
 
     apiDependencies.each { k, v -> api v }
 
+    implementation project(path: ':network')
+
 }
 repositories {
     mavenCentral()

@@ -1,7 +1,6 @@
 package com.aisier.ui
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.activityViewModels
 import by.kirich1409.viewbindingdelegate.viewBinding
@@ -9,7 +8,6 @@ import com.aisier.R
 import com.aisier.architecture.base.BaseFragment
 import com.aisier.bean.WxArticleBean
 import com.aisier.databinding.FragmentApiBinding
-import com.aisier.livedata.TimerGlobalLiveData
 import com.aisier.vm.ApiViewModel
 
 /**
@@ -40,11 +38,11 @@ class ApiFragment : BaseFragment(R.layout.fragment_api) {
                         wxArticleBean.name + "   是否展示： " + wxArticleBean.visible + "\n" + result[1].name + "   是否展示： " + result[1].visible
                 }
             }
-        }
 
+            onException {
+                mBinding.text.text = it.message
+            }
 
-        TimerGlobalLiveData.get().observe(viewLifecycleOwner) {
-            Log.i("ApiFragment", "GlobalTimer value: == $it")
         }
     }
 

@@ -19,27 +19,13 @@
             android:text="登录" />
 
         <Button
-            android:id="@+id/btn_multiple_data_sources_net"
+            android:id="@+id/btn_net_flow"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_weight="1"
-            android:text="多个数据源-net" />
+            android:text="请求网络使用FLow" />
 
         <Button
-            android:id="@+id/btn_multiple_data_sources_db"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_weight="1"
-            android:text="多个数据源-数据库" />
-
-        <Button
-            android:id="@+id/btn_net"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:text="请求网络" />
-
-        <Button
-            android:id="@+id/btn_net_error_1"
+            android:id="@+id/btn_net_error"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:text="请求网络错误" />

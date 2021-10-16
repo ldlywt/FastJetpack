@@ -1,12 +1,10 @@
 package com.aisier.vm
 
-import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.viewModelScope
 import com.aisier.architecture.base.BaseViewModel
 import com.aisier.bean.User
 import com.aisier.bean.WxArticleBean
 import com.aisier.net.WxArticleRepository
-import com.aisier.network.entity.ApiResponse
 import com.aisier.network.observer.StateLiveData
 import kotlinx.coroutines.launch
 
@@ -25,44 +23,26 @@ class ApiViewModel : BaseViewModel() {
 
     val wxArticleLiveData = StateLiveData<List<WxArticleBean>>()
     val userLiveData = StateLiveData<User?>()
-    private val dbLiveData = StateLiveData<List<WxArticleBean>>()
-    private val apiLiveData = StateLiveData<List<WxArticleBean>>()
-    val mediatorLiveDataLiveData = MediatorLiveData<ApiResponse<List<WxArticleBean>>>().apply {
-        this.addSource(apiLiveData) {
-            this.value = it
-        }
-        this.addSource(dbLiveData) {
-            this.value = it
-        }
+
+    fun login(username: String, password: String) {
+        launchWithLoading(requestBlock = {
+            repository.login(username, password)
+        }, resultCallback = {
+            userLiveData.value = it
+        })
     }
 
-    fun requestNet() {
-        viewModelScope.launch {
-            wxArticleLiveData.value = repository.fetchWxArticleFromNet()
-        }
+    fun requestNetWithFlow() {
+        launchWithLoading(requestBlock = {
+            repository.fetchWxArticleFromNet()
+        }, resultCallback = { response ->
+            wxArticleLiveData.value = response
+        })
     }
 
     fun requestNetError() {
         viewModelScope.launch {
             wxArticleLiveData.value = repository.fetchWxArticleError()
-        }
-    }
-
-    fun requestFromNet() {
-        viewModelScope.launch {
-            apiLiveData.value = repository.fetchWxArticleFromNet()
-        }
-    }
-
-    fun requestFromDb() {
-        viewModelScope.launch {
-            dbLiveData.value = repository.fetchWxArticleFromDb()
-        }
-    }
-
-    fun login(username: String, password: String) {
-        viewModelScope.launch {
-            userLiveData.value = repository.login(username, password)
         }
     }
 }
