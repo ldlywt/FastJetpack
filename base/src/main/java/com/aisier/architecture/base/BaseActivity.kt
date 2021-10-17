@@ -21,12 +21,15 @@ abstract class BaseActivity(@LayoutRes contentLayoutId: Int) : AppCompatActivity
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         init()
-        observeToast()
+        observeUi()
     }
 
-    private fun observeToast() {
+    private fun observeUi() {
         LiveEventBus.get<String>(SHOW_TOAST).observe(this) {
             toast(it)
+        }
+        LiveEventBus.get<Boolean>(LOADING_STATE).observe(this) {
+            if (it) showLoading() else dismissLoading()
         }
     }
 
@@ -46,5 +49,6 @@ abstract class BaseActivity(@LayoutRes contentLayoutId: Int) : AppCompatActivity
 
     companion object {
         const val SHOW_TOAST = "show_toast"
+        const val LOADING_STATE = "loading_state"
     }
 }

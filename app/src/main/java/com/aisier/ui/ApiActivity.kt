@@ -21,10 +21,10 @@ class ApiActivity : BaseActivity(R.layout.activity_api) {
     }
 
     private fun initObserver() {
-        mViewModel.loadingLiveData.observe(this) {
-            if (it) showLoading() else dismissLoading()
-        }
-
+        // 也可以使用类似EventBus，可以没必要每个Activity都写这个代码
+//        mViewModel.loadingLiveData.observe(this) {
+//            if (it) showLoading() else dismissLoading()
+//        }
         mViewModel.wxArticleLiveData.observeState(this) {
             onSuccess { data: List<WxArticleBean> ->
                 showNetErrorPic(false)
