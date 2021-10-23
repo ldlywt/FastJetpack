@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--black-->
+    <color name="black">#000000</color>
+    <color name="black_20">#33000000</color>
+
+    <!--White-->
+    <color name="white">#FFFFFF</color>
+    <color name="white_e0">#E0E0E0</color>
+    <color name="white_ed">#EDEDED</color>
+
+    <!--Red-->
+    <color name="red_89">#F2D7D4</color>
+    <color name="red_74">#E5B0AA</color>
+    <color name="red_46">#BF382A</color>
+    <color name="red_20">#610F07</color>
+    <color name="red_11">#380600</color>
+
+    <!--Chrome Orange/铬橙-->
+    <color name="chrome_orange_90">#FCDDCF</color>
+    <color name="chrome_orange_74">#E5AD93</color>
+    <color name="chrome_orange_54">#F16222</color>
+    <color name="chrome_orange_20">#612307</color>
+    <color name="chrome_orange_11">#381200</color>
+
+    <!--Orange/橙-->
+    <color name="orange_90">#FDECD0</color>
+    <color name="orange_80">#FAD7A0</color>
+    <color name="orange_51">#F39C12</color>
+    <color name="orange_20">#613E07</color>
+    <color name="orange_11">#382300</color>
+
+    <!--Yellow/黄-->
+    <color name="yellow_87">#FCF6CF</color>
+    <color name="yellow_80">#FAEEA0</color>
+    <color name="yellow_51">#F2D411</color>
+    <color name="yellow_20">#615507</color>
+    <color name="yellow_11">#383100</color>
+
+    <!--Green/绿-->
+    <color name="green_85">#CCE8D4</color>
+    <color name="green_71">#99D1AA</color>
+    <color name="green_40">#0DBF42</color>
+    <color name="green_22">#006E21</color>
+    <color name="green_11">#003811</color>
+
+    <!--Cyan/蓝绿-->
+    <color name="cyan_86">#CCEFF0</color>
+    <color name="cyan_74">#99DFE1</color>
+    <color name="cyan_35">#00AFB5</color>
+    <color name="cyan_21">#00696D</color>
+    <color name="cyan_11">#003638</color>
+
+    <!--Blue/蓝-->
+    <color name="blue_90">#CFDFFC</color>
+    <color name="blue_80">#A0BFFA</color>
+    <color name="blue_40">#0D4ABF</color>
+    <color name="blue_22">#00266E</color>
+    <color name="blue_11">#001438</color>
+
+    <!--Purple/紫-->
+    <color name="purple_90">#EDCFFC</color>
+    <color name="purple_80">#DCA0FA</color>
+    <color name="purple_40">#840DBF</color>
+    <color name="purple_22">#49006E</color>
+    <color name="purple_11">#250038</color>
+
+    <!--Neutral/中性-->
+    <color name="gray_94">#EDEFF2</color>
+    <color name="gray_87">#DCDEE0</color>
+    <color name="gray_78">#C4C8CC</color>
+    <color name="gray_55">#A2A5A8</color>
+    <color name="gray_40">#5E6770</color>
+    <color name="gray_32">#435160</color>
+    <color name="gray_20">#2B343D</color>
+    <color name="gray_10">#1D2329</color>
+    <color name="gray_14">#171C21</color>
+    <color name="gray_707">#707070</color>
+
+</resources>

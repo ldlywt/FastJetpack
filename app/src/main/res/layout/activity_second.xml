@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    android:padding="10dp"
+    tools:context=".ui.SecondActivity">
+
+    <Button
+        android:id="@+id/bt_back"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="带值返回" />
+
+    <Button
+        android:id="@+id/bt_take_photo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="拍照" />
+
+    <Button
+        android:id="@+id/bt_request_permission"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="请求权限" />
+
+    <Button
+        android:id="@+id/bt_request_permission_v2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="请求权限LiveData"
+        android:textAllCaps="false" />
+
+    <Button
+        android:id="@+id/bt_stop_timer"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="停止全局定时器" />
+
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="100dp"
+        android:layout_height="100dp" />
+</LinearLayout>
