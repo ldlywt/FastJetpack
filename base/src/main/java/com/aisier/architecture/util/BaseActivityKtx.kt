@@ -7,10 +7,10 @@ import com.aisier.network.observer.ResultBuilder
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
-fun BaseActivity.launchWithLoading(block: suspend () -> Unit) {
+fun BaseActivity.launchWithLoading(requestBlock: suspend () -> Unit) {
     lifecycleScope.launch {
         flow {
-            emit(block())
+            emit(requestBlock())
         }.onStart {
             showLoading()
         }.onCompletion {
@@ -19,9 +19,9 @@ fun BaseActivity.launchWithLoading(block: suspend () -> Unit) {
     }
 }
 
-fun <T> BaseActivity.launchWithLoadingGetFlow(block: suspend () -> ApiResponse<T>): Flow<ApiResponse<T>> {
+fun <T> BaseActivity.launchWithLoadingFlow(requestBlock: suspend () -> ApiResponse<T>): Flow<ApiResponse<T>> {
     return flow {
-        emit(block())
+        emit(requestBlock())
     }.onStart {
         showLoading()
     }.onCompletion {
@@ -32,10 +32,10 @@ fun <T> BaseActivity.launchWithLoadingGetFlow(block: suspend () -> ApiResponse<T
 /**
  * 请求不带Loading&&不需要声明LiveData
  */
-fun <T> BaseActivity.launchAndCollect(block: suspend () -> ApiResponse<T>, listenerBuilder: ResultBuilder<T>.() -> Unit) {
+fun <T> BaseActivity.launchAndCollect(requestBlock: suspend () -> ApiResponse<T>, listenerBuilder: ResultBuilder<T>.() -> Unit) {
     lifecycleScope.launch {
         flow {
-            emit(block())
+            emit(requestBlock())
         }.collect { response ->
             parseResultAndCallback(response, listenerBuilder)
         }
@@ -45,9 +45,9 @@ fun <T> BaseActivity.launchAndCollect(block: suspend () -> ApiResponse<T>, liste
 /**
  * 请求带Loading&&不需要声明LiveData
  */
-fun <T> BaseActivity.launchWithLoadingAndCollect(block: suspend () -> ApiResponse<T>, listenerBuilder: ResultBuilder<T>.() -> Unit) {
+fun <T> BaseActivity.launchWithLoadingAndCollect(requestBlock: suspend () -> ApiResponse<T>, listenerBuilder: ResultBuilder<T>.() -> Unit) {
     lifecycleScope.launch {
-        launchWithLoadingGetFlow(block).collect { response ->
+        launchWithLoadingFlow(requestBlock).collect { response ->
             parseResultAndCallback(response, listenerBuilder)
         }
     }
