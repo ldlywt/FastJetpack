@@ -34,4 +34,10 @@
 
 项目会长期不定时更新优化...
 
+如果该项目对你有帮助，马上动动手指star一个，谢谢
+
+# License
+MIT License
+
+Copyright (c) 2021 wutao
 
