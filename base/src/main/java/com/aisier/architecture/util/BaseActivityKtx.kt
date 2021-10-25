@@ -7,6 +7,22 @@ import com.aisier.network.observer.ResultBuilder
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
+fun <T> launchFlow(
+    requestBlock: suspend () -> ApiResponse<T>,
+    startCallback: (() -> Unit)? = null,
+    completeCallback: (() -> Unit)? = null): Flow<ApiResponse<T>> {
+    return flow {
+        emit(requestBlock())
+    }.onStart {
+        startCallback?.invoke()
+    }.onCompletion {
+        completeCallback?.invoke()
+    }
+}
+
+/**
+ * 这个方法只是简单的一个封装Loading的普通方法，不返回任何实体类
+ */
 fun BaseActivity.launchWithLoading(requestBlock: suspend () -> Unit) {
     lifecycleScope.launch {
         flow {
@@ -19,24 +35,12 @@ fun BaseActivity.launchWithLoading(requestBlock: suspend () -> Unit) {
     }
 }
 
-fun <T> BaseActivity.launchWithLoadingFlow(requestBlock: suspend () -> ApiResponse<T>): Flow<ApiResponse<T>> {
-    return flow {
-        emit(requestBlock())
-    }.onStart {
-        showLoading()
-    }.onCompletion {
-        dismissLoading()
-    }
-}
-
 /**
  * 请求不带Loading&&不需要声明LiveData
  */
 fun <T> BaseActivity.launchAndCollect(requestBlock: suspend () -> ApiResponse<T>, listenerBuilder: ResultBuilder<T>.() -> Unit) {
     lifecycleScope.launch {
-        flow {
-            emit(requestBlock())
-        }.collect { response ->
+        launchFlow(requestBlock).collect { response ->
             parseResultAndCallback(response, listenerBuilder)
         }
     }
@@ -47,7 +51,7 @@ fun <T> BaseActivity.launchAndCollect(requestBlock: suspend () -> ApiResponse<T>
  */
 fun <T> BaseActivity.launchWithLoadingAndCollect(requestBlock: suspend () -> ApiResponse<T>, listenerBuilder: ResultBuilder<T>.() -> Unit) {
     lifecycleScope.launch {
-        launchWithLoadingFlow(requestBlock).collect { response ->
+        launchFlow(requestBlock, { showLoading() }, { dismissLoading() }).collect { response ->
             parseResultAndCallback(response, listenerBuilder)
         }
     }

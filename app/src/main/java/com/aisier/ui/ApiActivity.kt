@@ -104,9 +104,7 @@ class ApiActivity : BaseActivity(R.layout.activity_api) {
      * 将Flow转变为LiveData
      */
     private fun loginAsLiveData() {
-        val loginLiveData = launchWithLoadingFlow {
-            mViewModel.login("FastJetpack", "FastJetpack11")
-        }.asLiveData()
+        val loginLiveData = launchFlow(requestBlock = { mViewModel.login("FastJetpack", "FastJetpack11") }).asLiveData()
 
         loginLiveData.observeState(this) {
             onSuccess = {
