@@ -16,7 +16,6 @@
         android:theme="@style/AppTheme">
         <activity android:name=".ui.ApiActivity" />
         <activity android:name=".ui.SavedStateActivity" />
-        <activity android:name=".ui.SecondActivity" />
         <activity android:name=".ui.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
