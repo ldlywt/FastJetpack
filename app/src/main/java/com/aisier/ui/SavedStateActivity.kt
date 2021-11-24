@@ -5,10 +5,11 @@ import androidx.activity.viewModels
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.aisier.R
 import com.aisier.architecture.base.BaseActivity
+import com.aisier.architecture.base.BaseToolBarActivity
 import com.aisier.databinding.ActivitySavedStateBinding
 import com.aisier.vm.SavedStateViewModel
 
-class SavedStateActivity : BaseActivity(R.layout.activity_saved_state) {
+class SavedStateActivity : BaseToolBarActivity(R.layout.activity_saved_state) {
 
     private val stateViewModel by viewModels<SavedStateViewModel>()
     private val mBinding by viewBinding(ActivitySavedStateBinding::bind)
@@ -25,6 +26,4 @@ class SavedStateActivity : BaseActivity(R.layout.activity_saved_state) {
             stateViewModel.inputLiveData.value = inputText
         }
     }
-
-
 }

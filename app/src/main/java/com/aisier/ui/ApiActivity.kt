@@ -7,6 +7,7 @@ import androidx.lifecycle.asLiveData
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.aisier.R
 import com.aisier.architecture.base.BaseActivity
+import com.aisier.architecture.base.BaseToolBarActivity
 import com.aisier.architecture.util.*
 import com.aisier.bean.WxArticleBean
 import com.aisier.databinding.ActivityApiBinding
@@ -14,7 +15,7 @@ import com.aisier.network.observer.observeState
 import com.aisier.network.toast
 import com.aisier.vm.ApiViewModel
 
-class ApiActivity : BaseActivity(R.layout.activity_api) {
+class ApiActivity : BaseToolBarActivity(R.layout.activity_api) {
 
     private val mBinding by viewBinding(ActivityApiBinding::bind)
     private val mViewModel by viewModels<ApiViewModel>()

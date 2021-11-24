@@ -7,6 +7,7 @@
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.396875" />
         <entry key="app/src/main/res/layout/activity_saved_state.xml" value="0.396875" />
         <entry key="app/src/main/res/layout/activity_second.xml" value="0.396875" />
+        <entry key="base/src/main/res/layout/activity_base_toolbar.xml" value="0.5635416666666667" />
       </map>
     </option>
   </component>

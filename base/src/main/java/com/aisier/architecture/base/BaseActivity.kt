@@ -20,7 +20,6 @@ abstract class BaseActivity(@LayoutRes contentLayoutId: Int) : AppCompatActivity
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        init()
         observeUi()
     }
 
@@ -29,8 +28,6 @@ abstract class BaseActivity(@LayoutRes contentLayoutId: Int) : AppCompatActivity
             toast(it)
         }
     }
-
-    protected abstract fun init()
 
     private var progressDialog: ProgressDialog? = null
 

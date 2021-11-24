@@ -2,14 +2,14 @@
 
     <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="colorPrimary">@color/chrome_orange_54</item>
-        <item name="colorPrimaryDark">@color/chrome_orange_20</item>
-        <item name="android:windowContentOverlay">@null</item>
-        <item name="android:textAllCaps">false</item>
-        <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
-        <item name="android:statusBarColor">@android:color/transparent</item>
-        <item name="colorControlNormal">@color/chrome_orange_54</item>
-        <!--        <item name="checkboxStyle">@style/Widget.App.CheckBox</item>-->
-        <item name="colorAccent">@color/chrome_orange_54</item>
+        <item name="colorPrimaryVariant">@color/chrome_orange_54</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/chrome_orange_20</item>
+        <item name="colorSecondaryVariant">@color/chrome_orange_90</item>
+        <item name="colorOnSecondary">@color/black</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
     </style>
 
     <style name="ImmersiveTheme" parent="AppTheme">
