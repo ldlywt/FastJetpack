@@ -15,6 +15,8 @@
             android:id="@+id/bt_login"
             android:layout_width="match_parent"
             android:layout_height="50dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
             android:layout_weight="1"
             android:text="登录Flow" />
 
@@ -22,12 +24,16 @@
             android:id="@+id/btn_net"
             android:layout_width="match_parent"
             android:layout_height="50dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
             android:text="请求网络" />
 
         <Button
             android:id="@+id/btn_net_error"
             android:layout_width="match_parent"
             android:layout_height="50dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
             android:text="请求网络错误" />
 
     </LinearLayout>
@@ -35,8 +41,9 @@
     <TextView
         android:id="@+id/tv_content"
         android:layout_width="match_parent"
-        android:layout_height="400dp"
+        android:layout_height="0dp"
         android:layout_margin="10dp"
+        android:layout_weight="1"
         android:text="网络请求结果：" />
 
     <ImageView
@@ -47,14 +54,15 @@
         android:src="@mipmap/icon_net_error"
         android:visibility="gone" />
 
-
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/chrome_orange_54" />
 
-    <FrameLayout
-        android:id="@+id/fl_contain"
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragmentContainerView"
+        android:name="com.aisier.ui.ApiFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="150dp" />
+
 </LinearLayout>

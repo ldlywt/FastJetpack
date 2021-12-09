@@ -3,6 +3,7 @@ package com.aisier.ui
 import androidx.activity.viewModels
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
+import androidx.fragment.app.commit
 import androidx.lifecycle.asLiveData
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.aisier.R
@@ -53,7 +54,6 @@ class ApiActivity : BaseToolBarActivity(R.layout.activity_api) {
     }
 
     private fun initData() {
-        supportFragmentManager.beginTransaction().replace(R.id.fl_contain, ApiFragment()).commit()
         mBinding.btnNet.setOnClickListener {
             showNetErrorPic(false)
             requestNet()
