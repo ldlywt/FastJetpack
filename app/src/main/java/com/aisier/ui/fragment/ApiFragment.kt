@@ -1,4 +1,4 @@
-package com.aisier.ui
+package com.aisier.ui.fragment
 
 import android.os.Bundle
 import android.view.View
@@ -11,14 +11,6 @@ import com.aisier.databinding.FragmentApiBinding
 import com.aisier.network.observer.observeState
 import com.aisier.vm.ApiViewModel
 
-/**
- * <pre>
- * @author : wutao
- * time   : 2020/03/13
- * desc   :
- * version: 1.0
-</pre> *
- */
 class ApiFragment : BaseFragment(R.layout.fragment_api) {
 
     private val mBinding by viewBinding(FragmentApiBinding::bind)

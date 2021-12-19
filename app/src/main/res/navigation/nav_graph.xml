@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/mainFragment">
+
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.aisier.ui.fragment.MainFragment"
+        android:label="fragment_main"
+        tools:layout="@layout/fragment_main">
+        <action
+            android:id="@+id/action_mainFragment_to_netListFragment"
+            app:destination="@id/netListFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_savedStateFragment"
+            app:destination="@id/savedStateFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/netListFragment"
+        android:name="com.aisier.ui.fragment.NetListFragment"
+        android:label="fragment_net_list"
+        tools:layout="@layout/fragment_net_list" />
+    <fragment
+        android:id="@+id/savedStateFragment"
+        android:name="com.aisier.ui.fragment.SavedStateFragment"
+        android:label="fragment_saved_state"
+        tools:layout="@layout/fragment_saved_state" />
+</navigation>

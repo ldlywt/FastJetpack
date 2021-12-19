@@ -1,7 +1,7 @@
 ext {
 
     android = [
-            compileSdkVersion: 30,
+            compileSdkVersion: 31,
             targetSdkVersion : 28,
             minSdkVersion    : 21,
             versionName      : "1.1.0",
@@ -26,7 +26,7 @@ ext {
             "livedata-ktx"           : "androidx.lifecycle:lifecycle-livedata-ktx:2.2.0",
             "material"               : "com.google.android.material:material:1.4.0-alpha01",
 
-            "viewbindingdelegate"    : 'com.github.kirich1409:viewbindingpropertydelegate-noreflection:1.4.6',
+            "viewbindingdelegate"    : "com.github.kirich1409:viewbindingpropertydelegate:1.5.3",
             "livedatabus"        : 'io.github.jeremyliao:live-event-bus-x:1.8.0',
 
     ]

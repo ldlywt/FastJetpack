@@ -1,27 +1,30 @@
-package com.aisier.ui
+package com.aisier.ui.fragment
 
-import androidx.activity.viewModels
+import android.os.Bundle
+import android.view.View
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
-import androidx.fragment.app.commit
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.asLiveData
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.aisier.R
-import com.aisier.architecture.base.BaseActivity
-import com.aisier.architecture.base.BaseToolBarActivity
-import com.aisier.architecture.util.*
+import com.aisier.architecture.base.BaseFragment
+import com.aisier.architecture.util.launchFlow
+import com.aisier.architecture.util.launchWithLoading
+import com.aisier.architecture.util.launchWithLoadingAndCollect
 import com.aisier.bean.WxArticleBean
-import com.aisier.databinding.ActivityApiBinding
+import com.aisier.databinding.FragmentNetListBinding
 import com.aisier.network.observer.observeState
 import com.aisier.network.toast
 import com.aisier.vm.ApiViewModel
 
-class ApiActivity : BaseToolBarActivity(R.layout.activity_api) {
+class NetListFragment : BaseFragment(R.layout.fragment_net_list) {
 
-    private val mBinding by viewBinding(ActivityApiBinding::bind)
     private val mViewModel by viewModels<ApiViewModel>()
+    private val mBinding: FragmentNetListBinding by viewBinding()
 
-    override fun init() {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         initData()
         initObserver()
     }
@@ -34,9 +37,11 @@ class ApiActivity : BaseToolBarActivity(R.layout.activity_api) {
                 mBinding.tvContent.text = data.toString()
             }
 
-            onDataEmpty = { }
+            onDataEmpty = { dismissLoading() }
 
-            onComplete = this@ApiActivity::dismissLoading
+            onComplete = {
+
+            }
 
             onFailed = { code, msg ->
                 toast("errorCode: $code   errorMsg: $msg")
@@ -105,7 +110,8 @@ class ApiActivity : BaseToolBarActivity(R.layout.activity_api) {
      * 将Flow转变为LiveData
      */
     private fun loginAsLiveData() {
-        val loginLiveData = launchFlow(requestBlock = { mViewModel.login("FastJetpack", "FastJetpack11") }).asLiveData()
+        val loginLiveData =
+            launchFlow(requestBlock = { mViewModel.login("FastJetpack", "FastJetpack11") }).asLiveData()
 
         loginLiveData.observeState(this) {
             onSuccess = {
@@ -116,6 +122,4 @@ class ApiActivity : BaseToolBarActivity(R.layout.activity_api) {
             }
         }
     }
-
-
 }
