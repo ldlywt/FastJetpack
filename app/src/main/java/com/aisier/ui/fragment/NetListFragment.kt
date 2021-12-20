@@ -1,12 +1,13 @@
 package com.aisier.ui.fragment
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.asLiveData
-import by.kirich1409.viewbindingdelegate.viewBinding
 import com.aisier.R
 import com.aisier.architecture.base.BaseFragment
 import com.aisier.architecture.util.launchFlow
@@ -21,7 +22,19 @@ import com.aisier.vm.ApiViewModel
 class NetListFragment : BaseFragment(R.layout.fragment_net_list) {
 
     private val mViewModel by viewModels<ApiViewModel>()
-    private val mBinding: FragmentNetListBinding by viewBinding()
+
+    private var _binding: FragmentNetListBinding? = null
+    private val mBinding get() = _binding!!
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        _binding = FragmentNetListBinding.inflate(inflater, container, false)
+        return mBinding.root
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -39,9 +52,7 @@ class NetListFragment : BaseFragment(R.layout.fragment_net_list) {
 
             onDataEmpty = { dismissLoading() }
 
-            onComplete = {
-
-            }
+            onComplete = { }
 
             onFailed = { code, msg ->
                 toast("errorCode: $code   errorMsg: $msg")

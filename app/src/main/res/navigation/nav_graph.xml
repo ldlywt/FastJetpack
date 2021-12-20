@@ -17,6 +17,7 @@
             android:id="@+id/action_mainFragment_to_savedStateFragment"
             app:destination="@id/savedStateFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/netListFragment"
         android:name="com.aisier.ui.fragment.NetListFragment"

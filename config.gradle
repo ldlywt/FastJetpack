@@ -26,7 +26,6 @@ ext {
             "livedata-ktx"           : "androidx.lifecycle:lifecycle-livedata-ktx:2.2.0",
             "material"               : "com.google.android.material:material:1.4.0-alpha01",
 
-            "viewbindingdelegate"    : "com.github.kirich1409:viewbindingpropertydelegate:1.5.3",
             "livedatabus"        : 'io.github.jeremyliao:live-event-bus-x:1.8.0',
 
     ]
