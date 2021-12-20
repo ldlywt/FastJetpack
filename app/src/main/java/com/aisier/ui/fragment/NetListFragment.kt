@@ -10,11 +10,11 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.asLiveData
 import com.aisier.R
 import com.aisier.architecture.base.BaseFragment
-import com.aisier.architecture.util.launchFlow
 import com.aisier.architecture.util.launchWithLoading
 import com.aisier.architecture.util.launchWithLoadingAndCollect
 import com.aisier.bean.WxArticleBean
 import com.aisier.databinding.FragmentNetListBinding
+import com.aisier.network.launchFlow
 import com.aisier.network.observer.observeState
 import com.aisier.network.toast
 import com.aisier.vm.ApiViewModel

@@ -2,8 +2,10 @@ package com.aisier.architecture.util
 
 import androidx.lifecycle.lifecycleScope
 import com.aisier.architecture.base.BaseFragment
+import com.aisier.network.ResultBuilder
 import com.aisier.network.entity.*
-import com.aisier.network.observer.ResultBuilder
+import com.aisier.network.launchFlow
+import com.aisier.network.parseResultAndCallback
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
@@ -42,15 +44,4 @@ fun <T> BaseFragment.launchWithLoadingAndCollect(requestBlock: suspend () -> Api
             parseResultAndCallback(response, listenerBuilder)
         }
     }
-}
-
-private fun <T> parseResultAndCallback(response: ApiResponse<T>, listenerBuilder: ResultBuilder<T>.() -> Unit) {
-    val listener = ResultBuilder<T>().also(listenerBuilder)
-    when (response) {
-        is ApiSuccessResponse -> listener.onSuccess(response.response)
-        is ApiEmptyResponse -> listener.onDataEmpty()
-        is ApiFailedResponse -> listener.onFailed(response.errorCode, response.errorMsg)
-        is ApiErrorResponse -> listener.onError(response.throwable)
-    }
-    listener.onComplete()
 }

@@ -4,6 +4,7 @@ import androidx.annotation.MainThread
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.aisier.network.ResultBuilder
 import com.aisier.network.entity.*
 
 /**
@@ -49,16 +50,4 @@ inline fun <T> LiveData<ApiResponse<T>>.observeState(
         }
         listener.onComplete()
     }
-}
-
-class ResultBuilder<T> {
-    var onSuccess: (data: T?) -> Unit = {}
-    var onDataEmpty: () -> Unit = {}
-    var onFailed: (errorCode: Int?, errorMsg: String?) -> Unit = { _, errorMsg ->
-        errorMsg?.let { com.aisier.network.toast(it) }
-    }
-    var onError: (e: Throwable) -> Unit = { e ->
-        e.message?.let { com.aisier.network.toast(it) }
-    }
-    var onComplete: () -> Unit = {}
 }

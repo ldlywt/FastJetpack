@@ -11,7 +11,7 @@ import com.aisier.architecture.anno.FragmentConfiguration
  * desc   :
  * version: 1.1
  */
-abstract class BaseFragment(@LayoutRes contentLayoutId: Int) : Fragment(contentLayoutId) {
+abstract class BaseFragment(@LayoutRes contentLayoutId: Int) : Fragment(contentLayoutId), IUiView {
 
     private var useEventBus = false
 
@@ -23,13 +23,13 @@ abstract class BaseFragment(@LayoutRes contentLayoutId: Int) : Fragment(contentL
 
     private var progressDialog: ProgressDialog? = null
 
-    fun showLoading() {
+    override fun showLoading() {
         if (progressDialog == null)
             progressDialog = ProgressDialog(requireActivity())
         progressDialog?.show()
     }
 
-    fun dismissLoading() {
+    override fun dismissLoading() {
         progressDialog?.takeIf { it.isShowing }?.dismiss()
     }
 }
