@@ -10,7 +10,8 @@ import kotlinx.coroutines.launch
 fun <T> launchFlow(
     requestBlock: suspend () -> ApiResponse<T>,
     startCallback: (() -> Unit)? = null,
-    completeCallback: (() -> Unit)? = null): Flow<ApiResponse<T>> {
+    completeCallback: (() -> Unit)? = null,
+): Flow<ApiResponse<T>> {
     return flow {
         emit(requestBlock())
     }.onStart {
@@ -67,3 +68,4 @@ private fun <T> parseResultAndCallback(response: ApiResponse<T>, listenerBuilder
     }
     listener.onComplete()
 }
+

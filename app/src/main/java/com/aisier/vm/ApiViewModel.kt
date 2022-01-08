@@ -5,7 +5,9 @@ import com.aisier.bean.User
 import com.aisier.bean.WxArticleBean
 import com.aisier.net.WxArticleRepository
 import com.aisier.network.entity.ApiResponse
-import com.aisier.network.observer.StateMutableLiveData
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 
 /**
  * <pre>
@@ -19,14 +21,18 @@ class ApiViewModel : BaseViewModel() {
 
     private val repository by lazy { WxArticleRepository() }
 
-    val wxArticleLiveData = StateMutableLiveData<List<WxArticleBean>>()
+    // 使用StateFlow 替代livedata
+//    val wxArticleLiveData = StateMutableLiveData<List<WxArticleBean>>()
+
+    private val _uiState = MutableStateFlow<ApiResponse<List<WxArticleBean>>>(ApiResponse())
+    val uiState: StateFlow<ApiResponse<List<WxArticleBean>>> = _uiState.asStateFlow()
 
     suspend fun requestNet() {
-        wxArticleLiveData.value = repository.fetchWxArticleFromNet()
+        _uiState.value = repository.fetchWxArticleFromNet()
     }
 
     suspend fun requestNetError() {
-        wxArticleLiveData.value = repository.fetchWxArticleError()
+        _uiState.value = repository.fetchWxArticleError()
     }
 
     suspend fun login(username: String, password: String): ApiResponse<User?> {

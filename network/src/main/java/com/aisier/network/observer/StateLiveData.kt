@@ -20,7 +20,7 @@ typealias StateMutableLiveData<T> = MutableLiveData<ApiResponse<T>>
 @MainThread
 inline fun <T> StateMutableLiveData<T>.observeState(
     owner: LifecycleOwner,
-    listenerBuilder: ResultBuilder<T>.() -> Unit
+    listenerBuilder: ResultBuilder<T>.() -> Unit,
 ) {
     val listener = ResultBuilder<T>().also(listenerBuilder)
     observe(owner) { apiResponse ->
@@ -37,28 +37,10 @@ inline fun <T> StateMutableLiveData<T>.observeState(
 @MainThread
 inline fun <T> LiveData<ApiResponse<T>>.observeState(
     owner: LifecycleOwner,
-    listenerBuilder: ResultBuilder<T>.() -> Unit
+    listenerBuilder: ResultBuilder<T>.() -> Unit,
 ) {
     val listener = ResultBuilder<T>().also(listenerBuilder)
     observe(owner) { apiResponse ->
-        when (apiResponse) {
-            is ApiSuccessResponse -> listener.onSuccess(apiResponse.response)
-            is ApiEmptyResponse -> listener.onDataEmpty()
-            is ApiFailedResponse -> listener.onFailed(apiResponse.errorCode, apiResponse.errorMsg)
-            is ApiErrorResponse -> listener.onError(apiResponse.throwable)
-        }
-        listener.onComplete()
+        apiResponse.parseData(listener)
     }
-}
-
-class ResultBuilder<T> {
-    var onSuccess: (data: T?) -> Unit = {}
-    var onDataEmpty: () -> Unit = {}
-    var onFailed: (errorCode: Int?, errorMsg: String?) -> Unit = { _, errorMsg ->
-        errorMsg?.let { com.aisier.network.toast(it) }
-    }
-    var onError: (e: Throwable) -> Unit = { e ->
-        e.message?.let { com.aisier.network.toast(it) }
-    }
-    var onComplete: () -> Unit = {}
 }

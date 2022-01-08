@@ -1,0 +1,25 @@
+package com.aisier.network.observer
+
+import com.aisier.network.entity.*
+
+fun <T> ApiResponse<T>.parseData(listener: ResultBuilder<T>) {
+    when (this) {
+        is ApiSuccessResponse -> listener.onSuccess(this.response)
+        is ApiEmptyResponse -> listener.onDataEmpty()
+        is ApiFailedResponse -> listener.onFailed(this.errorCode, this.errorMsg)
+        is ApiErrorResponse -> listener.onError(this.throwable)
+    }
+    listener.onComplete()
+}
+
+class ResultBuilder<T> {
+    var onSuccess: (data: T?) -> Unit = {}
+    var onDataEmpty: () -> Unit = {}
+    var onFailed: (errorCode: Int?, errorMsg: String?) -> Unit = { _, errorMsg ->
+        errorMsg?.let { com.aisier.network.toast(it) }
+    }
+    var onError: (e: Throwable) -> Unit = { e ->
+        e.message?.let { com.aisier.network.toast(it) }
+    }
+    var onComplete: () -> Unit = {}
+}

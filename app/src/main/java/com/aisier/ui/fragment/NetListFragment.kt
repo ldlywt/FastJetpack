@@ -4,7 +4,8 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.asLiveData
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.aisier.R
@@ -14,13 +15,14 @@ import com.aisier.architecture.util.launchWithLoading
 import com.aisier.architecture.util.launchWithLoadingAndCollect
 import com.aisier.bean.WxArticleBean
 import com.aisier.databinding.FragmentNetListBinding
+import com.aisier.network.observer.launchAndCollectIn
 import com.aisier.network.observer.observeState
 import com.aisier.network.toast
 import com.aisier.vm.ApiViewModel
 
 class NetListFragment : BaseFragment(R.layout.fragment_net_list) {
 
-    private val mViewModel by viewModels<ApiViewModel>()
+    private val mViewModel by activityViewModels<ApiViewModel>()
     private val mBinding: FragmentNetListBinding by viewBinding()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -30,18 +32,12 @@ class NetListFragment : BaseFragment(R.layout.fragment_net_list) {
     }
 
     private fun initObserver() {
-        mViewModel.wxArticleLiveData.observeState(this) {
-
-            onSuccess = { data: List<WxArticleBean>? ->
-                showNetErrorPic(false)
-                mBinding.tvContent.text = data.toString()
+        mViewModel.uiState.launchAndCollectIn(this, Lifecycle.State.STARTED) {
+            onSuccess = { result: List<WxArticleBean>? ->
+                mBinding.tvContent.text = result.toString()
             }
 
-            onDataEmpty = { dismissLoading() }
-
-            onComplete = {
-
-            }
+            onComplete = { }
 
             onFailed = { code, msg ->
                 toast("errorCode: $code   errorMsg: $msg")

@@ -40,8 +40,6 @@ dependencies {
     implementation project(path: ':base')
     implementation project(path: ':network')
     implementation 'com.google.android.gms:play-services-location:18.0.0'
-    implementation 'com.android.support:support-v4:28.0.0'
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.7'
 
     def nav_version = "2.3.5"
