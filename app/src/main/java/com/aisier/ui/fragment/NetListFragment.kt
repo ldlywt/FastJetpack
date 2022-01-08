@@ -20,6 +20,9 @@ import com.aisier.network.observer.observeState
 import com.aisier.network.toast
 import com.aisier.vm.ApiViewModel
 
+/**
+ * dev 分支去掉LiveData，使用Flow
+ */
 class NetListFragment : BaseFragment(R.layout.fragment_net_list) {
 
     private val mViewModel by activityViewModels<ApiViewModel>()
