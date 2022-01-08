@@ -35,12 +35,11 @@ inline fun <T> StateMutableLiveData<T>.observeState(
 }
 
 @MainThread
-inline fun <T> LiveData<ApiResponse<T>>.observeState(
+fun <T> LiveData<ApiResponse<T>>.observeState(
     owner: LifecycleOwner,
     listenerBuilder: ResultBuilder<T>.() -> Unit,
 ) {
-    val listener = ResultBuilder<T>().also(listenerBuilder)
     observe(owner) { apiResponse ->
-        apiResponse.parseData(listener)
+        apiResponse.parseData(listenerBuilder)
     }
 }

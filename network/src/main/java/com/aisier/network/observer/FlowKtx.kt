@@ -9,10 +9,10 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
-inline fun <T> Flow<ApiResponse<T>>.launchAndCollectIn(
+fun <T> Flow<ApiResponse<T>>.launchAndCollectIn(
     owner: LifecycleOwner,
     minActiveState: Lifecycle.State = Lifecycle.State.STARTED,
-    crossinline listenerBuilder: ResultBuilder<T>.() -> Unit,
+    listenerBuilder: ResultBuilder<T>.() -> Unit,
 ) = owner.lifecycleScope.launch {
     owner.repeatOnLifecycle(minActiveState) {
         collectState(listenerBuilder)
@@ -20,10 +20,9 @@ inline fun <T> Flow<ApiResponse<T>>.launchAndCollectIn(
 }
 
 suspend inline fun <T> Flow<ApiResponse<T>>.collectState(
-    listenerBuilder: ResultBuilder<T>.() -> Unit,
+    noinline listenerBuilder: ResultBuilder<T>.() -> Unit,
 ) {
-    val listener = ResultBuilder<T>().also(listenerBuilder)
     collect { apiResponse: ApiResponse<T> ->
-        apiResponse.parseData(listener)
+        apiResponse.parseData(listenerBuilder)
     }
 }

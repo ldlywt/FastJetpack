@@ -2,8 +2,9 @@ package com.aisier.architecture.util
 
 import androidx.lifecycle.lifecycleScope
 import com.aisier.architecture.base.BaseActivity
-import com.aisier.network.entity.*
+import com.aisier.network.entity.ApiResponse
 import com.aisier.network.observer.ResultBuilder
+import com.aisier.network.observer.parseData
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
@@ -42,7 +43,7 @@ fun BaseActivity.launchWithLoading(requestBlock: suspend () -> Unit) {
 fun <T> BaseActivity.launchAndCollect(requestBlock: suspend () -> ApiResponse<T>, listenerBuilder: ResultBuilder<T>.() -> Unit) {
     lifecycleScope.launch {
         launchFlow(requestBlock).collect { response ->
-            parseResultAndCallback(response, listenerBuilder)
+            response.parseData(listenerBuilder)
         }
     }
 }
@@ -53,19 +54,10 @@ fun <T> BaseActivity.launchAndCollect(requestBlock: suspend () -> ApiResponse<T>
 fun <T> BaseActivity.launchWithLoadingAndCollect(requestBlock: suspend () -> ApiResponse<T>, listenerBuilder: ResultBuilder<T>.() -> Unit) {
     lifecycleScope.launch {
         launchFlow(requestBlock, { showLoading() }, { dismissLoading() }).collect { response ->
-            parseResultAndCallback(response, listenerBuilder)
+            response.parseData(listenerBuilder)
         }
     }
 }
 
-private fun <T> parseResultAndCallback(response: ApiResponse<T>, listenerBuilder: ResultBuilder<T>.() -> Unit) {
-    val listener = ResultBuilder<T>().also(listenerBuilder)
-    when (response) {
-        is ApiSuccessResponse -> listener.onSuccess(response.response)
-        is ApiEmptyResponse -> listener.onDataEmpty()
-        is ApiFailedResponse -> listener.onFailed(response.errorCode, response.errorMsg)
-        is ApiErrorResponse -> listener.onError(response.throwable)
-    }
-    listener.onComplete()
-}
+
 

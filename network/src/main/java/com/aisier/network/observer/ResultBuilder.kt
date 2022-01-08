@@ -2,7 +2,8 @@ package com.aisier.network.observer
 
 import com.aisier.network.entity.*
 
-fun <T> ApiResponse<T>.parseData(listener: ResultBuilder<T>) {
+fun <T> ApiResponse<T>.parseData(listenerBuilder: ResultBuilder<T>.() -> Unit) {
+    val listener = ResultBuilder<T>().also(listenerBuilder)
     when (this) {
         is ApiSuccessResponse -> listener.onSuccess(this.response)
         is ApiEmptyResponse -> listener.onDataEmpty()
