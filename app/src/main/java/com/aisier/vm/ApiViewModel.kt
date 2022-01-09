@@ -35,6 +35,9 @@ class ApiViewModel : BaseViewModel() {
         _uiState.value = repository.fetchWxArticleError()
     }
 
+    /**
+     * 场景：不需要监听数据变化
+     */
     suspend fun login(username: String, password: String): ApiResponse<User?> {
         return repository.login(username, password)
     }

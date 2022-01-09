@@ -74,23 +74,17 @@ class NetListFragment : BaseFragment(R.layout.fragment_net_list) {
         }
     }
 
-    /**
-     * 不接收返回结果，在viewmodel中通过livedata发送
-     */
     private fun requestNet() {
-        launchWithLoading {
-            mViewModel.requestNet()
-        }
+        launchWithLoading(mViewModel::requestNet)
     }
 
     private fun requestNetError() {
-        launchWithLoading {
-            mViewModel.requestNetError()
-        }
+        launchWithLoading(mViewModel::requestNetError)
     }
 
     /**
      * 链式调用，返回结果的处理都在一起，viewmodel中不需要创建一个livedata对象
+     * 适用于不需要监听数据变化的场景
      */
     private fun login() {
         launchWithLoadingAndCollect({
@@ -113,12 +107,9 @@ class NetListFragment : BaseFragment(R.layout.fragment_net_list) {
             launchFlow(requestBlock = { mViewModel.login("FastJetpack", "FastJetpack11") }).asLiveData()
 
         loginLiveData.observeState(this) {
-            onSuccess = {
-                mBinding.tvContent.text = it.toString()
-            }
-            onFailed = { errorCode, errorMsg ->
-                toast("errorCode: $errorCode   errorMsg: $errorMsg")
-            }
+            onSuccess = { mBinding.tvContent.text = it.toString() }
+            onFailed =
+                { errorCode, errorMsg -> toast("errorCode: $errorCode   errorMsg: $errorMsg") }
         }
     }
 }
