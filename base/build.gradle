@@ -32,7 +32,6 @@ def apiDependencies = rootProject.ext.dependencies
 
 dependencies {
 
-    api fileTree(dir: 'libs', include: ['*.jar'])
     apiDependencies.each { k, v -> api v }
     implementation project(path: ':network')
 

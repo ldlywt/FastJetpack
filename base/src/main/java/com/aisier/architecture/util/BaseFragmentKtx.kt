@@ -2,11 +2,13 @@ package com.aisier.architecture.util
 
 import androidx.lifecycle.lifecycleScope
 import com.aisier.architecture.base.BaseFragment
-import com.aisier.network.ResultBuilder
-import com.aisier.network.entity.*
-import com.aisier.network.launchFlow
-import com.aisier.network.parseResultAndCallback
-import kotlinx.coroutines.flow.*
+import com.aisier.network.entity.ApiResponse
+import com.aisier.network.observer.ResultBuilder
+import com.aisier.network.observer.parseData
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.onCompletion
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 
 /**
@@ -30,7 +32,7 @@ fun BaseFragment.launchWithLoading(requestBlock: suspend () -> Unit) {
 fun <T> BaseFragment.launchAndCollect(requestBlock: suspend () -> ApiResponse<T>, listenerBuilder: ResultBuilder<T>.() -> Unit) {
     lifecycleScope.launch {
         launchFlow(requestBlock).collect { response ->
-            parseResultAndCallback(response, listenerBuilder)
+            response.parseData(listenerBuilder)
         }
     }
 }
@@ -41,7 +43,7 @@ fun <T> BaseFragment.launchAndCollect(requestBlock: suspend () -> ApiResponse<T>
 fun <T> BaseFragment.launchWithLoadingAndCollect(requestBlock: suspend () -> ApiResponse<T>, listenerBuilder: ResultBuilder<T>.() -> Unit) {
     lifecycleScope.launch {
         launchFlow(requestBlock, { showLoading() }, { dismissLoading() }).collect { response ->
-            parseResultAndCallback(response, listenerBuilder)
+            response.parseData(listenerBuilder)
         }
     }
 }

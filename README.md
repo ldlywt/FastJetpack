@@ -16,9 +16,8 @@
 
 - 封装三 (对应分支[dev](https://github.com/ldlywt/FastJetpack/tree/dev)) 引入了新的flow流式编程（虽然出来很久，但是大部分人应该还没用到），链式调用，loading 和网络请求以及结果处理都在一起，很多时候甚至都不要声明 LiveData 对象。
 
-第二种封装我在公司的商业项目App中用了很长时间了，涉及几十个接口，暂时没遇到什么问题。
 
-第三种是我最近才折腾出来的，在公司的新项目中（还没上线）使用，也暂时没遇到什么问题。
+> 根据谷歌官方文档的[最新架构](https://developer.android.com/jetpack/guide)，推进使用dev分支。
 
 # 博客地址
 

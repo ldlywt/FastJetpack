@@ -1,43 +1,26 @@
-package com.aisier.network
+package com.aisier.network.observer
 
 import com.aisier.network.entity.*
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.onCompletion
-import kotlinx.coroutines.flow.onStart
+
+fun <T> ApiResponse<T>.parseData(listenerBuilder: ResultBuilder<T>.() -> Unit) {
+    val listener = ResultBuilder<T>().also(listenerBuilder)
+    when (this) {
+        is ApiSuccessResponse -> listener.onSuccess(this.response)
+        is ApiEmptyResponse -> listener.onDataEmpty()
+        is ApiFailedResponse -> listener.onFailed(this.errorCode, this.errorMsg)
+        is ApiErrorResponse -> listener.onError(this.throwable)
+    }
+    listener.onComplete()
+}
 
 class ResultBuilder<T> {
     var onSuccess: (data: T?) -> Unit = {}
     var onDataEmpty: () -> Unit = {}
     var onFailed: (errorCode: Int?, errorMsg: String?) -> Unit = { _, errorMsg ->
-        errorMsg?.let { toast(it) }
+        errorMsg?.let { com.aisier.network.toast(it) }
     }
     var onError: (e: Throwable) -> Unit = { e ->
-        e.message?.let { toast(it) }
+        e.message?.let { com.aisier.network.toast(it) }
     }
     var onComplete: () -> Unit = {}
-}
-
-fun <T> parseResultAndCallback(response: ApiResponse<T>, listenerBuilder: ResultBuilder<T>.() -> Unit) {
-    val listener = ResultBuilder<T>().also(listenerBuilder)
-    when (response) {
-        is ApiSuccessResponse -> listener.onSuccess(response.response)
-        is ApiEmptyResponse -> listener.onDataEmpty()
-        is ApiFailedResponse -> listener.onFailed(response.errorCode, response.errorMsg)
-        is ApiErrorResponse -> listener.onError(response.throwable)
-    }
-    listener.onComplete()
-}
-
-fun <T> launchFlow(
-        requestBlock: suspend () -> ApiResponse<T>,
-        startCallback: (() -> Unit)? = null,
-        completeCallback: (() -> Unit)? = null): Flow<ApiResponse<T>> {
-    return flow {
-        emit(requestBlock())
-    }.onStart {
-        startCallback?.invoke()
-    }.onCompletion {
-        completeCallback?.invoke()
-    }
 }

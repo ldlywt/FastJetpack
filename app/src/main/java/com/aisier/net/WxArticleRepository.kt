@@ -5,7 +5,6 @@ import com.aisier.bean.WxArticleBean
 import com.aisier.network.base.BaseRepository
 import com.aisier.network.entity.ApiResponse
 
-
 class WxArticleRepository : BaseRepository() {
 
     private val mService by lazy {
