@@ -1,13 +1,16 @@
 package com.aisier.ui.fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.asLiveData
-import by.kirich1409.viewbindingdelegate.viewBinding
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.aisier.R
 import com.aisier.architecture.base.BaseFragment
 import com.aisier.architecture.util.launchFlow
@@ -15,18 +18,22 @@ import com.aisier.architecture.util.launchWithLoading
 import com.aisier.architecture.util.launchWithLoadingAndCollect
 import com.aisier.bean.WxArticleBean
 import com.aisier.databinding.FragmentNetListBinding
+import com.aisier.network.observer.collectState
 import com.aisier.network.observer.launchAndCollectIn
 import com.aisier.network.observer.observeState
 import com.aisier.network.toast
 import com.aisier.vm.ApiViewModel
+import com.dylanc.viewbinding.binding
+import kotlinx.coroutines.launch
 
 /**
  * dev 分支去掉LiveData，使用Flow
  */
 class NetListFragment : BaseFragment(R.layout.fragment_net_list) {
 
-    private val mViewModel by activityViewModels<ApiViewModel>()
-    private val mBinding: FragmentNetListBinding by viewBinding()
+    // navigation情况下不能用Activity的ViewModel
+    private val mViewModel by viewModels<ApiViewModel>()
+    private val mBinding: FragmentNetListBinding by binding()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -37,18 +44,15 @@ class NetListFragment : BaseFragment(R.layout.fragment_net_list) {
     private fun initObserver() {
         mViewModel.uiState.launchAndCollectIn(this, Lifecycle.State.STARTED) {
             onSuccess = { result: List<WxArticleBean>? ->
+                showNetErrorPic(false)
                 mBinding.tvContent.text = result.toString()
             }
 
-            onComplete = { }
+            onComplete = { Log.i("wutao--> ", ": onComplete")}
 
-            onFailed = { code, msg ->
-                toast("errorCode: $code   errorMsg: $msg")
-            }
+            onFailed = { code, msg -> toast("errorCode: $code   errorMsg: $msg") }
 
-            onError = {
-                showNetErrorPic(true)
-            }
+            onError = { showNetErrorPic(true) }
         }
     }
 
@@ -58,10 +62,7 @@ class NetListFragment : BaseFragment(R.layout.fragment_net_list) {
     }
 
     private fun initData() {
-        mBinding.btnNet.setOnClickListener {
-            showNetErrorPic(false)
-            requestNet()
-        }
+        mBinding.btnNet.setOnClickListener { requestNet() }
 
         mBinding.btnNetError.setOnClickListener {
             showNetErrorPic(false)
@@ -74,17 +75,14 @@ class NetListFragment : BaseFragment(R.layout.fragment_net_list) {
         }
     }
 
-    private fun requestNet() {
-        launchWithLoading(mViewModel::requestNet)
-    }
+    private fun requestNet() = launchWithLoading(mViewModel::requestNet)
 
-    private fun requestNetError() {
-        launchWithLoading(mViewModel::requestNetError)
-    }
+    private fun requestNetError() = launchWithLoading(mViewModel::requestNetError)
 
     /**
      * 链式调用，返回结果的处理都在一起，viewmodel中不需要创建一个livedata对象
      * 适用于不需要监听数据变化的场景
+     * 屏幕旋转，Activity销毁重建，数据会消失
      */
     private fun login() {
         launchWithLoadingAndCollect({
@@ -104,7 +102,12 @@ class NetListFragment : BaseFragment(R.layout.fragment_net_list) {
      */
     private fun loginAsLiveData() {
         val loginLiveData =
-            launchFlow(requestBlock = { mViewModel.login("FastJetpack", "FastJetpack11") }).asLiveData()
+            launchFlow(requestBlock = {
+                mViewModel.login(
+                    "FastJetpack",
+                    "FastJetpack11"
+                )
+            }).asLiveData()
 
         loginLiveData.observeState(this) {
             onSuccess = { mBinding.tvContent.text = it.toString() }
