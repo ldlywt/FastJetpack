@@ -5,12 +5,9 @@ import android.util.Log
 import android.view.View
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.asLiveData
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import com.aisier.R
 import com.aisier.architecture.base.BaseFragment
 import com.aisier.architecture.util.launchFlow
@@ -18,13 +15,11 @@ import com.aisier.architecture.util.launchWithLoading
 import com.aisier.architecture.util.launchWithLoadingAndCollect
 import com.aisier.bean.WxArticleBean
 import com.aisier.databinding.FragmentNetListBinding
-import com.aisier.network.observer.collectState
-import com.aisier.network.observer.launchAndCollectIn
+import com.aisier.network.launchAndCollectIn
 import com.aisier.network.observer.observeState
 import com.aisier.network.toast
 import com.aisier.vm.ApiViewModel
 import com.dylanc.viewbinding.binding
-import kotlinx.coroutines.launch
 
 /**
  * dev 分支去掉LiveData，使用Flow
@@ -48,7 +43,7 @@ class NetListFragment : BaseFragment(R.layout.fragment_net_list) {
                 mBinding.tvContent.text = result.toString()
             }
 
-            onComplete = { Log.i("wutao--> ", ": onComplete")}
+            onComplete = { Log.i("NetListFragment", ": onComplete")}
 
             onFailed = { code, msg -> toast("errorCode: $code   errorMsg: $msg") }
 

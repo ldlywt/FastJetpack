@@ -3,6 +3,8 @@ package com.aisier.architecture.util
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -68,4 +70,14 @@ fun View.clickWithLimit(intervalMill: Int = 500, block: ((v: View?) -> Unit)) {
             }
         }
     })
+}
+
+/**
+ * 自定义圆角矩形
+ */
+fun View.setRoundRectBg(color: Int, cornerRadius: Int) {
+    background = GradientDrawable().apply {
+        setColor(color)
+        setCornerRadius(cornerRadius.toFloat())
+    }
 }
