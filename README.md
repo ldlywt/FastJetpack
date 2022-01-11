@@ -10,11 +10,11 @@
 
 # 分支解释
 
-- 封装一 (对应分支[oneWay](https://github.com/ldlywt/FastJetpack/tree/oneWay)) 传递ui引用，可按照项目进行深度ui定制，方便快速，但是耦合高
+- 封装一 (对应分支[oneWay](https://github.com/ldlywt/FastJetpack/tree/oneWay)) 传递ui引用，可按照项目进行深度ui定制，方便快速，但是耦合高(Google 最近架构文档已经不推荐在Repository中使用LiveData了，这种方式主要提供一种封装思想)
 
 - 封装二 (对应分支[master](https://github.com/ldlywt/FastJetpack/tree/master)） 耦合低，依赖的东西很少，但是写起来模板代码偏多
 
-- 封装三 (对应分支[dev](https://github.com/ldlywt/FastJetpack/tree/dev)) 引入了新的flow流式编程（虽然出来很久，但是大部分人应该还没用到），链式调用，loading 和网络请求以及结果处理都在一起，很多时候甚至都不要声明 LiveData 对象。
+- 封装三 (对应分支[dev](https://github.com/ldlywt/FastJetpack/tree/dev)) 目的就是为了减少模板代码，引入了新的flow流式编程，链式调用，loading 和网络请求以及结果处理都在一起，很多时候甚至都不要声明 LiveData/Flow 对象。
 
 
 > 根据谷歌官方文档的[最新架构](https://developer.android.com/jetpack/guide)，推进使用dev分支。
