@@ -1,10 +1,8 @@
 package com.aisier.architecture.base
 
 import android.app.Application
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleObserver
-import androidx.lifecycle.OnLifecycleEvent
-import androidx.lifecycle.ProcessLifecycleOwner
+import android.util.Log
+import androidx.lifecycle.*
 
 /**
  * author : wutao
@@ -25,16 +23,14 @@ open class BaseApp : Application() {
             private set
     }
 
-    private inner class ApplicationLifecycleObserver : LifecycleObserver {
+    private inner class ApplicationLifecycleObserver : DefaultLifecycleObserver {
 
-        @OnLifecycleEvent(Lifecycle.Event.ON_START)
-        private fun onAppForeground() {
-            // TODO: "ApplicationObserver: app moved to foreground"
+        override fun onStart(owner: LifecycleOwner) {
+            Log.i("wutao--> ", "Application: onStart")
         }
 
-        @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
-        private fun onAppBackground() {
-            // TODO: "ApplicationObserver: app moved to background"
+        override fun onStop(owner: LifecycleOwner) {
+            Log.i("wutao--> ", "Application: onStop")
         }
     }
 }
