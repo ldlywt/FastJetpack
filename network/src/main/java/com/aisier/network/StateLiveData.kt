@@ -1,4 +1,4 @@
-package com.aisier.network.observer
+package com.aisier.network
 
 import androidx.annotation.MainThread
 import androidx.lifecycle.LifecycleOwner

@@ -1,4 +1,4 @@
-package com.aisier.network.observer
+package com.aisier.network
 
 import com.aisier.network.entity.*
 
@@ -17,10 +17,10 @@ class ResultBuilder<T> {
     var onSuccess: (data: T?) -> Unit = {}
     var onDataEmpty: () -> Unit = {}
     var onFailed: (errorCode: Int?, errorMsg: String?) -> Unit = { _, errorMsg ->
-        errorMsg?.let { com.aisier.network.toast(it) }
+        errorMsg?.let { toast(it) }
     }
     var onError: (e: Throwable) -> Unit = { e ->
-        e.message?.let { com.aisier.network.toast(it) }
+        e.message?.let { toast(it) }
     }
     var onComplete: () -> Unit = {}
 }

@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModel
  */
 abstract class BaseViewModel : ViewModel()
 
+// TODO MVI
 sealed class ViewEffect {
     data class ShowLoading(val isShow: Boolean) : ViewEffect()
     data class ShowToast(val message: String) : ViewEffect()

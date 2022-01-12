@@ -7,8 +7,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.aisier.architecture.base.IUiView
 import com.aisier.network.entity.ApiResponse
-import com.aisier.network.observer.ResultBuilder
-import com.aisier.network.observer.parseData
+import com.aisier.network.ResultBuilder
+import com.aisier.network.parseData
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
@@ -44,7 +44,10 @@ fun IUiView.launchWithLoading(requestBlock: suspend () -> Unit) {
 /**
  * 请求不带Loading&&不需要声明LiveData
  */
-fun <T> IUiView.launchAndCollect(requestBlock: suspend () -> ApiResponse<T>, listenerBuilder: ResultBuilder<T>.() -> Unit) {
+fun <T> IUiView.launchAndCollect(
+    requestBlock: suspend () -> ApiResponse<T>,
+    listenerBuilder: ResultBuilder<T>.() -> Unit
+) {
     lifecycleScope.launch {
         launchFlow(requestBlock).collect { response ->
             response.parseData(listenerBuilder)
@@ -55,7 +58,10 @@ fun <T> IUiView.launchAndCollect(requestBlock: suspend () -> ApiResponse<T>, lis
 /**
  * 请求带Loading&&不需要声明LiveData
  */
-fun <T> IUiView.launchWithLoadingAndCollect(requestBlock: suspend () -> ApiResponse<T>, listenerBuilder: ResultBuilder<T>.() -> Unit) {
+fun <T> IUiView.launchWithLoadingAndCollect(
+    requestBlock: suspend () -> ApiResponse<T>,
+    listenerBuilder: ResultBuilder<T>.() -> Unit
+) {
     lifecycleScope.launch {
         launchFlow(requestBlock, { showLoading() }, { dismissLoading() }).collect { response ->
             response.parseData(listenerBuilder)
@@ -71,23 +77,19 @@ fun <T> Flow<ApiResponse<T>>.launchAndCollectIn(
     if (owner is Fragment) {
         owner.viewLifecycleOwner.lifecycleScope.launch {
             owner.viewLifecycleOwner.repeatOnLifecycle(minActiveState) {
-                collectState(listenerBuilder)
+                collect { apiResponse: ApiResponse<T> ->
+                    apiResponse.parseData(listenerBuilder)
+                }
             }
         }
     } else {
         owner.lifecycleScope.launch {
             owner.repeatOnLifecycle(minActiveState) {
-                collectState(listenerBuilder)
+                collect { apiResponse: ApiResponse<T> ->
+                    apiResponse.parseData(listenerBuilder)
+                }
             }
         }
-    }
-}
-
-suspend inline fun <T> Flow<ApiResponse<T>>.collectState(
-    noinline listenerBuilder: ResultBuilder<T>.() -> Unit,
-) {
-    collect { apiResponse: ApiResponse<T> ->
-        apiResponse.parseData(listenerBuilder)
     }
 }
 

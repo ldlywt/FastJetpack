@@ -16,7 +16,7 @@ import com.aisier.architecture.util.launchWithLoading
 import com.aisier.architecture.util.launchWithLoadingAndCollect
 import com.aisier.bean.WxArticleBean
 import com.aisier.databinding.FragmentNetListBinding
-import com.aisier.network.observer.observeState
+import com.aisier.network.observeState
 import com.aisier.network.toast
 import com.aisier.vm.ApiViewModel
 import com.dylanc.viewbinding.binding
