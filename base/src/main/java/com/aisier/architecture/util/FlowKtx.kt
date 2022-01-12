@@ -1,7 +1,11 @@
 package com.aisier.architecture.util
 
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
-import com.aisier.architecture.base.BaseActivity
+import androidx.lifecycle.repeatOnLifecycle
+import com.aisier.architecture.base.IUiView
 import com.aisier.network.entity.ApiResponse
 import com.aisier.network.observer.ResultBuilder
 import com.aisier.network.observer.parseData
@@ -25,7 +29,7 @@ fun <T> launchFlow(
 /**
  * 这个方法只是简单的一个封装Loading的普通方法，不返回任何实体类
  */
-fun BaseActivity.launchWithLoading(requestBlock: suspend () -> Unit) {
+fun IUiView.launchWithLoading(requestBlock: suspend () -> Unit) {
     lifecycleScope.launch {
         flow {
             emit(requestBlock())
@@ -40,7 +44,7 @@ fun BaseActivity.launchWithLoading(requestBlock: suspend () -> Unit) {
 /**
  * 请求不带Loading&&不需要声明LiveData
  */
-fun <T> BaseActivity.launchAndCollect(requestBlock: suspend () -> ApiResponse<T>, listenerBuilder: ResultBuilder<T>.() -> Unit) {
+fun <T> IUiView.launchAndCollect(requestBlock: suspend () -> ApiResponse<T>, listenerBuilder: ResultBuilder<T>.() -> Unit) {
     lifecycleScope.launch {
         launchFlow(requestBlock).collect { response ->
             response.parseData(listenerBuilder)
@@ -51,11 +55,39 @@ fun <T> BaseActivity.launchAndCollect(requestBlock: suspend () -> ApiResponse<T>
 /**
  * 请求带Loading&&不需要声明LiveData
  */
-fun <T> BaseActivity.launchWithLoadingAndCollect(requestBlock: suspend () -> ApiResponse<T>, listenerBuilder: ResultBuilder<T>.() -> Unit) {
+fun <T> IUiView.launchWithLoadingAndCollect(requestBlock: suspend () -> ApiResponse<T>, listenerBuilder: ResultBuilder<T>.() -> Unit) {
     lifecycleScope.launch {
         launchFlow(requestBlock, { showLoading() }, { dismissLoading() }).collect { response ->
             response.parseData(listenerBuilder)
         }
+    }
+}
+
+fun <T> Flow<ApiResponse<T>>.launchAndCollectIn(
+    owner: LifecycleOwner,
+    minActiveState: Lifecycle.State = Lifecycle.State.STARTED,
+    listenerBuilder: ResultBuilder<T>.() -> Unit,
+) {
+    if (owner is Fragment) {
+        owner.viewLifecycleOwner.lifecycleScope.launch {
+            owner.viewLifecycleOwner.repeatOnLifecycle(minActiveState) {
+                collectState(listenerBuilder)
+            }
+        }
+    } else {
+        owner.lifecycleScope.launch {
+            owner.repeatOnLifecycle(minActiveState) {
+                collectState(listenerBuilder)
+            }
+        }
+    }
+}
+
+suspend inline fun <T> Flow<ApiResponse<T>>.collectState(
+    noinline listenerBuilder: ResultBuilder<T>.() -> Unit,
+) {
+    collect { apiResponse: ApiResponse<T> ->
+        apiResponse.parseData(listenerBuilder)
     }
 }
 

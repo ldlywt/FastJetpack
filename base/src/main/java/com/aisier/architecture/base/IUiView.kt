@@ -1,6 +1,8 @@
 package com.aisier.architecture.base
 
-interface IUiView {
+import androidx.lifecycle.LifecycleOwner
+
+interface IUiView : LifecycleOwner {
 
     fun showLoading()
 

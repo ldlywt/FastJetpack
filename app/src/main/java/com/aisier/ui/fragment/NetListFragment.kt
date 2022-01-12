@@ -10,12 +10,12 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.asLiveData
 import com.aisier.R
 import com.aisier.architecture.base.BaseFragment
+import com.aisier.architecture.util.launchAndCollectIn
 import com.aisier.architecture.util.launchFlow
 import com.aisier.architecture.util.launchWithLoading
 import com.aisier.architecture.util.launchWithLoadingAndCollect
 import com.aisier.bean.WxArticleBean
 import com.aisier.databinding.FragmentNetListBinding
-import com.aisier.network.launchAndCollectIn
 import com.aisier.network.observer.observeState
 import com.aisier.network.toast
 import com.aisier.vm.ApiViewModel
