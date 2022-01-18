@@ -4,14 +4,16 @@ plugins {
 }
 
 android {
-    compileSdkVersion rootProject.ext.android["compileSdkVersion"]
+
+    def android = rootProject.ext.android
 
     defaultConfig {
         applicationId "com.fastjetpack"
-        minSdkVersion rootProject.ext.android["minSdkVersion"]
-        targetSdkVersion rootProject.ext.android["targetSdkVersion"]
-        versionCode rootProject.ext.android["versionCode"]
-        versionName rootProject.ext.android["versionName"]
+        compileSdk android.compileSdkVersion
+        minSdk android.minSdkVersion
+        targetSdk android.targetSdkVersion
+        versionCode android.versionCode
+        versionName android.versionName
     }
     buildTypes {
         release {

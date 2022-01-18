@@ -2,13 +2,15 @@ apply plugin:'com.android.library'
 apply plugin:'kotlin-android'
 
 android {
-    compileSdkVersion rootProject.ext.android["compileSdkVersion"]
-
+    def android = rootProject.ext.android
+    
     defaultConfig {
-        minSdkVersion rootProject.ext.android["minSdkVersion"]
-        targetSdkVersion rootProject.ext.android["targetSdkVersion"]
-        versionCode rootProject.ext.android["versionCode"]
-        versionName rootProject.ext.android["versionName"]
+        multiDexEnabled true
+        minSdk android.minSdkVersion
+        compileSdk android.compileSdkVersion
+        targetSdk android.targetSdkVersion
+        versionCode android.versionCode
+        versionName android.versionName
     }
 
     compileOptions {

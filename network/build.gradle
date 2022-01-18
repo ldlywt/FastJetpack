@@ -1,4 +1,4 @@
-apply from: "../default.gradle"
+apply from: "../common.gradle"
 
 def apiDependencies = rootProject.ext.netDependencies
 
