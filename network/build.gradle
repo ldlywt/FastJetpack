@@ -1,7 +1,9 @@
-apply from: "../common.gradle"
+apply from:"../basic.gradle"
 
-def apiDependencies = rootProject.ext.netDependencies
+def netDependencies = rootProject.ext.NetworkDepend
 
 dependencies {
-    apiDependencies.each { k, v -> api v }
+
+    netDependencies.each { k, v -> api v }
+    implementation(rootProject.ext.ThirdDepend.livedatabus)
 }

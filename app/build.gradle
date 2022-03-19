@@ -32,15 +32,16 @@ android {
     viewBinding {
         enabled = true
     }
-    buildFeatures {
-        viewBinding true
-    }
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+    rootProject.ext.GoogleDepend.each { k, v -> api v }
     implementation project(path: ':base')
     implementation project(path: ':network')
+
+    implementation(project.ThirdDepend.viewbindingdelegate)
+
     implementation 'com.google.android.gms:play-services-location:18.0.0'
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.7'
 
