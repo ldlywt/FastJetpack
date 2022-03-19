@@ -4,7 +4,7 @@ import android.app.ProgressDialog
 import android.os.Bundle
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
-import com.aisier.architecture.util.toast
+import com.aisier.architecture.ktx.toast
 import com.aisier.network.SHOW_TOAST
 import com.jeremyliao.liveeventbus.LiveEventBus
 

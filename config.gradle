@@ -41,7 +41,7 @@ ext {
     ]
 
     ThirdDepend = [
-            "viewbindingdelegate": "com.github.kirich1409:viewbindingpropertydelegate:1.5.3",
+            "viewbindingdelegate": "com.github.DylanCaiCoding.ViewBindingKTX:viewbinding-ktx:2.0.2",
             "livedatabus"        : 'io.github.jeremyliao:live-event-bus-x:1.8.0',
     ]
 
