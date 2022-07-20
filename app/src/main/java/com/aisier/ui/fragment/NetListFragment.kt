@@ -10,7 +10,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.asLiveData
 import com.aisier.R
 import com.aisier.architecture.base.BaseFragment
-import com.aisier.architecture.util.launchAndCollectIn
+import com.aisier.architecture.util.collectIn
 import com.aisier.architecture.util.launchFlow
 import com.aisier.architecture.util.launchWithLoading
 import com.aisier.architecture.util.launchWithLoadingAndCollect
@@ -37,13 +37,13 @@ class NetListFragment : BaseFragment(R.layout.fragment_net_list) {
     }
 
     private fun initObserver() {
-        mViewModel.uiState.launchAndCollectIn(this, Lifecycle.State.STARTED) {
+        mViewModel.uiState.collectIn(this, Lifecycle.State.STARTED) {
             onSuccess = { result: List<WxArticleBean>? ->
                 showNetErrorPic(false)
                 mBinding.tvContent.text = result.toString()
             }
 
-            onComplete = { Log.i("NetListFragment", ": onComplete")}
+            onComplete = { Log.i("NetListFragment", ": onComplete") }
 
             onFailed = { code, msg -> toast("errorCode: $code   errorMsg: $msg") }
 

@@ -1,15 +1,19 @@
 package com.aisier.architecture.util
 
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import com.aisier.architecture.base.IUiView
-import com.aisier.network.entity.ApiResponse
 import com.aisier.network.ResultBuilder
+import com.aisier.network.entity.ApiResponse
 import com.aisier.network.parseData
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.onCompletion
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 
 fun <T> launchFlow(
@@ -46,7 +50,7 @@ fun IUiView.launchWithLoading(requestBlock: suspend () -> Unit) {
  */
 fun <T> IUiView.launchAndCollect(
     requestBlock: suspend () -> ApiResponse<T>,
-    listenerBuilder: ResultBuilder<T>.() -> Unit
+    listenerBuilder: ResultBuilder<T>.() -> Unit,
 ) {
     lifecycleScope.launch {
         launchFlow(requestBlock).collect { response ->
@@ -60,7 +64,7 @@ fun <T> IUiView.launchAndCollect(
  */
 fun <T> IUiView.launchWithLoadingAndCollect(
     requestBlock: suspend () -> ApiResponse<T>,
-    listenerBuilder: ResultBuilder<T>.() -> Unit
+    listenerBuilder: ResultBuilder<T>.() -> Unit,
 ) {
     lifecycleScope.launch {
         launchFlow(requestBlock, { showLoading() }, { dismissLoading() }).collect { response ->
@@ -69,27 +73,14 @@ fun <T> IUiView.launchWithLoadingAndCollect(
     }
 }
 
-fun <T> Flow<ApiResponse<T>>.launchAndCollectIn(
-    owner: LifecycleOwner,
+fun <T> Flow<ApiResponse<T>>.collectIn(
+    lifecycleOwner: LifecycleOwner,
     minActiveState: Lifecycle.State = Lifecycle.State.STARTED,
     listenerBuilder: ResultBuilder<T>.() -> Unit,
-) {
-    if (owner is Fragment) {
-        owner.viewLifecycleOwner.lifecycleScope.launch {
-            owner.viewLifecycleOwner.repeatOnLifecycle(minActiveState) {
-                collect { apiResponse: ApiResponse<T> ->
-                    apiResponse.parseData(listenerBuilder)
-                }
-            }
-        }
-    } else {
-        owner.lifecycleScope.launch {
-            owner.repeatOnLifecycle(minActiveState) {
-                collect { apiResponse: ApiResponse<T> ->
-                    apiResponse.parseData(listenerBuilder)
-                }
-            }
-        }
+): Job = lifecycleOwner.lifecycleScope.launch {
+    flowWithLifecycle(lifecycleOwner.lifecycle,
+        minActiveState).collect { apiResponse: ApiResponse<T> ->
+        apiResponse.parseData(listenerBuilder)
     }
 }
 
