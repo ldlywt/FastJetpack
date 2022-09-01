@@ -1,21 +1,16 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+<!--    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="colorPrimary">@color/chrome_orange_54</item>
         <item name="colorPrimaryVariant">@color/chrome_orange_54</item>
         <item name="colorOnPrimary">@color/white</item>
-        <!-- Secondary brand color. -->
+        &lt;!&ndash; Secondary brand color. &ndash;&gt;
         <item name="colorSecondary">@color/chrome_orange_20</item>
         <item name="colorSecondaryVariant">@color/chrome_orange_90</item>
         <item name="colorOnSecondary">@color/black</item>
-        <!-- Status bar color. -->
+        &lt;!&ndash; Status bar color. &ndash;&gt;
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
-    </style>
+    </style>-->
 
-    <style name="ImmersiveTheme" parent="AppTheme">
-        <item name="android:windowTranslucentStatus">true</item>
-        <item name="android:windowTranslucentNavigation">true</item>
-        <item name="android:statusBarColor">@android:color/transparent</item>
-        <item name="android:navigationBarColor">@android:color/transparent</item>
-    </style>
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar"/>
 </resources>

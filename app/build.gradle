@@ -36,7 +36,6 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    rootProject.ext.GoogleDepend.each { k, v -> api v }
     implementation project(path: ':base')
     implementation project(path: ':network')
 
@@ -49,4 +48,7 @@ dependencies {
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
 
+    rootProject.ext.AndroidDepend.each { k, v -> api v }
+    rootProject.ext.LifecycleDepend.each { k, v -> api v }
+    rootProject.ext.GoogleDepend.each { k, v -> api v }
 }

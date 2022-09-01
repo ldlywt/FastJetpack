@@ -26,12 +26,8 @@ android {
     }
 }
 
-def androidDependencies = rootProject.ext.AndroidDepend
-def lifecycleDependencies = rootProject.ext.LifecycleDepend
-
 dependencies {
-
-    androidDependencies.each { k, v -> api v }
-    lifecycleDependencies.each { k, v -> api v }
-
+    rootProject.ext.AndroidDepend.each { k, v -> api v }
+    rootProject.ext.LifecycleDepend.each { k, v -> api v }
+    rootProject.ext.GoogleDepend.each { k, v -> api v }
 }

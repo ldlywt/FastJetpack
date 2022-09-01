@@ -7,6 +7,8 @@ import androidx.appcompat.app.AppCompatActivity
 import com.aisier.architecture.ktx.toast
 import com.aisier.network.SHOW_TOAST
 import com.jeremyliao.liveeventbus.LiveEventBus
+import io.multimoon.colorful.BaseTheme
+import io.multimoon.colorful.Colorful
 
 /**
  * <pre>
@@ -19,6 +21,7 @@ import com.jeremyliao.liveeventbus.LiveEventBus
 abstract class BaseActivity(@LayoutRes contentLayoutId: Int) : AppCompatActivity(contentLayoutId), IUiView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        Colorful().apply(this, override = true, baseTheme = BaseTheme.THEME_MATERIAL)
         super.onCreate(savedInstanceState)
         observeUi()
     }

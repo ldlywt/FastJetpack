@@ -1,0 +1,6 @@
+apply from:"../basic.gradle"
+
+dependencies {
+    implementation(project.AndroidDepend.appcompat)
+    implementation(project.GoogleDepend.material)
+}

@@ -2,7 +2,8 @@ apply from:"../basic.gradle"
 
 dependencies {
 
-    implementation project(path: ':network')
+    api project(path: ':network')
+    api project(path: ':libraryTheme')
     implementation(rootProject.ext.ThirdDepend.livedatabus)
 }
 
