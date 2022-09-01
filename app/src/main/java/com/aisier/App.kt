@@ -12,8 +12,7 @@ class App : BaseApp() {
         val defaults = Defaults(
             primaryColor = ThemeColor.GREEN,
             accentColor = ThemeColor.BLUE,
-            useDarkTheme = true,
-            translucent = false)
+            useDarkTheme = true)
         initColorful(this, defaults)
     }
 }

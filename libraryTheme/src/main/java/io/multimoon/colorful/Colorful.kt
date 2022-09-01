@@ -6,11 +6,11 @@ import android.util.Log
 import androidx.annotation.RequiresApi
 
 var mInstance: ColorfulDelegate? = null
-val primaryThemeKey: String = "primary_theme"
-val accentThemeKey: String = "accent_theme"
-val darkThemeKey: String = "dark_theme"
-val customThemeKey: String = "custom_theme"
-val translucentKey: String = "translucent"
+const val primaryThemeKey: String = "primary_theme"
+const val accentThemeKey: String = "accent_theme"
+const val darkThemeKey: String = "dark_theme"
+const val customThemeKey: String = "custom_theme"
+const val translucentKey: String = "translucent"
 
 enum class BaseTheme {
     @RequiresApi(21)

@@ -11,6 +11,6 @@ data class Defaults(
     val primaryColor: ThemeColorInterface,
     val accentColor: ThemeColorInterface,
     val useDarkTheme: Boolean,
-    val translucent: Boolean,
+    val translucent: Boolean = false,
     @StyleRes val customTheme: Int = 0,
 )

@@ -24,7 +24,6 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
                 .setPrimaryColor(ThemeColor.values().random())
                 .setAccentColor(ThemeColor.values().random())
                 .setDarkTheme(false)
-                .setTranslucent(true)
                 .apply(requireActivity()) {
                     requireActivity().recreate()
                 }
