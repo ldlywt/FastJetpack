@@ -1,0 +1,66 @@
+<resources>
+
+    <style name="Theme.Red" parent="Theme.Base">
+        <item name="colorPrimary">@color/red_primary_night</item>
+        <item name="android:colorPrimary">@color/red_primary_night</item>
+        <item name="colorSecondary">@color/red_second_night</item>
+        <item name="android:colorSecondary">@color/red_second_night</item>
+        <item name="colorSurface">@color/red_third_night</item>
+    </style>
+
+    <style name="Theme.Pink" parent="Theme.Base">
+        <item name="colorPrimary">@color/pink_primary_night</item>
+        <item name="android:colorPrimary">@color/pink_primary_night</item>
+        <item name="colorSecondary">@color/pink_second_night</item>
+        <item name="android:colorSecondary">@color/pink_second_night</item>
+        <item name="colorSurface">@color/pink_third_night</item>
+    </style>
+
+    <style name="Theme.Orange" parent="Theme.Base">
+        <item name="colorPrimary">@color/orange_primary_night</item>
+        <item name="android:colorPrimary">@color/orange_primary_night</item>
+        <item name="colorSecondary">@color/orange_second_night</item>
+        <item name="android:colorSecondary">@color/orange_second_night</item>
+        <item name="colorSurface">@color/orange_third_night</item>
+    </style>
+
+    <style name="Theme.Blue" parent="Theme.Base">
+        <item name="colorPrimary">@color/blue_primary_night</item>
+        <item name="android:colorPrimary">@color/blue_primary_night</item>
+        <item name="colorSecondary">@color/blue_second_night</item>
+        <item name="android:colorSecondary">@color/blue_second_night</item>
+        <item name="colorSurface">@color/blue_third_night</item>
+    </style>
+
+
+    <style name="Theme.Yellow" parent="Theme.Base">
+        <item name="colorPrimary">@color/yellow_primary_night</item>
+        <item name="android:colorPrimary">@color/yellow_primary_night</item>
+        <item name="colorSecondary">@color/yellow_second_night</item>
+        <item name="android:colorSecondary">@color/yellow_second_night</item>
+        <item name="colorSurface">@color/yellow_third_night</item>
+    </style>
+
+    <style name="Theme.Edition1" parent="Theme.Base">
+        <item name="colorPrimary">@color/edition1_primary_night</item>
+        <item name="android:colorPrimary">@color/edition1_primary_night</item>
+        <item name="colorSecondary">@color/edition1_second_night</item>
+        <item name="android:colorSecondary">@color/edition1_second_night</item>
+        <item name="colorSurface">@color/edition1_third_night</item>
+
+    </style>
+
+    <!-- Base application theme. -->
+    <style name="Theme.Base" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor">?attr/colorPrimary</item>
+        <!-- Customize your theme here. -->
+        <item name="android:colorAccent">?attr/colorPrimary</item>
+        <item name="colorAccent">?attr/colorPrimary</item>
+        <item name="android:colorControlActivated">?attr/colorPrimary</item>
+        <item name="colorControlActivated">?attr/colorPrimary</item>
+        <item name="translucent70">@color/trans70_night</item>
+        <item name="translucent50">@color/trans50_night</item>
+    </style>
+
+</resources>

@@ -1,18 +1,18 @@
 package com.aisier
 
 import com.aisier.architecture.base.BaseApp
-import io.multimoon.colorful.Defaults
-import io.multimoon.colorful.ThemeColor
-import io.multimoon.colorful.initColorful
+import com.ldlywt.colorful.ColorThemeConfig
+import com.ldlywt.colorful.initColorful
 
 class App : BaseApp() {
     
     override fun onCreate() {
         super.onCreate()
-        val defaults = Defaults(
-            primaryColor = ThemeColor.GREEN,
-            accentColor = ThemeColor.BLUE,
-            useDarkTheme = true)
-        initColorful(this, defaults)
+        val colorThemeConfig = ColorThemeConfig(
+            useDarkTheme = true,
+            translucent = false,
+            customTheme = R.style.Theme_Red
+        )
+        initColorful(this, colorThemeConfig)
     }
 }

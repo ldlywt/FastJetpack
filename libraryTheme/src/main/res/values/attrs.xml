@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- background -->
+    <attr name="eBackground" format="reference"/>
+
+    <!-- seekbar -->
+    <attr name="eSeekBarBackgroundNormal" format="reference" />
+    <attr name="eSeekBarProgressNormal" format="reference" />
+    <attr name="eSeekBarBackgroundSmall" format="reference" />
+    <attr name="eSeekBarProgressSmall" format="reference" />
+</resources>

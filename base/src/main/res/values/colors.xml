@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--数字是不透明度，20表示:不透明度是20，透明度是80-->
 <resources>
     <!--black-->
     <color name="black">#000000</color>

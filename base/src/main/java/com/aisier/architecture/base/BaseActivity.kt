@@ -7,8 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.aisier.architecture.ktx.toast
 import com.aisier.network.SHOW_TOAST
 import com.jeremyliao.liveeventbus.LiveEventBus
-import io.multimoon.colorful.BaseTheme
-import io.multimoon.colorful.Colorful
+import com.ldlywt.colorful.ColorTheme
 
 /**
  * <pre>
@@ -19,29 +18,28 @@ import io.multimoon.colorful.Colorful
 </pre> *
  */
 abstract class BaseActivity(@LayoutRes contentLayoutId: Int) : AppCompatActivity(contentLayoutId), IUiView {
-
+    
     override fun onCreate(savedInstanceState: Bundle?) {
-        Colorful().apply(this, override = true, baseTheme = BaseTheme.THEME_MATERIAL)
+        ColorTheme().applyTheme(this)
         super.onCreate(savedInstanceState)
         observeUi()
     }
-
+    
     private fun observeUi() {
         LiveEventBus.get<String>(SHOW_TOAST).observe(this) {
             toast(it)
         }
     }
-
+    
     private var progressDialog: ProgressDialog? = null
-
+    
     override fun showLoading() {
         if (progressDialog == null)
             progressDialog = ProgressDialog(this)
         progressDialog?.show()
     }
-
+    
     override fun dismissLoading() {
         progressDialog?.takeIf { it.isShowing }?.dismiss()
     }
-
 }

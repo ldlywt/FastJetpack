@@ -1,0 +1,83 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="Theme.Base" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor">?attr/colorPrimary</item>
+        <!-- Customize your theme here. -->
+        <item name="android:colorAccent">?attr/colorPrimary</item>
+        <item name="colorAccent">?attr/colorPrimary</item>
+        <item name="android:colorControlActivated">?attr/colorPrimary</item>
+        <item name="colorControlActivated">?attr/colorPrimary</item>
+        <item name="translucent70">@color/trans70</item>
+        <item name="translucent50">@color/trans50</item>
+        <!-- Widgets style -->
+        <item name="android:textCursorDrawable">?attr/colorPrimary</item>
+
+        <!-- SeekBar background-->
+        <item name="eSeekBarBackgroundNormal">?attr/colorPrimary</item>
+        <item name="eSeekBarBackgroundSmall">?attr/colorPrimary</item>
+    </style>
+
+    <style name="Theme.Red" parent="Theme.Base">
+        <item name="colorPrimary">@color/red_primary</item>
+        <item name="android:colorPrimary">@color/red_primary</item>
+        <item name="colorSecondary">@color/red_second</item>
+        <item name="android:colorSecondary">@color/red_second</item>
+        <item name="colorSurface">@color/red_third</item>
+        <item name="eBackground">@color/red_primary</item>
+        <!-- SeekBar -->
+        <item name="eSeekBarProgressNormal">@color/red_primary</item>
+        <item name="eSeekBarProgressSmall">@color/red_primary</item>
+    </style>
+
+    <style name="Theme.Pink" parent="Theme.Base">
+        <item name="colorPrimary">@color/pink_primary</item>
+        <item name="android:colorPrimary">@color/pink_primary</item>
+        <item name="colorSecondary">@color/pink_second</item>
+        <item name="android:colorSecondary">@color/pink_second</item>
+        <item name="colorSurface">@color/pink_third</item>
+        <item name="eBackground">@color/pink_primary</item>
+        <!-- SeekBar -->
+        <item name="eSeekBarProgressNormal">@color/pink_primary</item>
+        <item name="eSeekBarProgressSmall">@color/pink_primary</item>
+    </style>
+
+    <style name="Theme.Orange" parent="Theme.Base">
+        <item name="colorPrimary">@color/orange_primary</item>
+        <item name="android:colorPrimary">@color/orange_primary</item>
+        <item name="colorSecondary">@color/orange_second</item>
+        <item name="android:colorSecondary">@color/orange_second</item>
+        <item name="colorSurface">@color/orange_third</item>
+        <item name="eBackground">@color/orange_primary</item>
+        <!-- SeekBar -->
+        <item name="eSeekBarProgressNormal">@color/orange_primary</item>
+        <item name="eSeekBarProgressSmall">@color/orange_primary</item>
+    </style>
+
+    <style name="Theme.Blue" parent="Theme.Base">
+        <item name="colorPrimary">@color/blue_primary</item>
+        <item name="android:colorPrimary">@color/blue_primary</item>
+        <item name="colorSecondary">@color/blue_second</item>
+        <item name="android:colorSecondary">@color/blue_second</item>
+        <item name="colorSurface">@color/blue_third</item>
+        <item name="eBackground">@color/blue_primary</item>
+        <!-- SeekBar -->
+        <item name="eSeekBarProgressNormal">@color/blue_primary</item>
+        <item name="eSeekBarProgressSmall">@color/blue_primary</item>
+    </style>
+
+
+    <style name="Theme.Yellow" parent="Theme.Base">
+        <item name="colorPrimary">@color/yellow_primary</item>
+        <item name="android:colorPrimary">@color/yellow_primary</item>
+        <item name="colorSecondary">@color/yellow_second</item>
+        <item name="android:colorSecondary">@color/yellow_second</item>
+        <item name="colorSurface">@color/yellow_third</item>
+        <item name="eBackground">@color/yellow_primary</item>
+        <!-- SeekBar -->
+        <item name="eSeekBarProgressNormal">@color/yellow_primary</item>
+        <item name="eSeekBarProgressSmall">@color/yellow_primary</item>
+    </style>
+
+</resources>

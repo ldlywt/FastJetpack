@@ -5,15 +5,14 @@ plugins {
 
 android {
 
-    def android = rootProject.ext.android
+    compileSdk 32
 
     defaultConfig {
         applicationId "com.fastjetpack"
-        compileSdk android.compileSdkVersion
-        minSdk android.minSdkVersion
-        targetSdk android.targetSdkVersion
-        versionCode android.versionCode
-        versionName android.versionName
+        minSdk 29
+        targetSdk 32
+        versionCode 1
+        versionName "1.0"
     }
     buildTypes {
         release {
@@ -37,18 +36,12 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(path: ':base')
-    implementation project(path: ':network')
 
-    implementation(project.ThirdDepend.viewbindingdelegate)
+    implementation("com.github.DylanCaiCoding.ViewBindingKTX:viewbinding-ktx:2.0.2")
 
-    implementation 'com.google.android.gms:play-services-location:18.0.0'
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.7'
 
     def nav_version = "2.3.5"
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
-
-    rootProject.ext.AndroidDepend.each { k, v -> api v }
-    rootProject.ext.LifecycleDepend.each { k, v -> api v }
-    rootProject.ext.GoogleDepend.each { k, v -> api v }
 }

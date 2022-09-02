@@ -1,6 +1,6 @@
 package com.aisier.network.base
 
-import androidx.viewbinding.BuildConfig
+import com.aisier.network.BuildConfig
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
