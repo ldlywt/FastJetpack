@@ -1,36 +1,38 @@
-# 三种方式封装Retrofit+协程，实现优雅快速的网络请求
+[简体中文](https://github.com/ldlywt/FastJetpack/blob/dev/README-zh-CN.md)
 
-# 介绍
-项目涉及到三种方式对Retrofit+协程的封装，每种封装思想都不一样
+# Three ways to encapsulate Retrofit + Kotlin Coroutines for elegant and fast network requests
 
-就算对协程和Kotlin flow 不熟悉，也可以快速上手
+# Introduction
+This project involves three ways to encapsulate Retrofit + Kotlin Coroutines, each encapsulation idea is different.
 
-封装的目的是为了减少模板代码，方便快速开发
+Even if you are not familiar with the concatenation and Kotlin flow, you can get started quickly.
 
-
-# 分支解释
-
-- 封装一 (对应分支[oneWay](https://github.com/ldlywt/FastJetpack/tree/oneWay)) 传递ui引用，可按照项目进行深度ui定制，方便快速，但是耦合高(Google 最近架构文档已经不推荐在Repository中使用LiveData了，这种方式主要提供一种封装思想)
-
-- 封装二 (对应分支[master](https://github.com/ldlywt/FastJetpack/tree/master)） 耦合低，依赖的东西很少，但是写起来模板代码偏多
-
-- 封装三 (对应分支[dev](https://github.com/ldlywt/FastJetpack/tree/dev)) 目的就是为了减少模板代码，引入了新的flow流式编程，链式调用，loading 和网络请求以及结果处理都在一起，很多时候甚至都不要声明 LiveData/Flow 对象。
+The purpose of the wrappers is to reduce boilerplate code and facilitate rapid development.
 
 
-> 根据谷歌官方文档的[最新架构](https://developer.android.com/jetpack/guide)，推进使用dev分支。
+# Branching Explained
 
-# 博客地址
+- Encapsulation 1 (corresponding to branch [oneWay](https://github.com/ldlywt/FastJetpack/tree/oneWay)) passes ui references, allowing deep ui customization according to the project, which is fast and convenient, but highly coupled (Google's recent architecture documentation no longer recommends using LiveData in the repository). Google's recent architecture documentation no longer recommends the use of LiveData in the Repository, this approach mainly provides a kind of encapsulation of ideas)
 
-- [两种方式封装Retrofit+协程，实现优雅快速的网络请求](https://juejin.cn/post/6993294489125126151) 
-- [使用 Kotlin Flow 优化你的网络请求框架，减少模板代码](https://juejin.cn/post/7022823222928211975)
+- Encapsulation two (corresponding to branch [master](https://github.com/ldlywt/FastJetpack/tree/master)) is low coupling, few dependencies, but more template code.
 
-# 鸣谢
-项目的部分思路来源于其他的开源项目，感谢其他作者的无私奉献。
+- Encapsulation 3 (corresponding to branch [dev](https://github.com/ldlywt/FastJetpack/tree/dev)) aims to reduce boilerplate code, introduces the new flow stream programming, chaining calls, loading and network requests and result processing are all together, and in many cases don't even declare the LiveData/Flow objects.
 
-项目调试Api来源于鸿阳大神的 [wanandroid](https://wanandroid.com/)，多谢提供免费稳定的api。
 
-希望大家和谐友好交流，共建开源社区。
+> According to the [latest architecture](https://developer.android.com/jetpack/guide) of Google's official documentation, advancing the use of dev branches.
 
-项目会长期不定时更新优化...
+# Blog address
+
+- [Two ways to encapsulate Retrofit + concatenation for elegant and fast network requests](https://juejin.cn/post/6993294489125126151) 
+- [Optimizing your web request framework with Kotlin Flow to reduce boilerplate code](https://juejin.cn/post/7022823222928211975)
+
+# Acknowledgments
+Some of the ideas of the project come from other open source projects, thanks to other authors for their selfless contributions.
+
+The project debugging Api comes from [wanandroid](https://wanandroid.com/) of Hongyang God, thanks for providing free and stable api.
+
+I hope we can have a harmonious and friendly communication to build an open source community.
+
+Translated with DeepL
 
 
